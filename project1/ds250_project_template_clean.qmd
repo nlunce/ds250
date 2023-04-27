@@ -1,7 +1,7 @@
 ---
-title: "Client Report - [Insert Project Title]"
+title: "Client Report - Project 1"
 subtitle: "Course DS 250"
-author: "[STUDENT NAME]"
+author: "Nathan Lunceford"
 format:
   html:
     self-contained: true
@@ -51,57 +51,51 @@ __Highlight the grand questions__
 
 ## GRAND QUESTION 1
 
-__COPY PASTE GRAND QUESTION 1 FROM THE PROJECT HERE__
+__How does your name at your birth year compare to its use historically?__
 
-_type your results and analysis here_
+_When I was born in the year 2002 the usage of my name was approching is peak. The data shows that the name Nathan was not very popular from the year 1910 to about 1967. At around the year 1967 the the name Nathan saw a sharp increase in usage where it continued to increase until about 2005 where it saw its peak and began to decline._
 
 ```{python}
 #| label: GQ1
 #| code-summary: Read and format data
 # Include and execute your code here
+names = pd.read_csv('names_year.csv')
 
+nathan = names.query('name == "Nathan"')
 
-```
+birthYearDf= pd.DataFrame({'year': [2002]})
+birthYearLine = alt.Chart(birthYearDf).mark_rule(color="red").encode(x = "year")
 
-_include figures in chunks and discuss your findings in the figure._
+birthYearLabel = alt.Chart(birthYearDf).mark_text(
+    text='Birth of Nathan Lunceford (2002)',
+    align='left',
+    baseline='middle',
+    dx=10,
+    dy=250
+).encode(
+    x='year',
+    y=alt.value(0)  # adjust label position
+)
 
-```{python}
-#| label: GQ1 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x="name", y="AK")\
-    .mark_bar()\
-    .properties(
-        width=800,
-        height=300
+chartNathan = (alt.Chart(nathan, title = 'Name of Nathan over the years')
+  .encode(
+    x = alt.X('year', axis = alt.Axis(format= 'd', title= 'Year')),
+    y = alt.Y('Total', axis= alt.Axis(format= 'd', 
+                title='Children with the name Nathan', ))
     )
-```
+  .mark_line()
+)
 
-
-```{python}
-#| label: GQ1 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
+chart = chartNathan + birthYearLine + birthYearLabel
+chart
 
 ```
+
 
 
 ## GRAND QUESTION 2
 
-__COPY PASTE GRAND QUESTION FROM THE PROJECT HERE__
+__If you talked to someone named Brittany on the phone, what is your guess of his or her age? What ages would you not guess?__
 
 _type your results and analysis here_
 
@@ -115,39 +109,10 @@ _type your results and analysis here_
 
 _include figures in chunks and discuss your findings in the figure._
 
-```{python}
-#| label: GQ2 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x = "name", y = "AK")\
-    .mark_bar()
-```
-
-
-```{python}
-#| label: GQ2 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
-
-```
-
 
 ## GRAND QUESTION 3
 
-__COPY PASTE GRAND QUESTION FROM THE PROJECT HERE__
+__Mary, Martha, Peter, and Paul are all Christian names. From 1920 - 2000, compare the name usage of each of the four names. What trends do you notice?__
 
 _type your results and analysis here_
 
@@ -161,35 +126,22 @@ _type your results and analysis here_
 
 _include figures in chunks and discuss your findings in the figure._
 
-```{python}
-#| label: GQ3 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x = "name", y = "AK")\
-    .mark_bar()
-```
 
+## GRAND QUESTION 4
+
+__Think of a unique name from a famous movie. Plot the usage of that name and see how changes line up with the movie release. Does it look like the movie had an effect on usage?__
+
+_type your results and analysis here_
 
 ```{python}
-#| label: GQ3 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
+#| label: GQ4
+#| code-summary: Read and format data
 # Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
 
-display(mydat)
 
 ```
 
+_include figures in chunks and discuss your findings in the figure._
 
 
 ## APPENDIX A (Additional Python Code)
