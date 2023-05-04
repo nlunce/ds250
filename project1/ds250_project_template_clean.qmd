@@ -71,7 +71,8 @@ birthYearLabel = alt.Chart(birthYearDf).mark_text(
     align='left',
     baseline='middle',
     dx=10,
-    dy=250
+    dy=250,
+    color= 'red'
 ).encode(
     x='year',
     y=alt.value(0)  # adjust label position
@@ -104,6 +105,46 @@ _type your results and analysis here_
 #| code-summary: Read and format data
 # Include and execute your code here
 
+# Load Dataset
+names = pd.read_csv('names_year.csv')
+
+# Query Brittany
+brittany = names.query('name == "Brittany"')
+
+# Chart Brittany
+chartBritrany = (alt.Chart(brittany, title = 'Name of Nathan over the years')
+  .encode(
+    x = alt.X('year', axis = alt.Axis(format= 'd', title= 'Year')),
+    y = alt.Y('Total', axis= alt.Axis(format= 'd', 
+                title='Children with the name Brittany' ))
+    )
+  .mark_line()
+)
+
+# Peak Brittany year Dataframe
+year1990Df = pd.DataFrame({'Year': [1990]})
+year1990Line = alt.Chart(year1990Df).mark_rule(color="red").encode(x = "Year")
+
+# Year 1990 Label
+year1990LineLable = alt.Chart(year1990Df).mark_text(
+    text='Year where most Brittanys were born (1990)',
+    align='left',
+    baseline='middle',
+    dx=10,
+    dy=10,
+    color= 'red'
+).encode(
+    x='Year',
+    y=alt.value(50)  # adjust label position
+)
+
+# Final Chart
+chart = chartBritrany + year1990Line + year1990LineLable
+chart
+
+
+
+
 
 ```
 
@@ -120,7 +161,20 @@ _type your results and analysis here_
 #| label: GQ3
 #| code-summary: Read and format data
 # Include and execute your code here
+data = pd.read_csv('names_year.csv')
 
+# Filter data for desired names
+names = ['Mary', 'Martha', 'Peter', 'Paul']
+filtered_data = data[data['name'].isin(names) & (data['year'] >= 1920) & (data['year'] <= 2000)]
+
+# Create final chart
+chart = (alt.Chart(filtered_data, title='Names over the years')
+         .encode(x=alt.X('year', axis=alt.Axis(format='d', title='Year')),
+                 y=alt.Y('Total', axis=alt.Axis(format='d', title='Children with the name')),
+                 color=alt.Color('name', title='Name'))
+         .mark_line())
+
+chart
 
 ```
 
@@ -137,7 +191,45 @@ _type your results and analysis here_
 #| label: GQ4
 #| code-summary: Read and format data
 # Include and execute your code here
+# Load data
+data = pd.read_csv('names_year.csv')
+data
 
+#%%
+# Filter data for desired name
+bruce = data.query('name == "Bruce"')
+
+# bruce = data[data['name'] == "Bruce"]
+# bruce
+
+# Create Bruce charts
+bruceChart = (alt.Chart(bruce, title='Name of Bruce over the years')
+         .encode(x=alt.X('year', axis=alt.Axis(format='d', title='Year')),
+                 y=alt.Y('Total', axis=alt.Axis(format='d', title='Children with the name Bruce')),
+                 )
+         .mark_line())
+
+
+# Create an lable dataframe for when the first Batman movie came out
+batman1943Df= pd.DataFrame({'year': [1943]})
+
+batman1943Line = alt.Chart(batman1943Df).mark_rule(color="red").encode(x = "year")
+
+
+batman1943LineLabel = alt.Chart(batman1943Df).mark_text(
+    text='First Batman movie comes out (1943)',
+    align='left',
+    baseline='middle',
+    dx=10,
+    dy=10,
+    color='red').encode(
+    x='year',
+    y=alt.value(0)  # adjust label position
+)
+
+# Final chart
+chart = bruceChart + batman1943Line + batman1943LineLabel
+chart
 
 ```
 

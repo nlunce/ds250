@@ -72,6 +72,8 @@ Your final report should also include the markdown table created from the follow
 
 My analysis from this table is that Audi A4s get at least 26mpg on the highway.
 
+
+
 ```{python}
 #| label: GQ2
 #| code-summary: Read and format data
