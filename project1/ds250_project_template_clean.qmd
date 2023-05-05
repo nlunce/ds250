@@ -38,7 +38,7 @@ from tabulate import tabulate
 
 ## Elevator pitch
 
-_paste your elevator pitch here_
+_In this project, we worked with a names database and compared the usage of different names over time._
 
 ```{python}
 #| label: project data
@@ -53,7 +53,7 @@ __Highlight the grand questions__
 
 __How does your name at your birth year compare to its use historically?__
 
-_When I was born in the year 2002 the usage of my name was approching is peak. The data shows that the name Nathan was not very popular from the year 1910 to about 1967. At around the year 1967 the the name Nathan saw a sharp increase in usage where it continued to increase until about 2005 where it saw its peak and began to decline._
+_When I was born in the year 2002 the usage of my name was approaching its peak. The data shows that the name "Nathan" was not very popular from the year 1910 to about 1967. At around the year 1967, the name "Nathan" saw a sharp increase in usage which continued to increase until about 2005 when it saw its peak and began to decline._
 
 ```{python}
 #| label: GQ1
@@ -92,13 +92,14 @@ chart
 
 ```
 
+_The data shows that I was born near the peak of naming babies the name "Nathan"._
 
 
 ## GRAND QUESTION 2
 
 __If you talked to someone named Brittany on the phone, what is your guess of his or her age? What ages would you not guess?__
 
-_type your results and analysis here_
+_If I talked to someone named Brittany on the phone I would guess that she was around 33 years old. The ages I would not guess are 40 or older and 23 or younger._
 
 ```{python}
 #| label: GQ2
@@ -148,14 +149,14 @@ chart
 
 ```
 
-_include figures in chunks and discuss your findings in the figure._
+_This data shows a clear peak in the name "Brittany". The name "Brittany" peaked in 1990 and fell pretty sharply as the year approached 2000._
 
 
 ## GRAND QUESTION 3
 
 __Mary, Martha, Peter, and Paul are all Christian names. From 1920 - 2000, compare the name usage of each of the four names. What trends do you notice?__
 
-_type your results and analysis here_
+_From this data, I saw that the name "Mary" has almost always been the most popular of the four names except for several brief periods in the 60s, 70s, and 80s when the name "Paul" surpassed "Mary" in popularity. The names "Martha" and "Peter" were less popular between 1920-2000. A clear trend I noticed is that the data shows that all four names had a peak around 1950-1960._
 
 ```{python}
 #| label: GQ3
@@ -178,14 +179,14 @@ chart
 
 ```
 
-_include figures in chunks and discuss your findings in the figure._
+_"Mary" is shown to be the most poplular name compared to "Martha", "Paul", and "Peter"._
 
 
 ## GRAND QUESTION 4
 
 __Think of a unique name from a famous movie. Plot the usage of that name and see how changes line up with the movie release. Does it look like the movie had an effect on usage?__
 
-_type your results and analysis here_
+_I chose the movie Batman (1943) where the main character is Bruce Wayne. The data shows a clear uprising in the name "Bruce" after the movie was released but I am not so sure that the release of Batman (1943) had anything to do with it. The graph shows a consistent increase in usage of the name "Bruce" from 1910 forward which was before the release of Batman (1943). However, the graph shows a sharper increase in the usage of the name "Bruce" after the release of Batman (1943). I conclude that the name "Bruce" was already rising in popularity and the release of Batman (1943) only increased the popularity of an already popular name._
 
 ```{python}
 #| label: GQ4
@@ -233,7 +234,7 @@ chart
 
 ```
 
-_include figures in chunks and discuss your findings in the figure._
+_The data shows that the usage of the name "Bruce" peaked around 1955 which was after the release of Batman (1943)._
 
 
 ## APPENDIX A (Additional Python Code)
