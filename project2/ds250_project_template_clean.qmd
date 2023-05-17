@@ -98,39 +98,52 @@ _type your results and analysis here_
 #| code-summary: Read and format data
 # Include and execute your code here
 
+#Load Dataset
+df = pd.read_json('flights_missing.json')
+
+# Filter Data
+filter_df = df.filter(['month','num_of_delays_total' ])
+
+filter_df = filter_df.query('month != "n/a"')
+month_order = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July',
+       'August', 'September', 'October', 'November', 'December']
+
+filter_df['month'] = pd.Categorical(filter_df['month'], categories=month_order, ordered=True)
+
+# Group data
+chart = filter_df.groupby('month', as_index=False).agg('mean')
+chart['average_num_of_delays'] = chart['num_of_delays_total']
+chart = chart.drop(['num_of_delays_total'], axis=1)
+
+# Graph Data
+graph = (alt.Chart(chart, title='Average Number of Delays by Month')
+  .encode(
+    x=alt.X('month:O', axis=alt.Axis(title="Month"), sort= month_order),
+    y=alt.Y('average_num_of_delays:Q', axis=alt.Axis(title="Average Number of Delays"))
+        ).configure_axis(
+             labelFontSize=20,
+             titleFontSize=30
+        ).configure_title(
+            fontSize=35
+        ).properties(
+            width=800,
+            height=400 )
+  .mark_bar()
+)
+graph
+
+```
+```{python}
+#| label: GQ2.1
+#| code-summary: Display Data in Table
+# Include and execute your code here
+chart
 
 ```
 
 _include figures in chunks and discuss your findings in the figure._
 
-```{python}
-#| label: GQ2 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x = "name", y = "AK")\
-    .mark_bar()
-```
 
-
-```{python}
-#| label: GQ2 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
-
-```
 
 
 ## GRAND QUESTION 3
