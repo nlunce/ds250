@@ -13,6 +13,8 @@ from tabulate import tabulate
 # Load dataset
 df = pd.read_json('flights_missing.json')
 
+df.columns
+
 #%%
 # Filter Data Columns
 desired_columns = ['month','num_of_delays_nas','num_of_delays_weather','num_of_delays_late_aircraft']
