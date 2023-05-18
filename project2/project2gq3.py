@@ -77,7 +77,7 @@ total_flights_delayed_by_weather
 
 #%%
 # Add 'true_num_of_delays_weather'
-filter_df['true_num_of_delays_weather']
+filter_df['true_num_of_delays_weather'] = 0
 filter_df
 
 #%%
