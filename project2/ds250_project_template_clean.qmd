@@ -164,39 +164,57 @@ _type your results and analysis here_
 #| code-summary: Read and format data
 # Include and execute your code here
 
+# Load dataset
+df = pd.read_json('flights_missing.json')
+
+# Filter Data Columns
+desired_columns = ['month','num_of_delays_nas','num_of_delays_weather','num_of_delays_late_aircraft']
+filter_df = df.filter(desired_columns)
+
+# Filter out -999 values from delay_late_aircraft
+filter_df['num_of_delays_late_aircraft'] = filter_df['num_of_delays_late_aircraft'].replace({-999:np.nan})
+filter_df
+
+# Calculate average 'num_of_delays_late_aircraft'
+avg_delays_late_aircraft = filter_df['num_of_delays_late_aircraft'].mean().round()
+
+# Replace Nan values with avg_delays_late_aircraft
+filter_df['num_of_delays_late_aircraft'] = filter_df['num_of_delays_late_aircraft'].replace({np.nan: avg_delays_late_aircraft})
+
+# Drop n/a months
+filter_df = filter_df.query('month != "n/a"')
+
+# Add 'true_num_of_delays_weather'
+filter_df['true_num_of_delays_weather'] = 0
+
+# Define the conditions
+condition1 = filter_df['month'].isin(['April', 'May', 'June', 'July', 'August'])
+condition2 = ~filter_df['month'].isin(['April', 'May', 'June', 'July', 'August'])
+
+# Calculate the values for the new column based on the conditions
+filter_df.loc[condition1, 'true_num_of_delays_weather'] = (
+    filter_df['num_of_delays_weather'] + 
+    (filter_df['num_of_delays_late_aircraft'] * .30) +
+    (filter_df['num_of_delays_nas'] * .40)
+    ).round()
+
+filter_df.loc[condition2, 'true_num_of_delays_weather'] = (
+    filter_df['num_of_delays_weather'] +
+    (filter_df['num_of_delays_late_aircraft'] * .30)+
+    (df['num_of_delays_nas'] * .65)
+).round()
+
+# Final table
+
+final = filter_df.rename(columns={'num_of_delays_weather':'num_of_delays_severe_weather'} )
+final = final.rename(columns={'true_num_of_delays_weather':'total_num_delays_weather'} )
+final = final.filter(['month', 'num_of_delays_late_aircraft', 'num_of_delays_nas', 'num_of_delays_severe_weather', 'total_num_delays_weather' ])
+final.head(5)
 
 ```
 
 _include figures in chunks and discuss your findings in the figure._
 
-```{python}
-#| label: GQ3 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x = "name", y = "AK")\
-    .mark_bar()
-```
-
-
-```{python}
-#| label: GQ3 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
-
-```
 
 ## GRAND QUESTION 4
 
@@ -209,9 +227,142 @@ _type your results and analysis here_
 #| code-summary: Read and format data
 # Include and execute your code here
 
+# Load dataset
+df = pd.read_json("flights_missing.json")
 
+# Filter Data Columns
+desired_columns = [
+    "airport_code",
+    "month",
+    "num_of_delays_nas",
+    "num_of_delays_weather",
+    "num_of_delays_late_aircraft",
+    "num_of_delays_total",
+]
+filter_df = df.filter(desired_columns)
+
+# Filter data
+filter_df["num_of_delays_late_aircraft"] = filter_df[
+    "num_of_delays_late_aircraft"
+].replace({-999: np.nan})
+
+# Calculate average 'num_of_delays_late_aircraft'
+avg_delays_late_aircraft = filter_df["num_of_delays_late_aircraft"].mean().round()
+
+# Replace Nan values with avg_delays_late_aircraft
+filter_df["num_of_delays_late_aircraft"] = filter_df[
+    "num_of_delays_late_aircraft"
+].replace({np.nan: avg_delays_late_aircraft})
+
+# Drop n/a months
+filter_df = filter_df.query('month != "n/a"')
+
+
+# Define the conditions
+months = ["April", "May", "June", "July", "August"]
+condition = filter_df["month"].isin(months)
+
+
+# Mild late
+filter_df = filter_df.assign(
+    num_delays_mild_weather_late_aircraft=filter_df["num_of_delays_late_aircraft"]
+    * 0.30
+)
+
+
+# mild nas
+filter_df = filter_df.assign(
+    num_delays_mild_weather_nas=np.where(
+        condition,
+        filter_df["num_of_delays_nas"] * 0.40,
+        filter_df["num_of_delays_nas"] * 0.65,
+    )
+)
+
+# weather total and sever
+
+filter_df = filter_df.assign(
+    total_num_weather_delays=(
+        filter_df["num_of_delays_weather"]
+        + filter_df["num_delays_mild_weather_late_aircraft"]
+        + filter_df["num_delays_mild_weather_nas"]
+    ).round()
+)
+
+# Finalize
+final = filter_df.rename(
+    columns={"num_of_delays_weather": "num_of_delays_severe_weather"}
+).filter(
+    [
+        "airport_code",
+        "month",
+        "num_of_delays_nas",
+        "num_of_delays_late_aircraft",
+        "num_of_delays_severe_weather",
+        "total_num_weather_delays",
+        "num_of_delays_total",
+    ]
+)
+
+final = final.groupby("airport_code", as_index=False).agg(
+    total_weather_delays=("total_num_weather_delays", "sum"),
+    total_delays=("num_of_delays_total", "sum"),
+)
+
+final["total_weather_delays"] = final["total_weather_delays"].astype(int)
+
+final["Percent of Total Delays Caused by Weather"] = (
+    final["total_weather_delays"] / final["total_delays"]
+).apply(lambda x: f"{x:0.2f}" + "%")
+
+
+final = final.rename(
+    columns={
+        "total_weather_delays": "Weather Delays",
+        "total_delays": "Total Delays",
+        "airport_code": "Airport Code",
+    }
+)
+
+graph = (
+    alt.Chart(
+        final, title="Total Number of Delays Compared to Delays Caused by Weather"
+    )
+    .transform_fold(fold=["Total Delays", "Weather Delays"], as_=["Key", "value"])
+    .mark_bar()
+    .configure_axis(labelFontSize=20, titleFontSize=30)
+    .configure_title(
+        fontSize=35,
+    )
+    .properties(width=600, height=400)
+    .encode(
+        x=alt.X("Airport Code:O", axis=alt.Axis(title="Airport")),
+        y=alt.Y("Total Delays:Q", axis=alt.Axis(title="Delays")),
+        color=alt.Color(
+            "Key:N",
+            legend=alt.Legend(
+                title="Key",
+                labelFontSize=20,
+                titleFontSize=30,
+                titleFontWeight="bold",
+                titleOrient="top",
+                titleAnchor="middle",
+                values=["Total Delays", "Weather Delays"],
+            ),
+        ),
+    )
+)
+graph
 ```
 
+```{python}
+#| label: GQ4 Table
+#| code-summary: Read and format data
+# Include and execute your code here
+final
+
+
+```
 _include figures in chunks and discuss your findings in the figure._
 
 
@@ -223,7 +374,7 @@ __Fix all of the varied missing data types in the data to be consistent (all mis
 _type your results and analysis here_
 
 ```{python}
-#| label: GQ5
+#| label: GQ5 
 #| code-summary: Read and format data
 # Include and execute your code here
 
