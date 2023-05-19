@@ -38,7 +38,7 @@ from tabulate import tabulate
 
 ## Elevator pitch
 
-_In this project, I worked with untidy data. I also demonstrate how to work with and clean data and make it tidy._
+_In this project, I demonstrate how to work with and clean data and make it tidy._
 
 ```{python}
 #| label: project data
