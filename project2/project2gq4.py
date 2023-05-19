@@ -93,6 +93,10 @@ final = filter_df.rename(
     ]
 )
 
+final
+
+# %%
+
 final = final.groupby("airport_code", as_index=False).agg(
     total_weather_delays=("total_num_weather_delays", "sum"),
     total_delays=("num_of_delays_total", "sum"),
@@ -115,33 +119,35 @@ final = final.rename(
 
 final
 
+
 # %%
-graph = (
-    alt.Chart(
-        final, title="Total Number of Delays Compared to Delays Caused by Weather"
-    )
-    .transform_fold(fold=["Total Delays", "Weather Delays"], as_=["Key", "value"])
+graph1 = (
+    alt.Chart(final, title="Total Number of Delays")
     .mark_bar()
-    .configure_axis(labelFontSize=20, titleFontSize=30)
-    .configure_title(
-        fontSize=35,
-    )
-    .properties(width=800, height=400)
     .encode(
         x=alt.X("Airport Code:O", axis=alt.Axis(title="Airport")),
         y=alt.Y("Total Delays:Q", axis=alt.Axis(title="Delays")),
-        color=alt.Color(
-            "Key:N",
-            legend=alt.Legend(
-                title="Key",
-                labelFontSize=20,
-                titleFontSize=30,
-                titleFontWeight="bold",
-                titleOrient="top",
-                titleAnchor="middle",
-                values=["Total Delays", "Weather Delays"],
-            ),
-        ),
     )
 )
-graph
+
+
+graph2 = (
+    alt.Chart(final, title="Total Delays Caused by Weather")
+    .mark_bar(color="#900dd6")
+    .encode(
+        x=alt.X("Airport Code:O", axis=alt.Axis(title="Airport")),
+        y=alt.Y("Weather Delays:Q", axis=alt.Axis(title="Delays")),
+    )
+)
+
+
+graph2
+# %%
+
+graph3 = graph1 + graph2
+
+graph3 = graph3.properties(
+    title="Total Number of Delays Compared to Delays Caused by Weather"
+)
+final_graph = graph3 | graph1 | graph2
+final_graph
