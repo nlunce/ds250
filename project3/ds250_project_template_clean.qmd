@@ -1,7 +1,7 @@
 ---
-title: "Client Report - [Insert Project Title]"
+title: "Client Report - Project 3"
 subtitle: "Course DS 250"
-author: "[STUDENT NAME]"
+author: "Nathan Lunceford"
 format:
   html:
     self-contained: true
@@ -33,6 +33,7 @@ import numpy as np
 from IPython.display import Markdown
 from IPython.display import display
 from tabulate import tabulate
+import sqlite3
 ```
 
 
@@ -40,18 +41,12 @@ from tabulate import tabulate
 
 _paste your elevator pitch here_
 
-```{python}
-#| label: project data
-#| code-summary: Read and format project data
-# Include and execute your code here
-dat = pd.read_csv("https://github.com/byuidatascience/data4names/raw/master/data-raw/names_year/names_year.csv")
-```
 
 __Highlight the grand questions__
 
 ## GRAND QUESTION 1
 
-__COPY PASTE GRAND QUESTION 1 FROM THE PROJECT HERE__
+__Write an SQL query to create a new dataframe about baseball players who attended BYU-Idaho. The new table should contain five columns: playerID, schoolID, salary, and the yearID/teamID associated with each salary. Order the table by salary (highest to lowest) and print out the table in your report.__
 
 _type your results and analysis here_
 
@@ -60,94 +55,128 @@ _type your results and analysis here_
 #| code-summary: Read and format data
 # Include and execute your code here
 
+# Load Dataset
+con = sqlite3.connect("lahmansbaseballdb.sqlite")
+
+# SQL Query
+sql = """
+SELECT DISTINCT
+    p.playerid, c.schoolid, s.salary, s.yearid, s.teamid
+FROM
+    people AS p
+JOIN CollegePlaying as c ON p.playerid = c.playerid
+JOIN Salaries as s ON c.playerid = s.playerid
+WHERE c.schoolid = 'idbyuid'
+ORDER BY s.salary DESC
+"""
+
+df = pd.read_sql_query(sql, con)
+df
 
 ```
 
 _include figures in chunks and discuss your findings in the figure._
-
-```{python}
-#| label: GQ1 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x="name", y="AK")\
-    .mark_bar()\
-    .properties(
-        width=800,
-        height=300
-    )
-```
-
-
-```{python}
-#| label: GQ1 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
-
-```
 
 
 ## GRAND QUESTION 2
 
-__COPY PASTE GRAND QUESTION FROM THE PROJECT HERE__
+__This three-part question requires you to calculate batting average (number of hits divided by the number of at-bats)__
 
-_type your results and analysis here_
+_a. Write an SQL query that provides playerID, yearID, and batting average for players with at least 1 at bat that year. Sort the table from highest batting average to lowest, and then by playerid alphabetically. Show the top 5 results in your report._
 
 ```{python}
-#| label: GQ2
+#| label: GQ2a
 #| code-summary: Read and format data
 # Include and execute your code here
+# SQL Query
 
 
+sql = """
+SELECT
+    b.playerid AS Player_ID, b.yearid, sum(b.ab) AS At_Bat, sum(b.h) AS Hits, 
+    CAST(SUM(b.h) AS FLOAT) / NULLIF(SUM(b.ab), 0) AS Batting_Average
+FROM
+    batting AS b
+GROUP BY
+    b.playerid,
+    b.yearid
+HAVING
+    sum(b.ab) >= 1
+ORDER BY 
+5 DESC,
+1 ASC
+"""
+
+df = pd.read_sql_query(sql, con)
+df.head(5)
+
+```
+
+_b. Use the same query as above, but only include players with at least 10 at bats that year. Print the top 5 results._
+
+```{python}
+#| label: GQ2b
+#| code-summary: Read and format data
+# Include and execute your code here
+# SQL Query
+
+
+sql2 = """
+SELECT
+    b.playerid AS Player_ID, b.yearid, sum(b.ab) AS At_Bat, sum(b.h) AS Hits, 
+    CAST(SUM(b.h) AS FLOAT) / NULLIF(SUM(b.ab), 0) AS Batting_Average
+FROM
+    batting AS b
+GROUP BY
+    b.playerid,
+    b.yearid
+HAVING
+    sum(b.ab) >= 10
+ORDER BY 
+5 DESC,
+1 ASC
+"""
+
+df2 = pd.read_sql_query(sql2, con)
+
+df2.head(5)
+```
+
+_c. Now calculate the batting average for players over their entire careers (all years combined). Only include players with at least 100 at bats, and print the top 5 results._
+
+```{python}
+#| label: GQ2c
+#| code-summary: Read and format data
+# Include and execute your code here
+# SQL Query
+
+sql3 = """
+SELECT
+    b.playerid AS Player_ID,
+    SUM(b.ab) AS At_Bat,
+    SUM(b.h) AS Hits,
+    CAST(SUM(b.h) AS FLOAT) / NULLIF(SUM(b.ab), 0) AS Career_Batting_Average
+FROM
+    batting AS b
+GROUP BY
+    b.playerid
+HAVING
+    SUM(b.ab) >= 100
+ORDER BY
+    Career_Batting_Average DESC;
+"""
+
+df3 = pd.read_sql_query(sql3, con)
+df3.head(5)
 ```
 
 _include figures in chunks and discuss your findings in the figure._
 
-```{python}
-#| label: GQ2 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x = "name", y = "AK")\
-    .mark_bar()
-```
-
-
-```{python}
-#| label: GQ2 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
-
-```
 
 
 ## GRAND QUESTION 3
 
-__COPY PASTE GRAND QUESTION FROM THE PROJECT HERE__
+__Pick any two baseball teams and compare them using a metric of your choice (average salary, home runs, number of wins, etc). Write an SQL query to get the data you need, then make a graph in Altair to visualize the comparison. What do you learn?__
 
 _type your results and analysis here_
 
@@ -160,36 +189,6 @@ _type your results and analysis here_
 ```
 
 _include figures in chunks and discuss your findings in the figure._
-
-```{python}
-#| label: GQ3 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x = "name", y = "AK")\
-    .mark_bar()
-```
-
-
-```{python}
-#| label: GQ3 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
-
-```
-
 
 
 ## APPENDIX A (Additional Python Code)
