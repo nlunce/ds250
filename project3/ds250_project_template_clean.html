@@ -3048,13 +3048,13 @@ vertical-align: -.125em;
 </nav>
 <section id="elevator-pitch" class="level2">
 <h2 class="anchored" data-anchor-id="elevator-pitch">Elevator pitch</h2>
-<p><em>paste your elevator pitch here</em></p>
+<p><em>In this project I worked with a baseball statistics sqlite database. I show an understanding of how to use sql queries.</em></p>
 <p><strong>Highlight the grand questions</strong></p>
 </section>
 <section id="grand-question-1" class="level2">
 <h2 class="anchored" data-anchor-id="grand-question-1">GRAND QUESTION 1</h2>
 <p><strong>Write an SQL query to create a new dataframe about baseball players who attended BYU-Idaho. The new table should contain five columns: playerID, schoolID, salary, and the yearID/teamID associated with each salary. Order the table by salary (highest to lowest) and print out the table in your report.</strong></p>
-<p><em>type your results and analysis here</em></p>
+<p><em>Thsi data shows that there were three players from BYU-Idaho. Of the three players only two went pro. The data shows that the players that went pro made yearly salaries ranging from $150,000 to $4,000,000.</em></p>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Read and format data</summary>
@@ -3066,19 +3066,19 @@ vertical-align: -.125em;
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># SQL Query</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sql <span class="op">=</span> <span class="st">&quot;&quot;&quot;</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT DISTINCT</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">    p.playerid, c.schoolid, s.salary, s.yearid, s.teamid</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">    c.playerid, c.schoolid, s.teamid, s.yearid, s.salary</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">FROM</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">    people AS p</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN CollegePlaying as c ON p.playerid = c.playerid</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN Salaries as s ON c.playerid = s.playerid</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE c.schoolid = &#39;idbyuid&#39;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">ORDER BY s.salary DESC</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">    collegeplaying c</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">LEFT JOIN salaries AS s ON c.playerid = s.playerid</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE c.schoolid = &#39;idbyuid&#39;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">ORDER BY s.salary DESC</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_sql_query(sql, con)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="gq1" class="cell-output cell-output-display" data-execution_count="17">
+<div id="gq1" class="cell-output cell-output-display" data-execution_count="50">
 <div>
 
 
@@ -3088,9 +3088,9 @@ vertical-align: -.125em;
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">playerID</th>
 <th data-quarto-table-cell-role="th">schoolID</th>
-<th data-quarto-table-cell-role="th">salary</th>
-<th data-quarto-table-cell-role="th">yearID</th>
 <th data-quarto-table-cell-role="th">teamID</th>
+<th data-quarto-table-cell-role="th">yearID</th>
+<th data-quarto-table-cell-role="th">salary</th>
 </tr>
 </thead>
 <tbody>
@@ -3098,121 +3098,129 @@ vertical-align: -.125em;
 <td data-quarto-table-cell-role="th">0</td>
 <td>lindsma01</td>
 <td>idbyuid</td>
-<td>4000000.0</td>
-<td>2014</td>
 <td>CHA</td>
+<td>2014.0</td>
+<td>4000000.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>lindsma01</td>
 <td>idbyuid</td>
-<td>3600000.0</td>
-<td>2012</td>
 <td>BAL</td>
+<td>2012.0</td>
+<td>3600000.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>lindsma01</td>
 <td>idbyuid</td>
-<td>2800000.0</td>
-<td>2011</td>
 <td>COL</td>
+<td>2011.0</td>
+<td>2800000.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>lindsma01</td>
 <td>idbyuid</td>
-<td>2300000.0</td>
-<td>2013</td>
 <td>CHA</td>
+<td>2013.0</td>
+<td>2300000.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>lindsma01</td>
 <td>idbyuid</td>
-<td>1625000.0</td>
-<td>2010</td>
 <td>HOU</td>
+<td>2010.0</td>
+<td>1625000.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
 <td>stephga01</td>
 <td>idbyuid</td>
-<td>1025000.0</td>
-<td>2001</td>
 <td>SLN</td>
+<td>2001.0</td>
+<td>1025000.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
 <td>stephga01</td>
 <td>idbyuid</td>
-<td>900000.0</td>
-<td>2002</td>
 <td>SLN</td>
+<td>2002.0</td>
+<td>900000.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
 <td>stephga01</td>
 <td>idbyuid</td>
-<td>800000.0</td>
-<td>2003</td>
 <td>SLN</td>
+<td>2003.0</td>
+<td>800000.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
 <td>stephga01</td>
 <td>idbyuid</td>
-<td>550000.0</td>
-<td>2000</td>
 <td>SLN</td>
+<td>2000.0</td>
+<td>550000.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
 <td>lindsma01</td>
 <td>idbyuid</td>
-<td>410000.0</td>
-<td>2009</td>
 <td>FLO</td>
+<td>2009.0</td>
+<td>410000.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">10</td>
 <td>lindsma01</td>
 <td>idbyuid</td>
-<td>395000.0</td>
-<td>2008</td>
 <td>FLO</td>
+<td>2008.0</td>
+<td>395000.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
 <td>lindsma01</td>
 <td>idbyuid</td>
-<td>380000.0</td>
-<td>2007</td>
 <td>FLO</td>
+<td>2007.0</td>
+<td>380000.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">12</td>
 <td>stephga01</td>
 <td>idbyuid</td>
-<td>215000.0</td>
-<td>1999</td>
 <td>SLN</td>
+<td>1999.0</td>
+<td>215000.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">13</td>
 <td>stephga01</td>
 <td>idbyuid</td>
-<td>185000.0</td>
-<td>1998</td>
 <td>PHI</td>
+<td>1998.0</td>
+<td>185000.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">14</td>
 <td>stephga01</td>
 <td>idbyuid</td>
-<td>150000.0</td>
-<td>1997</td>
 <td>PHI</td>
+<td>1997.0</td>
+<td>150000.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>catetr01</td>
+<td>idbyuid</td>
+<td>None</td>
+<td>NaN</td>
+<td>NaN</td>
 </tr>
 </tbody>
 </table>
@@ -3220,7 +3228,6 @@ vertical-align: -.125em;
 </div>
 </div>
 </div>
-<p><em>include figures in chunks and discuss your findings in the figure.</em></p>
 </section>
 <section id="grand-question-2" class="level2">
 <h2 class="anchored" data-anchor-id="grand-question-2">GRAND QUESTION 2</h2>
@@ -3252,7 +3259,7 @@ vertical-align: -.125em;
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_sql_query(sql, con)</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="gq2a" class="cell-output cell-output-display" data-execution_count="18">
+<div id="gq2a" class="cell-output cell-output-display" data-execution_count="51">
 <div>
 
 
@@ -3314,6 +3321,7 @@ vertical-align: -.125em;
 </div>
 </div>
 </div>
+<p><em>This data shows that sometimes you need to provide a more specific context for data. For example, just because a person got one chance at bat and hit the ball giving that person a batting average of 100% it does not really mean that that player is a really good baseball player because one at bat and one hit is not enough data to conclude a players skill</em></p>
 <p><em>b. Use the same query as above, but only include players with at least 10 at bats that year. Print the top 5 results.</em></p>
 <div class="cell" data-execution_count="4">
 <details>
@@ -3342,7 +3350,7 @@ vertical-align: -.125em;
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>df2.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="gq2b" class="cell-output cell-output-display" data-execution_count="19">
+<div id="gq2b" class="cell-output cell-output-display" data-execution_count="52">
 <div>
 
 
@@ -3404,6 +3412,7 @@ vertical-align: -.125em;
 </div>
 </div>
 </div>
+<p><em>As the number of at bats goes up the batting average goes down.</em></p>
 <p><em>c. Now calculate the batting average for players over their entire careers (all years combined). Only include players with at least 100 at bats, and print the top 5 results.</em></p>
 <div class="cell" data-execution_count="5">
 <details>
@@ -3430,7 +3439,7 @@ vertical-align: -.125em;
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> pd.read_sql_query(sql3, con)</span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>df3.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="gq2c" class="cell-output cell-output-display" data-execution_count="20">
+<div id="gq2c" class="cell-output cell-output-display" data-execution_count="53">
 <div>
 
 
@@ -3486,23 +3495,456 @@ vertical-align: -.125em;
 </div>
 </div>
 </div>
-<p><em>include figures in chunks and discuss your findings in the figure.</em></p>
+<p><em>As the number of at bats goes even further up the batting average continues to goes down. We can conclude that 100+ at bats gives a more proper representation of a players batting skill. </em></p>
 </section>
 <section id="grand-question-3" class="level2">
 <h2 class="anchored" data-anchor-id="grand-question-3">GRAND QUESTION 3</h2>
 <p><strong>Pick any two baseball teams and compare them using a metric of your choice (average salary, home runs, number of wins, etc). Write an SQL query to get the data you need, then make a graph in Altair to visualize the comparison. What do you learn?</strong></p>
-<p><em>type your results and analysis here</em></p>
-<div id="gq3" class="cell" data-execution_count="6">
+<p><em>I chose the New York Yankees and the Boston Red Sox to compare. The metric which I chose to compare was world series wins. From this data, I learned that the New York Yankees have three times as many world series wins than their biggest rival The Boston Red Sox. Just for fun, I made another bar chart with all the teams and their respective world series wins and I was surprised to see that The New York Yankees have the most world series wins and are miles ahead of the competition.</em></p>
+<div class="cell" data-execution_count="6">
 <details>
 <summary>Read and format data</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sql <span class="op">=</span> <span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">    t.teamID, </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">    s.round, </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">    s.teamIDwinner, </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">    count_ws.wins</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">FROM</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">    teams AS t</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN seriespost AS s ON t.teamID = s.teamIDwinner</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN (</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT </span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="st">        teamIDwinner,</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="st">        COUNT(*) AS wins</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="st">        seriespost</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="st">    WHERE</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="st">        round = &quot;WS&quot;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="st">        teamIDwinner</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="st">) AS count_ws ON s.teamIDwinner = count_ws.teamIDwinner</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE </span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="st">    s.round = &quot;WS&quot; </span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="st">    AND (t.teamID = &quot;NYA&quot; OR t.teamID = &quot;BOS&quot;)</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="st">GROUP BY </span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="st">    t.teamID;</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_sql_query(sql, con)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>custom_color_scheme <span class="op">=</span> alt.Scale(domain<span class="op">=</span>[<span class="st">&#39;BOS&#39;</span>,<span class="st">&#39;NYA&#39;</span>], <span class="bu">range</span><span class="op">=</span>[<span class="st">&quot;#dc3545&quot;</span>,<span class="st">&quot;#007bff&quot;</span>])</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> (</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    alt.Chart(df, title<span class="op">=</span><span class="st">&quot;Total World Series Wins for The Boston Red Sox (BOS) and The New York Yankees (NYA)&quot;</span>)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">&quot;teamID:O&quot;</span>, axis<span class="op">=</span>alt.Axis(title<span class="op">=</span><span class="st">&quot;Team&quot;</span>)),</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">&quot;wins:Q&quot;</span>, axis<span class="op">=</span>alt.Axis(title<span class="op">=</span><span class="st">&quot;Wins&quot;</span>)),</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">&quot;teamID&quot;</span>, scale<span class="op">=</span>custom_color_scheme),</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">&quot;teamID&quot;</span>), alt.Tooltip(<span class="st">&quot;wins&quot;</span>)]</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    .configure_view(width<span class="op">=</span><span class="dv">400</span>)</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    .configure_axis(labelFontSize<span class="op">=</span><span class="dv">12</span>, titleFontSize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>graph</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div id="gq3" class="cell-output cell-output-display" data-execution_count="54">
+
+<div id="altair-viz-0fecc7b1610c48049017ad31ddf3c2c5"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-0fecc7b1610c48049017ad31ddf3c2c5") {
+      outputDiv = document.getElementById("altair-viz-0fecc7b1610c48049017ad31ddf3c2c5");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300, "width": 400}, "axis": {"labelFontSize": 12, "titleFontSize": 14}}, "data": {"name": "data-e8cb23f4d0f72d24efc362c146aeb2e4"}, "mark": "bar", "encoding": {"color": {"field": "teamID", "scale": {"domain": ["BOS", "NYA"], "range": ["#dc3545", "#007bff"]}, "type": "nominal"}, "tooltip": [{"field": "teamID", "type": "nominal"}, {"field": "wins", "type": "quantitative"}], "x": {"axis": {"title": "Team"}, "field": "teamID", "type": "ordinal"}, "y": {"axis": {"title": "Wins"}, "field": "wins", "type": "quantitative"}}, "title": "Total World Series Wins for The Boston Red Sox (BOS) and The New York Yankees (NYA)", "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-e8cb23f4d0f72d24efc362c146aeb2e4": [{"teamID": "BOS", "round": "WS", "teamIDwinner": "BOS", "wins": 9}, {"teamID": "NYA", "round": "WS", "teamIDwinner": "NYA", "wins": 27}]}}, {"mode": "vega-lite"});
+</script>
 </div>
-<p><em>include figures in chunks and discuss your findings in the figure.</em></p>
+</div>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sql2 <span class="op">=</span> <span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">    t.teamID, </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">    s.round, </span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="st">    s.teamIDwinner, </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="st">    count_ws.wins</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="st">FROM</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="st">    teams AS t</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN seriespost AS s ON t.teamID = s.teamIDwinner</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN (</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT </span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="st">        teamIDwinner,</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="st">        COUNT(*) AS wins</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="st">        seriespost</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="st">    WHERE</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="st">        round = &quot;WS&quot;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="st">        teamIDwinner</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="st">) AS count_ws ON s.teamIDwinner = count_ws.teamIDwinner</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE </span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="st">    s.round = &quot;WS&quot; </span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="st">GROUP BY </span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="st">    t.teamID;</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.read_sql_query(sql2, con)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>graph2 <span class="op">=</span> (</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    alt.Chart(df2, title<span class="op">=</span><span class="st">&quot;Total World Series Wins By Team&quot;</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">&quot;teamID:O&quot;</span>, axis<span class="op">=</span>alt.Axis(title<span class="op">=</span><span class="st">&quot;Team&quot;</span>)),</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">&quot;wins:Q&quot;</span>, axis<span class="op">=</span>alt.Axis(title<span class="op">=</span><span class="st">&quot;Wins&quot;</span>)),</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">&quot;teamID&quot;</span>, legend<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">&quot;teamID&quot;</span>), alt.Tooltip(<span class="st">&quot;wins&quot;</span>)]</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    .configure_view(width<span class="op">=</span><span class="dv">400</span>)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    .configure_axis(labelFontSize<span class="op">=</span><span class="dv">12</span>, titleFontSize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>graph2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq3.1" class="cell-output cell-output-display" data-execution_count="55">
+
+<div id="altair-viz-42460ba01cf642f68541b202d6bc46c3"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-42460ba01cf642f68541b202d6bc46c3") {
+      outputDiv = document.getElementById("altair-viz-42460ba01cf642f68541b202d6bc46c3");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300, "width": 400}, "axis": {"labelFontSize": 12, "titleFontSize": 14}}, "data": {"name": "data-fb5d1299b0979f80c73aee9bc16a502e"}, "mark": "bar", "encoding": {"color": {"field": "teamID", "legend": null, "type": "nominal"}, "tooltip": [{"field": "teamID", "type": "nominal"}, {"field": "wins", "type": "quantitative"}], "x": {"axis": {"title": "Team"}, "field": "teamID", "type": "ordinal"}, "y": {"axis": {"title": "Wins"}, "field": "wins", "type": "quantitative"}}, "title": "Total World Series Wins By Team", "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-fb5d1299b0979f80c73aee9bc16a502e": [{"teamID": "ANA", "round": "WS", "teamIDwinner": "ANA", "wins": 1}, {"teamID": "ARI", "round": "WS", "teamIDwinner": "ARI", "wins": 1}, {"teamID": "ATL", "round": "WS", "teamIDwinner": "ATL", "wins": 1}, {"teamID": "BAL", "round": "WS", "teamIDwinner": "BAL", "wins": 3}, {"teamID": "BOS", "round": "WS", "teamIDwinner": "BOS", "wins": 9}, {"teamID": "BRO", "round": "WS", "teamIDwinner": "BRO", "wins": 2}, {"teamID": "BSN", "round": "WS", "teamIDwinner": "BSN", "wins": 1}, {"teamID": "CHA", "round": "WS", "teamIDwinner": "CHA", "wins": 3}, {"teamID": "CHN", "round": "WS", "teamIDwinner": "CHN", "wins": 4}, {"teamID": "CIN", "round": "WS", "teamIDwinner": "CIN", "wins": 5}, {"teamID": "CLE", "round": "WS", "teamIDwinner": "CLE", "wins": 2}, {"teamID": "DET", "round": "WS", "teamIDwinner": "DET", "wins": 4}, {"teamID": "DTN", "round": "WS", "teamIDwinner": "DTN", "wins": 1}, {"teamID": "FLO", "round": "WS", "teamIDwinner": "FLO", "wins": 2}, {"teamID": "HOU", "round": "WS", "teamIDwinner": "HOU", "wins": 1}, {"teamID": "KCA", "round": "WS", "teamIDwinner": "KCA", "wins": 2}, {"teamID": "LAN", "round": "WS", "teamIDwinner": "LAN", "wins": 5}, {"teamID": "MIN", "round": "WS", "teamIDwinner": "MIN", "wins": 2}, {"teamID": "ML1", "round": "WS", "teamIDwinner": "ML1", "wins": 1}, {"teamID": "NY1", "round": "WS", "teamIDwinner": "NY1", "wins": 7}, {"teamID": "NYA", "round": "WS", "teamIDwinner": "NYA", "wins": 27}, {"teamID": "NYN", "round": "WS", "teamIDwinner": "NYN", "wins": 2}, {"teamID": "OAK", "round": "WS", "teamIDwinner": "OAK", "wins": 4}, {"teamID": "PHA", "round": "WS", "teamIDwinner": "PHA", "wins": 5}, {"teamID": "PHI", "round": "WS", "teamIDwinner": "PHI", "wins": 2}, {"teamID": "PIT", "round": "WS", "teamIDwinner": "PIT", "wins": 5}, {"teamID": "PRO", "round": "WS", "teamIDwinner": "PRO", "wins": 1}, {"teamID": "SFN", "round": "WS", "teamIDwinner": "SFN", "wins": 3}, {"teamID": "SL4", "round": "WS", "teamIDwinner": "SL4", "wins": 1}, {"teamID": "SLN", "round": "WS", "teamIDwinner": "SLN", "wins": 11}, {"teamID": "TOR", "round": "WS", "teamIDwinner": "TOR", "wins": 2}, {"teamID": "WAS", "round": "WS", "teamIDwinner": "WAS", "wins": 1}, {"teamID": "WS1", "round": "WS", "teamIDwinner": "WS1", "wins": 1}]}}, {"mode": "vega-lite"});
+</script>
+</div>
+</div>
+<p><em>KEY</em></p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sql3 <span class="op">=</span> <span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">    tf.franchName as Franchise_Name,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="st">    t.teamID as Key, </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">    s.round, </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">    s.teamIDwinner, </span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st">    count_ws.wins</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">FROM</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">    teams AS t</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN teamsfranchises AS tf on t.franchID = tf.franchID</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN seriespost AS s ON t.teamID = s.teamIDwinner</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN (</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT </span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="st">        teamIDwinner,</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="st">        COUNT(*) AS wins</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="st">        seriespost</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="st">    WHERE</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="st">        round = &quot;WS&quot;</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="st">        teamIDwinner</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="st">) AS count_ws ON s.teamIDwinner = count_ws.teamIDwinner</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE </span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="st">    s.round = &quot;WS&quot; </span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="st">GROUP BY </span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="st">    t.teamID;</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> pd.read_sql_query(sql3, con)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> df3.<span class="bu">filter</span>([<span class="st">&#39;Franchise_Name&#39;</span>, <span class="st">&#39;Key&#39;</span>])</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>df3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq3.2" class="cell-output cell-output-display" data-execution_count="56">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Franchise_Name</th>
+<th data-quarto-table-cell-role="th">Key</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Los Angeles Angels of Anaheim</td>
+<td>ANA</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Arizona Diamondbacks</td>
+<td>ARI</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Atlanta Braves</td>
+<td>ATL</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Baltimore Orioles</td>
+<td>BAL</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Boston Red Sox</td>
+<td>BOS</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Los Angeles Dodgers</td>
+<td>BRO</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Atlanta Braves</td>
+<td>BSN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Chicago White Sox</td>
+<td>CHA</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Chicago Cubs</td>
+<td>CHN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>Cincinnati Reds</td>
+<td>CIN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>Cleveland Indians</td>
+<td>CLE</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>Detroit Tigers</td>
+<td>DET</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>Detroit Wolverines</td>
+<td>DTN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>Florida Marlins</td>
+<td>FLO</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>Houston Astros</td>
+<td>HOU</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>Kansas City Royals</td>
+<td>KCA</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>Los Angeles Dodgers</td>
+<td>LAN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>Minnesota Twins</td>
+<td>MIN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>Atlanta Braves</td>
+<td>ML1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>San Francisco Giants</td>
+<td>NY1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20</td>
+<td>New York Yankees</td>
+<td>NYA</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
+<td>New York Mets</td>
+<td>NYN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td>Oakland Athletics</td>
+<td>OAK</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">23</td>
+<td>Oakland Athletics</td>
+<td>PHA</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">24</td>
+<td>Philadelphia Phillies</td>
+<td>PHI</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">25</td>
+<td>Pittsburgh Pirates</td>
+<td>PIT</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">26</td>
+<td>Providence Grays</td>
+<td>PRO</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">27</td>
+<td>San Francisco Giants</td>
+<td>SFN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">28</td>
+<td>St. Louis Cardinals</td>
+<td>SL4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">29</td>
+<td>St. Louis Cardinals</td>
+<td>SLN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30</td>
+<td>Toronto Blue Jays</td>
+<td>TOR</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">31</td>
+<td>Washington Senators</td>
+<td>WAS</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">32</td>
+<td>Minnesota Twins</td>
+<td>WS1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="appendix-a-additional-python-code" class="level2">
 <h2 class="anchored" data-anchor-id="appendix-a-additional-python-code">APPENDIX A (Additional Python Code)</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#paste other your code from your python file (.py) here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#paste other your code from your python file (.py) here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 
 </main>

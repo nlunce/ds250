@@ -1,0 +1,1262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Sqlite" id="Project-81a" database="Sqlite" >
+	<schema name="Default" >
+		<table name="allstarfull" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" />
+			<column name="gameNum" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="gameID" type="VARCHAR" length="12" jt="12" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="GP" type="SMALLINT" jt="5" />
+			<column name="startingPos" type="SMALLINT" jt="5" />
+			<index name="pk_allstarfull" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="allstarfull_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="allstarfull_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="yearID" />
+				<column name="gameNum" />
+				<column name="gameID" />
+				<column name="lgID" />
+			</index>
+			<index name="allstarfull_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<fk name="FK_allstarfull leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_allstarfull teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+		</table>
+		<table name="appearances" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" mandatory="y" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="G_all" type="SMALLINT" jt="5" />
+			<column name="GS" type="SMALLINT" jt="5" />
+			<column name="G_batting" type="SMALLINT" jt="5" />
+			<column name="G_defense" type="SMALLINT" jt="5" />
+			<column name="G_p" type="SMALLINT" jt="5" />
+			<column name="G_c" type="SMALLINT" jt="5" />
+			<column name="G_1b" type="SMALLINT" jt="5" />
+			<column name="G_2b" type="SMALLINT" jt="5" />
+			<column name="G_3b" type="SMALLINT" jt="5" />
+			<column name="G_ss" type="SMALLINT" jt="5" />
+			<column name="G_lf" type="SMALLINT" jt="5" />
+			<column name="G_cf" type="SMALLINT" jt="5" />
+			<column name="G_rf" type="SMALLINT" jt="5" />
+			<column name="G_of" type="SMALLINT" jt="5" />
+			<column name="G_dh" type="SMALLINT" jt="5" />
+			<column name="G_ph" type="SMALLINT" jt="5" />
+			<column name="G_pr" type="SMALLINT" jt="5" />
+			<index name="pk_appearances" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="appearances_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="appearances_playerID" unique="NORMAL" >
+				<column name="playerID" />
+			</index>
+			<index name="appearances_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<index name="appearances_yearID" unique="UNIQUE_INDEX" >
+				<column name="yearID" />
+				<column name="teamID" />
+				<column name="playerID" />
+			</index>
+			<fk name="FK_appearances leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_appearances teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_appearances people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="awardsmanagers" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="10" jt="12" mandatory="y" />
+			<column name="awardID" type="VARCHAR" length="75" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="tie" type="VARCHAR" length="1" jt="12" />
+			<column name="notes" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_awardsmanagers" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="awardsmanagers_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="awardsmanagers_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="awardID" />
+				<column name="yearID" />
+				<column name="lgID" />
+			</index>
+			<fk name="FK_awardsmanagers leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_awardsmanagers people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="awardsplayers" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="awardID" type="VARCHAR" length="255" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="tie" type="VARCHAR" length="1" jt="12" />
+			<column name="notes" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_awardsplayers" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="awardsplayers_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="awardsplayers_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="awardID" />
+				<column name="yearID" />
+				<column name="lgID" />
+			</index>
+			<fk name="FK_awardsplayers leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_awardsplayers people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="awardssharemanagers" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="awardID" type="VARCHAR" length="25" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="10" jt="12" mandatory="y" />
+			<column name="pointsWon" type="SMALLINT" jt="5" />
+			<column name="pointsMax" type="SMALLINT" jt="5" />
+			<column name="votesFirst" type="SMALLINT" jt="5" />
+			<index name="pk_awardssharemanagers" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="awardssharemanagers_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="awardssharemanagers_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="awardID" />
+				<column name="yearID" />
+				<column name="lgID" />
+			</index>
+			<fk name="FK_awardssharemanagers leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_awardssharemanagers people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="awardsshareplayers" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="awardID" type="VARCHAR" length="25" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="pointsWon" type="DOUBLE" jt="8" />
+			<column name="pointsMax" type="SMALLINT" jt="5" />
+			<column name="votesFirst" type="DOUBLE" jt="8" />
+			<index name="pk_awardsshareplayers" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="awardsshareplayers_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="awardsshareplayers_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="awardID" />
+				<column name="yearID" />
+				<column name="lgID" />
+			</index>
+			<fk name="FK_awardsshareplayers leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_awardsshareplayers people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="batting" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="stint" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="G_batting" type="SMALLINT" jt="5" />
+			<column name="AB" type="SMALLINT" jt="5" />
+			<column name="R" type="SMALLINT" jt="5" />
+			<column name="H" type="SMALLINT" jt="5" />
+			<column name="2B" type="SMALLINT" jt="5" />
+			<column name="3B" type="SMALLINT" jt="5" />
+			<column name="HR" type="SMALLINT" jt="5" />
+			<column name="RBI" type="SMALLINT" jt="5" />
+			<column name="SB" type="SMALLINT" jt="5" />
+			<column name="CS" type="SMALLINT" jt="5" />
+			<column name="BB" type="SMALLINT" jt="5" />
+			<column name="SO" type="SMALLINT" jt="5" />
+			<column name="IBB" type="SMALLINT" jt="5" />
+			<column name="HBP" type="SMALLINT" jt="5" />
+			<column name="SH" type="SMALLINT" jt="5" />
+			<column name="SF" type="SMALLINT" jt="5" />
+			<column name="GIDP" type="SMALLINT" jt="5" />
+			<index name="pk_batting" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="batting_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="batting_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="yearID" />
+				<column name="stint" />
+			</index>
+			<index name="batting_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<fk name="FK_batting leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_batting teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_batting people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="battingpost" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="round" type="VARCHAR" length="10" jt="12" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="AB" type="SMALLINT" jt="5" />
+			<column name="R" type="SMALLINT" jt="5" />
+			<column name="H" type="SMALLINT" jt="5" />
+			<column name="2B" type="SMALLINT" jt="5" />
+			<column name="3B" type="SMALLINT" jt="5" />
+			<column name="HR" type="SMALLINT" jt="5" />
+			<column name="RBI" type="SMALLINT" jt="5" />
+			<column name="SB" type="SMALLINT" jt="5" />
+			<column name="CS" type="SMALLINT" jt="5" />
+			<column name="BB" type="SMALLINT" jt="5" />
+			<column name="SO" type="SMALLINT" jt="5" />
+			<column name="IBB" type="SMALLINT" jt="5" />
+			<column name="HBP" type="SMALLINT" jt="5" />
+			<column name="SH" type="SMALLINT" jt="5" />
+			<column name="SF" type="SMALLINT" jt="5" />
+			<column name="GIDP" type="SMALLINT" jt="5" />
+			<index name="pk_battingpost" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="battingpost_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="battingpost_playerID" unique="NORMAL" >
+				<column name="playerID" />
+			</index>
+			<index name="battingpost_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<index name="battingpost_yearID" unique="UNIQUE_INDEX" >
+				<column name="yearID" />
+				<column name="round" />
+				<column name="playerID" />
+			</index>
+			<fk name="FK_battingpost leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_battingpost teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_battingpost people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="collegeplaying" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="schoolID" type="VARCHAR" length="15" jt="12" />
+			<column name="yearID" type="SMALLINT" jt="5" />
+			<index name="pk_collegeplaying" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="collegeplaying_playerID" unique="NORMAL" >
+				<column name="playerID" />
+			</index>
+			<index name="collegeplaying_schoolID" unique="NORMAL" >
+				<column name="schoolID" />
+			</index>
+			<fk name="FK_collegeplaying schools" to_schema="Default" to_table="schools" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="schoolID" pk="schoolID" />
+			</fk>
+			<fk name="FK_collegeplaying people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="divisions" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="divID" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="division" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="active" type="VARCHAR" length="1" jt="12" mandatory="y" />
+			<index name="pk_divisions" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="divisions_divID" unique="UNIQUE_INDEX" >
+				<column name="divID" />
+				<column name="lgID" />
+			</index>
+			<index name="divisions_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<fk name="FK_divisions leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+		</table>
+		<table name="fielding" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="stint" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="POS" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="GS" type="SMALLINT" jt="5" />
+			<column name="InnOuts" type="SMALLINT" jt="5" />
+			<column name="PO" type="SMALLINT" jt="5" />
+			<column name="A" type="SMALLINT" jt="5" />
+			<column name="E" type="SMALLINT" jt="5" />
+			<column name="DP" type="SMALLINT" jt="5" />
+			<column name="PB" type="SMALLINT" jt="5" />
+			<column name="WP" type="SMALLINT" jt="5" />
+			<column name="SB" type="SMALLINT" jt="5" />
+			<column name="CS" type="SMALLINT" jt="5" />
+			<column name="ZR" type="DOUBLE" jt="8" />
+			<index name="pk_fielding" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="fielding_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="fielding_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="yearID" />
+				<column name="stint" />
+				<column name="POS" />
+			</index>
+			<index name="fielding_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<fk name="FK_fielding leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_fielding teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_fielding people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="fieldingof" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="stint" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="Glf" type="SMALLINT" jt="5" />
+			<column name="Gcf" type="SMALLINT" jt="5" />
+			<column name="Grf" type="SMALLINT" jt="5" />
+			<index name="pk_fieldingof" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="fieldingof_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="yearID" />
+				<column name="stint" />
+			</index>
+			<fk name="FK_fieldingof people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="fieldingofsplit" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="stint" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="POS" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="GS" type="SMALLINT" jt="5" />
+			<column name="InnOuts" type="SMALLINT" jt="5" />
+			<column name="PO" type="SMALLINT" jt="5" />
+			<column name="A" type="SMALLINT" jt="5" />
+			<column name="E" type="SMALLINT" jt="5" />
+			<column name="DP" type="SMALLINT" jt="5" />
+			<column name="PB" type="SMALLINT" jt="5" />
+			<column name="WP" type="SMALLINT" jt="5" />
+			<column name="SB" type="SMALLINT" jt="5" />
+			<column name="CS" type="SMALLINT" jt="5" />
+			<column name="ZR" type="DOUBLE" jt="8" />
+			<index name="pk_fieldingofsplit" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="fieldingofsplit_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="fieldingofsplit_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="yearID" />
+				<column name="stint" />
+				<column name="POS" />
+			</index>
+			<index name="fieldingofsplit_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<fk name="FK_fieldingofsplit leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_fieldingofsplit teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_fieldingofsplit people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="fieldingpost" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="round" type="VARCHAR" length="10" jt="12" mandatory="y" />
+			<column name="POS" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="GS" type="SMALLINT" jt="5" />
+			<column name="InnOuts" type="SMALLINT" jt="5" />
+			<column name="PO" type="SMALLINT" jt="5" />
+			<column name="A" type="SMALLINT" jt="5" />
+			<column name="E" type="SMALLINT" jt="5" />
+			<column name="DP" type="SMALLINT" jt="5" />
+			<column name="TP" type="SMALLINT" jt="5" />
+			<column name="PB" type="SMALLINT" jt="5" />
+			<column name="SB" type="SMALLINT" jt="5" />
+			<column name="CS" type="SMALLINT" jt="5" />
+			<index name="pk_fieldingpost" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="fieldingpost_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="fieldingpost_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="yearID" />
+				<column name="round" />
+				<column name="POS" />
+			</index>
+			<index name="fieldingpost_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<fk name="FK_fieldingpost leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_fieldingpost teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_fieldingpost people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="halloffame" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="10" jt="12" mandatory="y" />
+			<column name="yearid" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="votedBy" type="VARCHAR" length="64" jt="12" mandatory="y" />
+			<column name="ballots" type="SMALLINT" jt="5" />
+			<column name="needed" type="SMALLINT" jt="5" />
+			<column name="votes" type="SMALLINT" jt="5" />
+			<column name="inducted" type="VARCHAR" length="1" jt="12" />
+			<column name="category" type="VARCHAR" length="20" jt="12" />
+			<column name="needed_note" type="VARCHAR" length="25" jt="12" />
+			<index name="pk_halloffame" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="halloffame_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="yearid" />
+				<column name="votedBy" />
+			</index>
+			<fk name="FK_halloffame people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="homegames" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="yearkey" type="INTEGER" jt="4" />
+			<column name="leaguekey" type="VARCHAR" length="2" jt="12" />
+			<column name="teamkey" type="VARCHAR" length="3" jt="12" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="parkkey" type="VARCHAR" length="255" jt="12" />
+			<column name="park_ID" type="INTEGER" jt="4" />
+			<column name="spanfirst" type="VARCHAR" length="255" jt="12" />
+			<column name="spanlast" type="VARCHAR" length="255" jt="12" />
+			<column name="games" type="INTEGER" jt="4" />
+			<column name="openings" type="INTEGER" jt="4" />
+			<column name="attendance" type="INTEGER" jt="4" />
+			<column name="spanfirst_date" type="DATE" jt="91" />
+			<column name="spanlast_date" type="DATE" jt="91" />
+			<index name="pk_homegames" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="homegames_leaguekey" unique="NORMAL" >
+				<column name="leaguekey" />
+			</index>
+			<index name="homegames_park_ID" unique="NORMAL" >
+				<column name="park_ID" />
+			</index>
+			<index name="homegames_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<fk name="FK_homegames leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="leaguekey" pk="lgID" />
+			</fk>
+			<fk name="FK_homegames teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_homegames parks" to_schema="Default" to_table="parks" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="park_ID" pk="ID" />
+			</fk>
+		</table>
+		<table name="leagues" spec="" >
+			<column name="lgID" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="league" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="active" type="VARCHAR" length="1" jt="12" mandatory="y" />
+			<index name="pk_leagues" unique="PRIMARY_KEY" >
+				<column name="lgID" />
+			</index>
+		</table>
+		<table name="managers" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="10" jt="12" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" mandatory="y" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="inseason" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="W" type="SMALLINT" jt="5" />
+			<column name="L" type="SMALLINT" jt="5" />
+			<column name="teamRank" type="SMALLINT" jt="5" />
+			<column name="plyrMgr" type="VARCHAR" length="1" jt="12" />
+			<index name="pk_managers" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="managers_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="managers_playerID" unique="NORMAL" >
+				<column name="playerID" />
+			</index>
+			<index name="managers_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<index name="managers_yearID" unique="UNIQUE_INDEX" >
+				<column name="yearID" />
+				<column name="teamID" />
+				<column name="inseason" />
+			</index>
+			<fk name="FK_managers leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_managers teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_managers people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="managershalf" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="10" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" mandatory="y" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="inseason" type="SMALLINT" jt="5" />
+			<column name="half" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="W" type="SMALLINT" jt="5" />
+			<column name="L" type="SMALLINT" jt="5" />
+			<column name="teamRank" type="SMALLINT" jt="5" />
+			<index name="pk_managershalf" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="managershalf_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="managershalf_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="yearID" />
+				<column name="teamID" />
+				<column name="half" />
+			</index>
+			<index name="managershalf_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<fk name="FK_managershalf leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_managershalf teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_managershalf people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="parks" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="parkalias" type="VARCHAR" length="255" jt="12" />
+			<column name="parkkey" type="VARCHAR" length="255" jt="12" />
+			<column name="parkname" type="VARCHAR" length="255" jt="12" />
+			<column name="city" type="VARCHAR" length="255" jt="12" />
+			<column name="state" type="VARCHAR" length="255" jt="12" />
+			<column name="country" type="VARCHAR" length="255" jt="12" />
+			<index name="pk_parks" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+		</table>
+		<table name="people" spec="" >
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="birthYear" type="INTEGER" jt="4" />
+			<column name="birthMonth" type="INTEGER" jt="4" />
+			<column name="birthDay" type="INTEGER" jt="4" />
+			<column name="birthCountry" type="VARCHAR" length="255" jt="12" />
+			<column name="birthState" type="VARCHAR" length="255" jt="12" />
+			<column name="birthCity" type="VARCHAR" length="255" jt="12" />
+			<column name="deathYear" type="INTEGER" jt="4" />
+			<column name="deathMonth" type="INTEGER" jt="4" />
+			<column name="deathDay" type="INTEGER" jt="4" />
+			<column name="deathCountry" type="VARCHAR" length="255" jt="12" />
+			<column name="deathState" type="VARCHAR" length="255" jt="12" />
+			<column name="deathCity" type="VARCHAR" length="255" jt="12" />
+			<column name="nameFirst" type="VARCHAR" length="255" jt="12" />
+			<column name="nameLast" type="VARCHAR" length="255" jt="12" />
+			<column name="nameGiven" type="VARCHAR" length="255" jt="12" />
+			<column name="weight" type="INTEGER" jt="4" />
+			<column name="height" type="INTEGER" jt="4" />
+			<column name="bats" type="VARCHAR" length="255" jt="12" />
+			<column name="throws" type="VARCHAR" length="255" jt="12" />
+			<column name="debut" type="VARCHAR" length="255" jt="12" />
+			<column name="finalGame" type="VARCHAR" length="255" jt="12" />
+			<column name="retroID" type="VARCHAR" length="255" jt="12" />
+			<column name="bbrefID" type="VARCHAR" length="255" jt="12" />
+			<column name="birth_date" type="DATE" jt="91" />
+			<column name="debut_date" type="DATE" jt="91" />
+			<column name="finalgame_date" type="DATE" jt="91" />
+			<column name="death_date" type="DATE" jt="91" />
+			<index name="pk_people" unique="PRIMARY_KEY" >
+				<column name="playerID" />
+			</index>
+		</table>
+		<table name="pitching" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="stint" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="W" type="SMALLINT" jt="5" />
+			<column name="L" type="SMALLINT" jt="5" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="GS" type="SMALLINT" jt="5" />
+			<column name="CG" type="SMALLINT" jt="5" />
+			<column name="SHO" type="SMALLINT" jt="5" />
+			<column name="SV" type="SMALLINT" jt="5" />
+			<column name="IPouts" type="INTEGER" jt="4" />
+			<column name="H" type="SMALLINT" jt="5" />
+			<column name="ER" type="SMALLINT" jt="5" />
+			<column name="HR" type="SMALLINT" jt="5" />
+			<column name="BB" type="SMALLINT" jt="5" />
+			<column name="SO" type="SMALLINT" jt="5" />
+			<column name="BAOpp" type="DOUBLE" jt="8" />
+			<column name="ERA" type="DOUBLE" jt="8" />
+			<column name="IBB" type="SMALLINT" jt="5" />
+			<column name="WP" type="SMALLINT" jt="5" />
+			<column name="HBP" type="SMALLINT" jt="5" />
+			<column name="BK" type="SMALLINT" jt="5" />
+			<column name="BFP" type="SMALLINT" jt="5" />
+			<column name="GF" type="SMALLINT" jt="5" />
+			<column name="R" type="SMALLINT" jt="5" />
+			<column name="SH" type="SMALLINT" jt="5" />
+			<column name="SF" type="SMALLINT" jt="5" />
+			<column name="GIDP" type="SMALLINT" jt="5" />
+			<index name="pk_pitching" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="pitching_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="pitching_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="yearID" />
+				<column name="stint" />
+			</index>
+			<index name="pitching_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<fk name="FK_pitching leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_pitching teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_pitching people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="pitchingpost" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="round" type="VARCHAR" length="10" jt="12" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="W" type="SMALLINT" jt="5" />
+			<column name="L" type="SMALLINT" jt="5" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="GS" type="SMALLINT" jt="5" />
+			<column name="CG" type="SMALLINT" jt="5" />
+			<column name="SHO" type="SMALLINT" jt="5" />
+			<column name="SV" type="SMALLINT" jt="5" />
+			<column name="IPouts" type="INTEGER" jt="4" />
+			<column name="H" type="SMALLINT" jt="5" />
+			<column name="ER" type="SMALLINT" jt="5" />
+			<column name="HR" type="SMALLINT" jt="5" />
+			<column name="BB" type="SMALLINT" jt="5" />
+			<column name="SO" type="SMALLINT" jt="5" />
+			<column name="BAOpp" type="DOUBLE" jt="8" />
+			<column name="ERA" type="DOUBLE" jt="8" />
+			<column name="IBB" type="SMALLINT" jt="5" />
+			<column name="WP" type="SMALLINT" jt="5" />
+			<column name="HBP" type="SMALLINT" jt="5" />
+			<column name="BK" type="SMALLINT" jt="5" />
+			<column name="BFP" type="SMALLINT" jt="5" />
+			<column name="GF" type="SMALLINT" jt="5" />
+			<column name="R" type="SMALLINT" jt="5" />
+			<column name="SH" type="SMALLINT" jt="5" />
+			<column name="SF" type="SMALLINT" jt="5" />
+			<column name="GIDP" type="SMALLINT" jt="5" />
+			<index name="pk_pitchingpost" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="pitchingpost_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="pitchingpost_playerID" unique="UNIQUE_INDEX" >
+				<column name="playerID" />
+				<column name="yearID" />
+				<column name="round" />
+			</index>
+			<index name="pitchingpost_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<fk name="FK_pitchingpost leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_pitchingpost teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_pitchingpost people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="salaries" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" mandatory="y" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="playerID" type="VARCHAR" length="9" jt="12" mandatory="y" />
+			<column name="salary" type="DOUBLE" jt="8" />
+			<index name="pk_salaries" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="salaries_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="salaries_playerID" unique="NORMAL" >
+				<column name="playerID" />
+			</index>
+			<index name="salaries_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<index name="salaries_yearID" unique="UNIQUE_INDEX" >
+				<column name="yearID" />
+				<column name="teamID" />
+				<column name="lgID" />
+				<column name="playerID" />
+			</index>
+			<fk name="FK_salaries leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_salaries teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+			<fk name="FK_salaries people" to_schema="Default" to_table="people" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="playerID" pk="playerID" />
+			</fk>
+		</table>
+		<table name="schools" spec="" >
+			<column name="schoolID" type="VARCHAR" length="15" jt="12" mandatory="y" />
+			<column name="name_full" type="VARCHAR" length="255" jt="12" />
+			<column name="city" type="VARCHAR" length="55" jt="12" />
+			<column name="state" type="VARCHAR" length="55" jt="12" />
+			<column name="country" type="VARCHAR" length="55" jt="12" />
+			<index name="pk_schools" unique="PRIMARY_KEY" >
+				<column name="schoolID" />
+			</index>
+		</table>
+		<table name="seriespost" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="round" type="VARCHAR" length="5" jt="12" mandatory="y" />
+			<column name="teamIDwinner" type="VARCHAR" length="3" jt="12" />
+			<column name="lgIDwinner" type="VARCHAR" length="2" jt="12" />
+			<column name="team_IDwinner" type="INTEGER" jt="4" />
+			<column name="teamIDloser" type="VARCHAR" length="3" jt="12" />
+			<column name="team_IDloser" type="INTEGER" jt="4" />
+			<column name="lgIDloser" type="VARCHAR" length="2" jt="12" />
+			<column name="wins" type="SMALLINT" jt="5" />
+			<column name="losses" type="SMALLINT" jt="5" />
+			<column name="ties" type="SMALLINT" jt="5" />
+			<index name="pk_seriespost" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="seriespost_lgIDloser" unique="NORMAL" >
+				<column name="lgIDloser" />
+			</index>
+			<index name="seriespost_lgIDwinner" unique="NORMAL" >
+				<column name="lgIDwinner" />
+			</index>
+			<index name="seriespost_team_IDloser" unique="NORMAL" >
+				<column name="team_IDloser" />
+			</index>
+			<index name="seriespost_team_IDwinner" unique="NORMAL" >
+				<column name="team_IDwinner" />
+			</index>
+			<index name="seriespost_yearID" unique="UNIQUE_INDEX" >
+				<column name="yearID" />
+				<column name="round" />
+			</index>
+			<fk name="FK_seriespost leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgIDwinner" pk="lgID" />
+			</fk>
+			<fk name="FK_seriespost leagues_001" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgIDloser" pk="lgID" />
+			</fk>
+			<fk name="FK_seriespost teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_IDwinner" pk="ID" />
+			</fk>
+			<fk name="FK_seriespost teams_001" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_IDloser" pk="ID" />
+			</fk>
+		</table>
+		<table name="teams" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" mandatory="y" />
+			<column name="franchID" type="VARCHAR" length="3" jt="12" />
+			<column name="divID" type="VARCHAR" length="1" jt="12" />
+			<column name="div_ID" type="INTEGER" jt="4" />
+			<column name="teamRank" type="SMALLINT" jt="5" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="Ghome" type="SMALLINT" jt="5" />
+			<column name="W" type="SMALLINT" jt="5" />
+			<column name="L" type="SMALLINT" jt="5" />
+			<column name="DivWin" type="VARCHAR" length="1" jt="12" />
+			<column name="WCWin" type="VARCHAR" length="1" jt="12" />
+			<column name="LgWin" type="VARCHAR" length="1" jt="12" />
+			<column name="WSWin" type="VARCHAR" length="1" jt="12" />
+			<column name="R" type="SMALLINT" jt="5" />
+			<column name="AB" type="SMALLINT" jt="5" />
+			<column name="H" type="SMALLINT" jt="5" />
+			<column name="2B" type="SMALLINT" jt="5" />
+			<column name="3B" type="SMALLINT" jt="5" />
+			<column name="HR" type="SMALLINT" jt="5" />
+			<column name="BB" type="SMALLINT" jt="5" />
+			<column name="SO" type="SMALLINT" jt="5" />
+			<column name="SB" type="SMALLINT" jt="5" />
+			<column name="CS" type="SMALLINT" jt="5" />
+			<column name="HBP" type="SMALLINT" jt="5" />
+			<column name="SF" type="SMALLINT" jt="5" />
+			<column name="RA" type="SMALLINT" jt="5" />
+			<column name="ER" type="SMALLINT" jt="5" />
+			<column name="ERA" type="DOUBLE" jt="8" />
+			<column name="CG" type="SMALLINT" jt="5" />
+			<column name="SHO" type="SMALLINT" jt="5" />
+			<column name="SV" type="SMALLINT" jt="5" />
+			<column name="IPouts" type="INTEGER" jt="4" />
+			<column name="HA" type="SMALLINT" jt="5" />
+			<column name="HRA" type="SMALLINT" jt="5" />
+			<column name="BBA" type="SMALLINT" jt="5" />
+			<column name="SOA" type="SMALLINT" jt="5" />
+			<column name="E" type="INTEGER" jt="4" />
+			<column name="DP" type="INTEGER" jt="4" />
+			<column name="FP" type="DOUBLE" jt="8" />
+			<column name="name" type="VARCHAR" length="50" jt="12" />
+			<column name="park" type="VARCHAR" length="255" jt="12" />
+			<column name="attendance" type="INTEGER" jt="4" />
+			<column name="BPF" type="INTEGER" jt="4" />
+			<column name="PPF" type="INTEGER" jt="4" />
+			<column name="teamIDBR" type="VARCHAR" length="3" jt="12" />
+			<column name="teamIDlahman45" type="VARCHAR" length="3" jt="12" />
+			<column name="teamIDretro" type="VARCHAR" length="3" jt="12" />
+			<index name="pk_teams" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="teams_div_ID" unique="NORMAL" >
+				<column name="div_ID" />
+			</index>
+			<index name="teams_franchID" unique="NORMAL" >
+				<column name="franchID" />
+			</index>
+			<index name="teams_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="teams_yearID" unique="UNIQUE_INDEX" >
+				<column name="yearID" />
+				<column name="lgID" />
+				<column name="teamID" />
+			</index>
+			<fk name="FK_teams leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_teams divisions" to_schema="Default" to_table="divisions" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="div_ID" pk="ID" />
+			</fk>
+			<fk name="FK_teams teamsfranchises" to_schema="Default" to_table="teamsfranchises" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="franchID" pk="franchID" />
+			</fk>
+		</table>
+		<table name="teamsfranchises" spec="" >
+			<column name="franchID" type="VARCHAR" length="3" jt="12" mandatory="y" />
+			<column name="franchName" type="VARCHAR" length="50" jt="12" />
+			<column name="active" type="VARCHAR" length="1" jt="12" />
+			<column name="NAassoc" type="VARCHAR" length="3" jt="12" />
+			<index name="pk_teamsfranchises" unique="PRIMARY_KEY" >
+				<column name="franchID" />
+			</index>
+		</table>
+		<table name="teamshalf" spec="" >
+			<column name="ID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="yearID" type="SMALLINT" jt="5" mandatory="y" />
+			<column name="lgID" type="VARCHAR" length="2" jt="12" mandatory="y" />
+			<column name="teamID" type="VARCHAR" length="3" jt="12" mandatory="y" />
+			<column name="team_ID" type="INTEGER" jt="4" />
+			<column name="Half" type="VARCHAR" length="1" jt="12" mandatory="y" />
+			<column name="divID" type="VARCHAR" length="1" jt="12" />
+			<column name="div_ID" type="INTEGER" jt="4" />
+			<column name="DivWin" type="VARCHAR" length="1" jt="12" />
+			<column name="teamRank" type="SMALLINT" jt="5" />
+			<column name="G" type="SMALLINT" jt="5" />
+			<column name="W" type="SMALLINT" jt="5" />
+			<column name="L" type="SMALLINT" jt="5" />
+			<index name="pk_teamshalf" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<index name="teamshalf_div_ID" unique="NORMAL" >
+				<column name="div_ID" />
+			</index>
+			<index name="teamshalf_lgID" unique="NORMAL" >
+				<column name="lgID" />
+			</index>
+			<index name="teamshalf_team_ID" unique="NORMAL" >
+				<column name="team_ID" />
+			</index>
+			<index name="teamshalf_yearID" unique="UNIQUE_INDEX" >
+				<column name="yearID" />
+				<column name="lgID" />
+				<column name="teamID" />
+				<column name="Half" />
+			</index>
+			<fk name="FK_teamshalf leagues" to_schema="Default" to_table="leagues" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="lgID" pk="lgID" />
+			</fk>
+			<fk name="FK_teamshalf divisions" to_schema="Default" to_table="divisions" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="div_ID" pk="ID" />
+			</fk>
+			<fk name="FK_teamshalf teams" to_schema="Default" to_table="teams" options="ON UPDATE NO ACTION ON DELETE NO ACTION" >
+				<fk_column name="team_ID" pk="ID" />
+			</fk>
+		</table>
+	</schema>
+	<connector name="Sqlite" database="Sqlite" driver_class="org.sqlite.JDBC" driver_jar="sqlite-jdbc-3.40.0.0.jar" driver_desc="Standard" host="localhost" port="7210" instance="/home/nathan/Documents/school/ds250/project3/lahmansbaseballdb.sqlite" useSystemProxy="false" />
+	<layout name="Main Layout" id="Layout-883" show_relation="columns" >
+		<entity schema="Default" name="allstarfull" color="BEBEF4" x="512" y="992" />
+		<entity schema="Default" name="appearances" color="C7F4BE" x="2224" y="512" />
+		<entity schema="Default" name="awardsmanagers" color="BED3F4" x="400" y="2112" />
+		<entity schema="Default" name="awardsplayers" color="BEBEF4" x="1104" y="1328" />
+		<entity schema="Default" name="awardssharemanagers" color="BEBEF4" x="512" y="1328" />
+		<entity schema="Default" name="awardsshareplayers" color="BEBEF4" x="816" y="1328" />
+		<entity schema="Default" name="batting" color="BEBEF4" x="272" y="752" />
+		<entity schema="Default" name="battingpost" color="BEBEF4" x="48" y="192" />
+		<entity schema="Default" name="collegeplaying" color="F4DDBE" x="2784" y="2064" />
+		<entity schema="Default" name="divisions" color="C7F4BE" x="2784" y="800" />
+		<entity schema="Default" name="fielding" color="BED3F4" x="960" y="2400" />
+		<entity schema="Default" name="fieldingof" color="BED3F4" x="960" y="2112" />
+		<entity schema="Default" name="fieldingofsplit" color="BED3F4" x="672" y="3024" />
+		<entity schema="Default" name="fieldingpost" color="BED3F4" x="960" y="3024" />
+		<entity schema="Default" name="halloffame" color="BED3F4" x="672" y="2064" />
+		<entity schema="Default" name="homegames" color="C7F4BE" x="2784" y="80" />
+		<entity schema="Default" name="leagues" color="BEBEF4" x="288" y="528" />
+		<entity schema="Default" name="managers" color="BED3F4" x="432" y="3024" />
+		<entity schema="Default" name="managershalf" color="BED3F4" x="432" y="2656" />
+		<entity schema="Default" name="parks" color="C7F4BE" x="3056" y="80" />
+		<entity schema="Default" name="people" color="BED3F4" x="672" y="2400" />
+		<entity schema="Default" name="pitching" color="C7F4BE" x="2480" y="1056" />
+		<entity schema="Default" name="pitchingpost" color="C7F4BE" x="2240" y="1056" />
+		<entity schema="Default" name="salaries" color="BEBEF4" x="288" y="240" />
+		<entity schema="Default" name="schools" color="F4DDBE" x="3008" y="2064" />
+		<entity schema="Default" name="seriespost" color="BEBEF4" x="512" y="528" />
+		<entity schema="Default" name="teams" color="C7F4BE" x="2480" y="80" />
+		<entity schema="Default" name="teamsfranchises" color="C7F4BE" x="2208" y="80" />
+		<entity schema="Default" name="teamshalf" color="C7F4BE" x="2784" y="1056" />
+		<callout x="192" y="240" pointer="Round" >
+			<comment><![CDATA[This is a layout. 
+- Double-click table headers, columns, or foreign keys to edit 
+- Drag tables to the layout from the structure tree, or 
+   add them by pressing the arrow icon near columns 
+- Create multiple layouts with the same or different tables 
+- Right-click the layout to create new tables]]></comment>
+		</callout>
+		<group name="collegeplaying" color="F7F2EC" >
+			<entity schema="Default" name="collegeplaying" />
+			<entity schema="Default" name="schools" />
+		</group>
+		<group name="people" color="ECF0F7" >
+			<entity schema="Default" name="people" />
+			<entity schema="Default" name="fielding" />
+			<entity schema="Default" name="fieldingpost" />
+			<entity schema="Default" name="fieldingofsplit" />
+			<entity schema="Default" name="managers" />
+			<entity schema="Default" name="managershalf" />
+			<entity schema="Default" name="awardsmanagers" />
+			<entity schema="Default" name="halloffame" />
+			<entity schema="Default" name="fieldingof" />
+		</group>
+		<group name="teams" color="EEF7EC" >
+			<entity schema="Default" name="teams" />
+			<entity schema="Default" name="homegames" />
+			<entity schema="Default" name="divisions" />
+			<entity schema="Default" name="teamshalf" />
+			<entity schema="Default" name="pitching" />
+			<entity schema="Default" name="pitchingpost" />
+			<entity schema="Default" name="appearances" />
+			<entity schema="Default" name="parks" />
+			<entity schema="Default" name="teamsfranchises" />
+		</group>
+		<group name="leagues" color="ECECF7" >
+			<entity schema="Default" name="leagues" />
+			<entity schema="Default" name="seriespost" />
+			<entity schema="Default" name="batting" />
+			<entity schema="Default" name="battingpost" />
+			<entity schema="Default" name="salaries" />
+			<entity schema="Default" name="allstarfull" />
+			<entity schema="Default" name="awardssharemanagers" />
+			<entity schema="Default" name="awardsshareplayers" />
+			<entity schema="Default" name="awardsplayers" />
+		</group>
+	</layout>
+	<layout name="~Layout with Sample Tools" id="Layout-122" show_column_type="y" show_relation="columns" >
+		<entity schema="Default" name="allstarfull" color="BEBEF4" x="368" y="48" />
+		<entity schema="Default" name="appearances" color="C7F4BE" x="1728" y="480" />
+		<entity schema="Default" name="awardsmanagers" color="BED3F4" x="48" y="1248" />
+		<entity schema="Default" name="awardsplayers" color="BEBEF4" x="1360" y="80" />
+		<entity schema="Default" name="awardssharemanagers" color="BEBEF4" x="688" y="80" />
+		<entity schema="Default" name="awardsshareplayers" color="BEBEF4" x="1024" y="80" />
+		<entity schema="Default" name="batting" color="BEBEF4" x="368" y="608" />
+		<entity schema="Default" name="battingpost" color="BEBEF4" x="48" y="608" />
+		<entity schema="Default" name="collegeplaying" color="F4DDBE" x="1088" y="2400" />
+		<entity schema="Default" name="divisions" color="C7F4BE" x="2432" y="768" />
+		<entity schema="Default" name="fielding" color="BED3F4" x="768" y="1536" />
+		<entity schema="Default" name="fieldingof" color="BED3F4" x="768" y="1248" />
+		<entity schema="Default" name="fieldingofsplit" color="BED3F4" x="384" y="2160" />
+		<entity schema="Default" name="fieldingpost" color="BED3F4" x="768" y="2160" />
+		<entity schema="Default" name="halloffame" color="BED3F4" x="384" y="1200" />
+		<entity schema="Default" name="homegames" color="C7F4BE" x="2432" y="48" />
+		<entity schema="Default" name="leagues" color="BEBEF4" x="368" y="384" />
+		<entity schema="Default" name="managers" color="BED3F4" x="48" y="2160" />
+		<entity schema="Default" name="managershalf" color="BED3F4" x="48" y="1792" />
+		<entity schema="Default" name="parks" color="C7F4BE" x="2768" y="48" />
+		<entity schema="Default" name="people" color="BED3F4" x="384" y="1536" />
+		<entity schema="Default" name="pitching" color="C7F4BE" x="2048" y="1024" />
+		<entity schema="Default" name="pitchingpost" color="C7F4BE" x="1728" y="1024" />
+		<entity schema="Default" name="salaries" color="BEBEF4" x="48" y="320" />
+		<entity schema="Default" name="schools" color="F4DDBE" x="1392" y="2400" />
+		<entity schema="Default" name="seriespost" color="BEBEF4" x="688" y="384" />
+		<entity schema="Default" name="teams" color="C7F4BE" x="2048" y="48" />
+		<entity schema="Default" name="teamsfranchises" color="C7F4BE" x="1696" y="48" />
+		<entity schema="Default" name="teamshalf" color="C7F4BE" x="2432" y="1024" />
+		<script name="SQL Editor" id="Editor-94e" language="SQL" >
+			<string><![CDATA[SELECT
+	lgID, league, active
+FROM
+	leagues s;]]></string>
+		</script>
+		<browser id="Browse-bf8" name="Relational Data Explorer" confirm_updates="y" >
+			<browse_table schema="Default" entity="leagues" x="20" y="20" width="400" height="300" >
+				<browse_table schema="Default" entity="allstarfull" fk="FK_allstarfull leagues" x="440" y="20" width="500" height="350" >
+					<browse_table schema="Default" entity="teams" fk="FK_allstarfull teams" x="960" y="20" width="500" height="350" record_view="y" />
+				</browse_table>
+			</browse_table>
+		</browser>
+		<query id="Query-1004" name="Query Builder" >
+			<query_table schema="Default" name="leagues" alias="l" x="48" y="48" >
+				<column name="lgID" />
+				<column name="league" />
+				<column name="active" />
+				<query_table schema="Default" name="allstarfull" alias="a" x="240" y="48" fk="FK_allstarfull leagues" type="Inner Join" >
+					<column name="ID" />
+					<column name="playerID" />
+					<column name="yearID" />
+					<column name="gameNum" />
+					<column name="gameID" />
+					<column name="teamID" />
+					<column name="team_ID" />
+					<column name="lgID" />
+					<column name="GP" />
+					<column name="startingPos" />
+					<query_table schema="Default" name="teams" alias="t" x="464" y="48" fk="FK_allstarfull teams" type="Inner Join" >
+						<column name="ID" />
+						<column name="yearID" />
+						<column name="lgID" />
+						<column name="teamID" />
+						<column name="franchID" />
+						<column name="divID" />
+						<column name="div_ID" />
+						<column name="teamRank" />
+						<column name="G" />
+						<column name="Ghome" />
+						<column name="W" />
+						<column name="L" />
+						<column name="DivWin" />
+						<column name="WCWin" />
+						<column name="LgWin" />
+						<column name="WSWin" />
+						<column name="R" />
+						<column name="AB" />
+						<column name="H" />
+						<column name="2B" />
+						<column name="3B" />
+						<column name="HR" />
+						<column name="BB" />
+						<column name="SO" />
+						<column name="SB" />
+						<column name="CS" />
+						<column name="HBP" />
+						<column name="SF" />
+						<column name="RA" />
+						<column name="ER" />
+						<column name="ERA" />
+						<column name="CG" />
+						<column name="SHO" />
+						<column name="SV" />
+						<column name="IPouts" />
+						<column name="HA" />
+						<column name="HRA" />
+						<column name="BBA" />
+						<column name="SOA" />
+						<column name="E" />
+						<column name="DP" />
+						<column name="FP" />
+						<column name="name" />
+						<column name="park" />
+						<column name="attendance" />
+						<column name="BPF" />
+						<column name="PPF" />
+						<column name="teamIDBR" />
+						<column name="teamIDlahman45" />
+						<column name="teamIDretro" />
+					</query_table>
+				</query_table>
+			</query_table>
+		</query>
+		<form name="Report" id="Report-224d" template="Page" css="container-fluid" view="frame" >
+			<var name="samplePageNumber" type="4" value="0" mandatory="n" />
+			<var name="sampleRecordsPerPage" type="4" value="100" mandatory="n" />
+			<body name="Body" template="Grid" pos="0,0,0,0,f,f" layout="{{-2,-2,-2,-2,-1},{-2,-2,-2,-2}}" scroll="n" html="n" >
+				<cell type="label" name="Leagues Data" template="H3" pos="0,0,1,0,l,c" />
+				<cell type="chart" name="Pie" template="Pie" pos="0,1,4,1,l,c" max_records="20" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="lgID" />
+						<var name="league" />
+						<var name="active" />
+						<script ><![CDATA[SELECT * FROM leagues]]></script>
+					</form_script>
+					<param name="i0" value="active" />
+					<param name="width" value="100%" />
+					<param name="title" value="Sample Chart" />
+					<param name="height" value="400px" />
+				</cell>
+				<tableview name="sample" template="Table" css="table table-striped table-sm table-hover" pos="0,2,4,2,f,f" layout="{{-2,-2,-2,-2},{-2,-2}}" scroll="n" html="n" header_rows="1" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="lgID" />
+						<var name="league" />
+						<var name="active" />
+						<script ><![CDATA[SELECT * FROM leagues]]></script>
+					</form_script>
+					<cell type="label" name="lgID" pos="0,0,0,0,c,c" />
+					<cell type="label" name="league" pos="1,0,1,0,c,c" />
+					<cell type="label" name="active" pos="2,0,2,0,c,c" />
+					<cell type="label" name="Button can open other pages." pos="3,0,3,0,c,c" />
+					<cell type="label" name="${lgID}" template="Plain" pos="0,1,0,1,l,c" />
+					<cell type="label" name="${league}" template="Plain" pos="1,1,1,1,l,c" />
+					<cell type="label" name="${active}" template="Plain" pos="2,1,2,1,l,c" />
+					<cell type="button" name="More" template="Plain" css="btn btn-sm btn-secondary" pos="3,1,3,1,c,c" ref_id="Report-224d" />
+				</tableview>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="0,3,0,3,l,c" glyph="bi-chevron_double_left" ref_id="Report-224d" >
+					<var name="samplePageNumber" value="0" />
+				</cell>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="1,3,1,3,l,c" glyph="bi-chevron_left" ref_id="Report-224d" >
+					<var name="samplePageNumber" value="${Math.max(0,samplePageNumber-1)}" />
+				</cell>
+				<cell type="label" name="Page ${samplePageNumber+1}" pos="2,3,2,3,l,c" />
+				<cell type="href" name="" disabled="${!sampleHasNextPage}" pos="3,3,3,3,l,c" glyph="bi-chevron_right" ref_id="Report-224d" >
+					<var name="samplePageNumber" value="${( samplePageNumber+1 )}" />
+				</cell>
+			</body>
+		</form>
+	</layout>
+</project>

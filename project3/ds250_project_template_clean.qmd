@@ -39,7 +39,7 @@ import sqlite3
 
 ## Elevator pitch
 
-_paste your elevator pitch here_
+_In this project I worked with a baseball statistics sqlite database. I show an understanding of how to use sql queries._
 
 
 __Highlight the grand questions__
@@ -48,7 +48,7 @@ __Highlight the grand questions__
 
 __Write an SQL query to create a new dataframe about baseball players who attended BYU-Idaho. The new table should contain five columns: playerID, schoolID, salary, and the yearID/teamID associated with each salary. Order the table by salary (highest to lowest) and print out the table in your report.__
 
-_type your results and analysis here_
+_Thsi data shows that there were three players from BYU-Idaho. Of the three players only two went pro. The data shows that the players that went pro made yearly salaries ranging from $150,000 to $4,000,000._
 
 ```{python}
 #| label: GQ1
@@ -61,13 +61,13 @@ con = sqlite3.connect("lahmansbaseballdb.sqlite")
 # SQL Query
 sql = """
 SELECT DISTINCT
-    p.playerid, c.schoolid, s.salary, s.yearid, s.teamid
+    c.playerid, c.schoolid, s.teamid, s.yearid, s.salary
 FROM
-    people AS p
-JOIN CollegePlaying as c ON p.playerid = c.playerid
-JOIN Salaries as s ON c.playerid = s.playerid
+    collegeplaying c
+LEFT JOIN salaries AS s ON c.playerid = s.playerid
 WHERE c.schoolid = 'idbyuid'
 ORDER BY s.salary DESC
+
 """
 
 df = pd.read_sql_query(sql, con)
@@ -75,12 +75,12 @@ df
 
 ```
 
-_include figures in chunks and discuss your findings in the figure._
 
 
 ## GRAND QUESTION 2
 
 __This three-part question requires you to calculate batting average (number of hits divided by the number of at-bats)__
+
 
 _a. Write an SQL query that provides playerID, yearID, and batting average for players with at least 1 at bat that year. Sort the table from highest batting average to lowest, and then by playerid alphabetically. Show the top 5 results in your report._
 
@@ -111,6 +111,7 @@ df = pd.read_sql_query(sql, con)
 df.head(5)
 
 ```
+_This data shows that sometimes you need to provide a more specific context for data. For example, just because a person got one chance at bat and hit the ball giving that person a batting average of 100% it does not really mean that that player is a really good baseball player because one at bat and one hit is not enough data to conclude a players skill_
 
 _b. Use the same query as above, but only include players with at least 10 at bats that year. Print the top 5 results._
 
@@ -142,6 +143,8 @@ df2 = pd.read_sql_query(sql2, con)
 df2.head(5)
 ```
 
+_As the number of at bats goes up the batting average goes down._
+
 _c. Now calculate the batting average for players over their entire careers (all years combined). Only include players with at least 100 at bats, and print the top 5 results._
 
 ```{python}
@@ -169,8 +172,10 @@ ORDER BY
 df3 = pd.read_sql_query(sql3, con)
 df3.head(5)
 ```
+_As the number of at bats goes even further up the batting average continues to goes down. We can conclude that 100+ at bats gives a more proper representation of a players batting skill. _
 
-_include figures in chunks and discuss your findings in the figure._
+
+
 
 
 
@@ -178,17 +183,155 @@ _include figures in chunks and discuss your findings in the figure._
 
 __Pick any two baseball teams and compare them using a metric of your choice (average salary, home runs, number of wins, etc). Write an SQL query to get the data you need, then make a graph in Altair to visualize the comparison. What do you learn?__
 
-_type your results and analysis here_
+_I chose the New York Yankees and the Boston Red Sox to compare. The metric which I chose to compare was world series wins. From this data, I learned that the New York Yankees have three times as many world series wins than their biggest rival The Boston Red Sox. Just for fun, I made another bar chart with all the teams and their respective world series wins and I was surprised to see that The New York Yankees have the most world series wins and are miles ahead of the competition._
 
 ```{python}
 #| label: GQ3
 #| code-summary: Read and format data
 # Include and execute your code here
+sql = """
+SELECT 
+    t.teamID, 
+    s.round, 
+    s.teamIDwinner, 
+    count_ws.wins
+FROM
+    teams AS t
+JOIN seriespost AS s ON t.teamID = s.teamIDwinner
+JOIN (
+    SELECT 
+        teamIDwinner,
+        COUNT(*) AS wins
+    FROM
+        seriespost
+    WHERE
+        round = "WS"
+    GROUP BY
+        teamIDwinner
+) AS count_ws ON s.teamIDwinner = count_ws.teamIDwinner
+WHERE 
+    s.round = "WS" 
+    AND (t.teamID = "NYA" OR t.teamID = "BOS")
+GROUP BY 
+    t.teamID;
 
+"""
+
+df = pd.read_sql_query(sql, con)
+
+custom_color_scheme = alt.Scale(domain=['BOS','NYA'], range=["#dc3545","#007bff"])
+
+graph = (
+    alt.Chart(df, title="Total World Series Wins for The Boston Red Sox (BOS) and The New York Yankees (NYA)")
+    .mark_bar()
+    .encode(
+        x=alt.X("teamID:O", axis=alt.Axis(title="Team")),
+        y=alt.Y("wins:Q", axis=alt.Axis(title="Wins")),
+        color=alt.Color("teamID", scale=custom_color_scheme),
+        tooltip=[alt.Tooltip("teamID"), alt.Tooltip("wins")]
+    )
+    .configure_view(width=400)
+    .configure_axis(labelFontSize=12, titleFontSize=14)
+)
+
+graph
 
 ```
 
-_include figures in chunks and discuss your findings in the figure._
+```{python}
+#| label: GQ3.1
+#| code-summary: Read and format data
+# Include and execute your code here
+sql2 = """
+SELECT 
+    t.teamID, 
+    s.round, 
+    s.teamIDwinner, 
+    count_ws.wins
+FROM
+    teams AS t
+JOIN seriespost AS s ON t.teamID = s.teamIDwinner
+JOIN (
+    SELECT 
+        teamIDwinner,
+        COUNT(*) AS wins
+    FROM
+        seriespost
+    WHERE
+        round = "WS"
+    GROUP BY
+        teamIDwinner
+) AS count_ws ON s.teamIDwinner = count_ws.teamIDwinner
+WHERE 
+    s.round = "WS" 
+GROUP BY 
+    t.teamID;
+
+"""
+
+df2 = pd.read_sql_query(sql2, con)
+
+
+graph2 = (
+    alt.Chart(df2, title="Total World Series Wins By Team")
+    .mark_bar()
+    .encode(
+        x=alt.X("teamID:O", axis=alt.Axis(title="Team")),
+        y=alt.Y("wins:Q", axis=alt.Axis(title="Wins")),
+        color=alt.Color("teamID", legend=None),
+        tooltip=[alt.Tooltip("teamID"), alt.Tooltip("wins")]
+    )
+    .configure_view(width=400)
+    .configure_axis(labelFontSize=12, titleFontSize=14)
+)
+
+graph2
+
+```
+
+_KEY_
+
+```{python}
+#| label: GQ3.2
+#| code-summary: Read and format data
+# Include and execute your code here
+
+sql3 = """
+SELECT 
+    tf.franchName as Franchise_Name,
+    t.teamID as Key, 
+    s.round, 
+    s.teamIDwinner, 
+    count_ws.wins
+FROM
+    teams AS t
+JOIN teamsfranchises AS tf on t.franchID = tf.franchID
+JOIN seriespost AS s ON t.teamID = s.teamIDwinner
+JOIN (
+    SELECT 
+        teamIDwinner,
+        COUNT(*) AS wins
+    FROM
+        seriespost
+    WHERE
+        round = "WS"
+    GROUP BY
+        teamIDwinner
+) AS count_ws ON s.teamIDwinner = count_ws.teamIDwinner
+WHERE 
+    s.round = "WS" 
+GROUP BY 
+    t.teamID;
+"""
+
+df3 = pd.read_sql_query(sql3, con)
+
+df3 = df3.filter(['Franchise_Name', 'Key'])
+
+df3
+
+```
+
 
 
 ## APPENDIX A (Additional Python Code)
