@@ -33,6 +33,13 @@ import numpy as np
 from IPython.display import Markdown
 from IPython.display import display
 from tabulate import tabulate
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn import tree
+alt.data_transformers.enable('json')
 ```
 
 
@@ -63,12 +70,37 @@ _include figures in chunks and discuss your findings in the figure._
 
 __Build a classification model labeling houses as being built “before 1980” or “during or after 1980”. Your goal is to reach or exceed 90% accuracy. Explain your final model choice (algorithm, tuning parameters, etc) and describe what other models you tried.__
 
-_type your results and analysis here_
+_The algorithm I used to train my classifier was the DecisionTreeClassifier, my tuning parameters were: 'livearea', 'yrbuilt', 'arcstyle_ONE-STORY', and 'numbaths'. I tried the GaussianNB algorithm for my classifier but the highest accuracy I got with it was about 94%. When I used the DecisionTreeClassifier I got 100% accuracy every time. I chose my tuning parameters based on their correlation with the before1980 feature, I chose them because they had the highest correlation out of all the features in the data frame._
 
 ```{python}
 #| label: GQ2
 #| code-summary: Read and format data
 # Include and execute your code here
+
+# Load dataset/add columns befor and after1980
+dwell_denver = pd.read_csv("dwellings_denver.csv")
+dwell_ml = pd.read_csv("dwellings_ml.csv")
+dwell_neighborhoods_ml = pd.read_csv("dwellings_neighborhoods_ml.csv")
+
+dwell_ml['during1980'] = (dwell_ml['yrbuilt'] == 1980).astype(int)
+dwell_ml['after1980'] = (dwell_ml['yrbuilt'] > 1980).astype(int)
+
+# Train model
+X = dwell_ml[['livearea','yrbuilt','arcstyle_ONE-STORY','numbaths']]
+y = dwell_ml[['before1980', 'during1980', 'after1980']]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.3)
+
+classifier = DecisionTreeClassifier()
+classifier.fit(X_train, y_train)
+
+# prediction
+predictions = classifier.predict(X_test)
+
+# score
+score = accuracy_score(y_test, predictions)
+
+print(f"The accuracy of my classifier is {score * 100}%")
+
 
 
 ```

@@ -3061,12 +3061,39 @@ vertical-align: -.125em;
 <section id="grand-question-2" class="level2">
 <h2 class="anchored" data-anchor-id="grand-question-2">GRAND QUESTION 2</h2>
 <p><strong>Build a classification model labeling houses as being built “before 1980” or “during or after 1980”. Your goal is to reach or exceed 90% accuracy. Explain your final model choice (algorithm, tuning parameters, etc) and describe what other models you tried.</strong></p>
-<p><em>type your results and analysis here</em></p>
+<p><em>The algorithm I used to train my classifier was the DecisionTreeClassifier, my tuning parameters were: ‘livearea’, ‘yrbuilt’, ‘arcstyle_ONE-STORY’, and ‘numbaths’. I tried the GaussianNB algorithm for my classifier but the highest accuracy I got with it was about 94%. When I used the DecisionTreeClassifier I got 100% accuracy every time. I chose my tuning parameters based on their correlation with the before1980 feature, I chose them because they had the highest correlation out of all the features in the data frame.</em></p>
 <div id="gq2" class="cell" data-execution_count="3">
 <details>
 <summary>Read and format data</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load dataset/add columns befor and after1980</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dwell_denver <span class="op">=</span> pd.read_csv(<span class="st">&quot;dwellings_denver.csv&quot;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dwell_ml <span class="op">=</span> pd.read_csv(<span class="st">&quot;dwellings_ml.csv&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dwell_neighborhoods_ml <span class="op">=</span> pd.read_csv(<span class="st">&quot;dwellings_neighborhoods_ml.csv&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>dwell_ml[<span class="st">&#39;during1980&#39;</span>] <span class="op">=</span> (dwell_ml[<span class="st">&#39;yrbuilt&#39;</span>] <span class="op">==</span> <span class="dv">1980</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>dwell_ml[<span class="st">&#39;after1980&#39;</span>] <span class="op">=</span> (dwell_ml[<span class="st">&#39;yrbuilt&#39;</span>] <span class="op">&gt;</span> <span class="dv">1980</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Train model</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dwell_ml[[<span class="st">&#39;livearea&#39;</span>,<span class="st">&#39;yrbuilt&#39;</span>,<span class="st">&#39;arcstyle_ONE-STORY&#39;</span>,<span class="st">&#39;numbaths&#39;</span>]]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dwell_ml[[<span class="st">&#39;before1980&#39;</span>, <span class="st">&#39;during1980&#39;</span>, <span class="st">&#39;after1980&#39;</span>]]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">.3</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, y_train)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># prediction</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># score</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> accuracy_score(y_test, predictions)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;The accuracy of my classifier is </span><span class="sc">{</span>score <span class="op">*</span> <span class="dv">100</span><span class="sc">}</span><span class="ss">%&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>The accuracy of my classifier is 100.0%</code></pre>
+</div>
 </div>
 <p><em>include figures in chunks and discuss your findings in the figure.</em></p>
 </section>
@@ -3077,7 +3104,7 @@ vertical-align: -.125em;
 <div id="gq3" class="cell" data-execution_count="4">
 <details>
 <summary>Read and format data</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><em>include figures in chunks and discuss your findings in the figure.</em></p>
@@ -3089,14 +3116,14 @@ vertical-align: -.125em;
 <div id="gq4" class="cell" data-execution_count="5">
 <details>
 <summary>Read and format data</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><em>include figures in chunks and discuss your findings in the figure.</em></p>
 </section>
 <section id="appendix-a-additional-python-code" class="level2">
 <h2 class="anchored" data-anchor-id="appendix-a-additional-python-code">APPENDIX A (Additional Python Code)</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#paste other your code from your python file (.py) here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#paste other your code from your python file (.py) here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 
 </main>
