@@ -19,3 +19,5 @@ dwell.columns
 
 # %%
 # Crosstab
+# facet columns =before 1980
+

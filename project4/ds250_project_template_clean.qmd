@@ -40,6 +40,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn import tree
 alt.data_transformers.enable('json')
+
+dwell_denver = pd.read_csv("dwellings_denver.csv")
+dwell_ml = pd.read_csv("dwellings_ml.csv")
+dwell_neighborhoods_ml = pd.read_csv("dwellings_neighborhoods_ml.csv")
 ```
 
 
@@ -59,6 +63,109 @@ _type your results and analysis here_
 #| code-summary: Read and format data
 # Include and execute your code here
 
+dwell_ml.rename(columns={'arcstyle_ONE-STORY' : 'arcstyle_ONE_STORY'}, inplace=True)
+
+# Compute the correlation
+correlation_matrix = dwell_ml[['arcstyle_ONE_STORY', 'before1980']].corr()
+
+
+correlation_df = correlation_matrix.unstack().reset_index(name='correlation')
+correlation_df = correlation_df.rename(columns={'level_0': 'attribute', 'level_1': 'target'})
+
+heatmap1 = alt.Chart(correlation_df).mark_rect().encode(
+    x=alt.X('attribute:N', title=None, axis=alt.Axis(labelAngle=-45, labelFontSize=10, titleFontSize=16)),
+    y=alt.Y('target:N', title=None, axis=alt.Axis(labelFontSize=10, titleFontSize=16)),
+    color=alt.Color('correlation:Q', scale=alt.Scale(scheme='viridis'), title='Correlation'),
+    tooltip=['attribute', 'target', alt.Tooltip('correlation:Q')]
+).properties(
+    title=alt.TitleParams(
+        text='Correlation Matrix: "arcstyle_ONE_STORY" vs "before1980"',
+        fontSize=10,
+        anchor='middle',
+        fontWeight='bold'
+    ),
+       width=100,  # Specify the width of the chart
+    height=66  # Specify the height of the chart
+)
+
+# Compute the correlation
+correlation_matrix = dwell_ml[['numbaths', 'before1980']].corr()
+
+
+correlation_df = correlation_matrix.unstack().reset_index(name='correlation')
+correlation_df = correlation_df.rename(columns={'level_0': 'attribute', 'level_1': 'target'})
+
+heatmap2 = alt.Chart(correlation_df).mark_rect().encode(
+    x=alt.X('attribute:N', title=None, axis=alt.Axis(labelAngle=-45, labelFontSize=10, titleFontSize=16)),
+    y=alt.Y('target:N', title=None, axis=alt.Axis(labelFontSize=10, titleFontSize=16)),
+    color=alt.Color('correlation:Q', scale=alt.Scale(scheme='viridis'), title='Correlation'),
+    tooltip=['attribute', 'target', alt.Tooltip('correlation:Q')]
+).properties(
+    title=alt.TitleParams(
+        text='Correlation Matrix: "numbaths" vs "before1980"',
+        fontSize=10,
+        anchor='middle',
+        fontWeight='bold'
+    ),
+      width=100,  # Specify the width of the chart
+    height=66  # Specify the height of the chart
+)
+
+
+# Compute the correlation
+correlation_matrix = dwell_ml[['stories', 'before1980']].corr()
+
+
+correlation_df = correlation_matrix.unstack().reset_index(name='correlation')
+correlation_df = correlation_df.rename(columns={'level_0': 'attribute', 'level_1': 'target'})
+
+heatmap3 = alt.Chart(correlation_df).mark_rect().encode(
+    x=alt.X('attribute:N', title=None, axis=alt.Axis(labelAngle=-45, labelFontSize=10, titleFontSize=16)),
+    y=alt.Y('target:N', title=None, axis=alt.Axis(labelFontSize=10, titleFontSize=16)),
+    color=alt.Color('correlation:Q', scale=alt.Scale(scheme='viridis'), title='Correlation'),
+    tooltip=['attribute', 'target', alt.Tooltip('correlation:Q')]
+).properties(
+    title=alt.TitleParams(
+        text='Correlation Matrix: "stories" vs "before1980"',
+        fontSize=10,
+        anchor='middle',
+        fontWeight='bold'
+    ),
+    width=100,  # Specify the width of the chart
+    height=66  # Specify the height of the chart
+)
+
+final = heatmap1 | heatmap2 | heatmap3
+final
+
+
+
+```
+
+
+```{python}
+#| label: GQ1.2
+#| code-summary: Read and format data
+# Include and execute your code here
+dwell_ml[['arcstyle_ONE_STORY', 'before1980']].corr()
+
+```
+
+
+```{python}
+#| label: GQ1.3
+#| code-summary: Read and format data
+# Include and execute your code here
+dwell_ml[['numbaths', 'before1980']].corr()
+
+```
+
+
+```{python}
+#| label: GQ3.4
+#| code-summary: Read and format data
+# Include and execute your code here
+dwell_ml[['stories', 'before1980']].corr()
 
 ```
 
