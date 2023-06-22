@@ -26,37 +26,45 @@ format:
 ```{python}
 #| label: libraries
 #| include: false
+# Importing
 import pandas as pd
 import altair as alt
 import numpy as np
 
+from pycaret.classification import *
+
+
 from IPython.display import Markdown
 from IPython.display import display
-from tabulate import tabulate
+
+
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
+
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn import tree
+from sklearn.multioutput import MultiOutputClassifier
+
 alt.data_transformers.enable('json')
 
 dwell_denver = pd.read_csv("dwellings_denver.csv")
 dwell_ml = pd.read_csv("dwellings_ml.csv")
 dwell_neighborhoods_ml = pd.read_csv("dwellings_neighborhoods_ml.csv")
+
+
 ```
 
 
 ## Elevator pitch
 
-_paste your elevator pitch here_
+_In this project, I work with a dataset about houses in Denver. I demonstrate how to create a machine-learning model._
 
 
 ## GRAND QUESTION 1
 
 __Create 2-3 charts that evaluate potential relationships between the home variables and before1980. Explain what you learn from the charts that could help a machine learning algorithm.__
 
-_type your results and analysis here_
+_I created a confusion matrix between the features: "arcstyle_ONE_STORY", "numbaths", "stories" and the target "before1980". What I can learn from these confusion matrixes is that a house having one story has almost a 50% correlation with it being built before 1980 and a house with more stories has a negative correlation of about 46% with it being built before 1980. I also learn that the number of bathrooms in a house has a negative correlation of about 43% with it being built before 1980._
 
 ```{python}
 #| label: GQ1
@@ -79,7 +87,7 @@ heatmap1 = alt.Chart(correlation_df).mark_rect().encode(
     tooltip=['attribute', 'target', alt.Tooltip('correlation:Q')]
 ).properties(
     title=alt.TitleParams(
-        text='Correlation Matrix: "arcstyle_ONE_STORY" vs "before1980"',
+        text='Confusion Matrix: "arcstyle_ONE_STORY" vs "before1980"',
         fontSize=10,
         anchor='middle',
         fontWeight='bold'
@@ -102,7 +110,7 @@ heatmap2 = alt.Chart(correlation_df).mark_rect().encode(
     tooltip=['attribute', 'target', alt.Tooltip('correlation:Q')]
 ).properties(
     title=alt.TitleParams(
-        text='Correlation Matrix: "numbaths" vs "before1980"',
+        text='Confusion Matrix: "numbaths" vs "before1980"',
         fontSize=10,
         anchor='middle',
         fontWeight='bold'
@@ -126,7 +134,7 @@ heatmap3 = alt.Chart(correlation_df).mark_rect().encode(
     tooltip=['attribute', 'target', alt.Tooltip('correlation:Q')]
 ).properties(
     title=alt.TitleParams(
-        text='Correlation Matrix: "stories" vs "before1980"',
+        text='Confusion Matrix: "stories" vs "before1980"',
         fontSize=10,
         anchor='middle',
         fontWeight='bold'
@@ -162,7 +170,7 @@ dwell_ml[['numbaths', 'before1980']].corr()
 
 
 ```{python}
-#| label: GQ3.4
+#| label: GQ1.4
 #| code-summary: Read and format data
 # Include and execute your code here
 dwell_ml[['stories', 'before1980']].corr()
@@ -177,7 +185,7 @@ _include figures in chunks and discuss your findings in the figure._
 
 __Build a classification model labeling houses as being built “before 1980” or “during or after 1980”. Your goal is to reach or exceed 90% accuracy. Explain your final model choice (algorithm, tuning parameters, etc) and describe what other models you tried.__
 
-_The algorithm I used to train my classifier was the DecisionTreeClassifier, my tuning parameters were: 'livearea', 'yrbuilt', 'arcstyle_ONE-STORY', and 'numbaths'. I tried the GaussianNB algorithm for my classifier but the highest accuracy I got with it was about 94%. When I used the DecisionTreeClassifier I got 100% accuracy every time. I chose my tuning parameters based on their correlation with the before1980 feature, I chose them because they had the highest correlation out of all the features in the data frame._
+_The algorithm I used to train my classifier was the DecisionTreeClassifier, I used all of the features except "yrbuilt" and "parcel". At first, I tried the DecisionTreeClassifier for my classifier but the highest accuracy I got with it was about 89.77%. When I used the RandomForestClassifier I got an average accuracy of about 90%-91%. I initially used some hyperparameters but the added efficiency was minimal to none._
 
 ```{python}
 #| label: GQ2
@@ -189,25 +197,49 @@ dwell_denver = pd.read_csv("dwellings_denver.csv")
 dwell_ml = pd.read_csv("dwellings_ml.csv")
 dwell_neighborhoods_ml = pd.read_csv("dwellings_neighborhoods_ml.csv")
 
+new_dwell = dwell_ml.drop(columns=['yrbuilt', 'parcel'])
+
+dwell_ml_features = new_dwell.drop(columns=['before1980']).columns
+
+features  = dwell_ml_features.to_list()
+
+
 dwell_ml['during1980'] = (dwell_ml['yrbuilt'] == 1980).astype(int)
 dwell_ml['after1980'] = (dwell_ml['yrbuilt'] > 1980).astype(int)
 
+
 # Train model
-X = dwell_ml[['livearea','yrbuilt','arcstyle_ONE-STORY','numbaths']]
+X = dwell_ml[features]
 y = dwell_ml[['before1980', 'during1980', 'after1980']]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.3)
 
-classifier = DecisionTreeClassifier()
+
+classifier = MultiOutputClassifier(RandomForestClassifier())
+
+
 classifier.fit(X_train, y_train)
 
-# prediction
 predictions = classifier.predict(X_test)
 
-# score
+
 score = accuracy_score(y_test, predictions)
 
-print(f"The accuracy of my classifier is {score * 100}%")
+print(f"Accuracy Score: {score * 100: .3f}%")
 
+```
+
+_include figures in chunks and discuss your findings in the figure._
+
+```{python}
+#| label: GQ2.1
+#| code-summary: Read and format data
+# Include and execute your code here
+from pycaret.classification import *
+
+
+setup = setup(new_dwell,target='before1980')
+
+rf = create_model('rf')
 
 
 ```
@@ -215,12 +247,12 @@ print(f"The accuracy of my classifier is {score * 100}%")
 _include figures in chunks and discuss your findings in the figure._
 
 
-
 ## GRAND QUESTION 3
 
 __Justify your classification model by discussing the most important features selected by your model. This discussion should include a chart and a description of the features.__
 
-_type your results and analysis here_
+_The most important features in my classification model were: "livearea", "stories", "numbaths", and "sprice"/"tasp". I have included a Feature Importance plot and individual graphs for each feature below. The feature "livearea" correlates to the liveable area of a house and from the graph below you can see that after 1980 homes were being built larger. The feature "stories" correlates to the number of stories a house has and from the graph below you can see that after 1980 homes were being built with on average more stories. The feature "numbaths" correlates to the number of bathrooms a house has and from the graph below you can see that after 1980 homes were being built with more bathrooms. The features "sprice" and "tasp" correlates to the selling price of a house and the tax assessed selling price of a house and from the graph below you can see that after 1980 houses were becoming more expensive._
+
 
 ```{python}
 #| label: GQ3
@@ -228,9 +260,124 @@ _type your results and analysis here_
 # Include and execute your code here
 
 
+plot_model(rf, plot='feature')
+
+
 ```
 
-_include figures in chunks and discuss your findings in the figure._
+
+```{python}
+#| label: GQ3.2
+#| code-summary: Read and format data
+# Include and execute your code here
+graph_livearea = (
+    alt.Chart(dwell_ml)
+    .mark_circle()
+    .encode(
+        x=alt.X('yrbuilt', title='Year Built', scale=alt.Scale(zero=False)),
+        y=alt.Y('mean(livearea)', title='Average Living Area in Square Feet'), 
+        color=alt.Color("before1980:N", title='Built Before 1980')
+    )
+    .properties(title='Average House Living Area in Square Feet by Year')
+)
+
+graph_livearea
+
+```
+
+
+
+```{python}
+#| label: GQ3.3
+#| code-summary: Read and format data
+# Include and execute your code here
+graph_stories = (
+    alt.Chart(dwell_ml)
+    .mark_circle()
+    .encode(
+        x=alt.X('yrbuilt', title='Year Built', scale=alt.Scale(zero=False)),
+        y=alt.Y('mean(stories)', title='Average Number of Stories',), 
+        color=alt.Color("before1980:N", title='Built Before 1980')
+    )
+    .properties(title='Average Number of Stories by Year')
+)
+
+graph_stories
+
+```
+
+
+
+```{python}
+#| label: GQ3.4
+#| code-summary: Read and format data
+# Include and execute your code here
+graph_numbaths = (
+    alt.Chart(dwell_ml)
+    .mark_circle()
+    .encode(
+        x=alt.X('yrbuilt', title='Year Built', scale=alt.Scale(zero=False)),
+        y=alt.Y('mean(numbaths)', title='Average Number of Bathrooms',), 
+        color=alt.Color("before1980:N", title='Built Before 1980')
+    )
+    .properties(title='Average Number of Bathrooms by Year')
+)
+
+graph_numbaths
+
+```
+
+
+
+```{python}
+#| label: GQ3.5
+#| code-summary: Read and format data
+# Include and execute your code here
+graph_tasp= (
+    alt.Chart(dwell_ml)
+    .mark_circle()
+    .encode(
+        x=alt.X('yrbuilt', title='Year Built', scale=alt.Scale(zero=False)),
+        y=alt.Y('mean(tasp)', title='Average Tax Assesed Selling Price', scale=alt.Scale(type='log')), 
+        color=alt.Color("before1980:N", title='Built Before 1980')
+    )
+    .properties(title='Average Tax Assesed Selling Price of Home by Year')
+)
+
+graph_tasp
+
+
+
+```
+
+
+
+```{python}
+#| label: GQ3.1
+#| code-summary: Read and format data
+# Include and execute your code here
+graph_sprice= (
+    alt.Chart(dwell_ml)
+    .mark_circle()
+    .encode(
+        x=alt.X('yrbuilt', title='Year Built', scale=alt.Scale(zero=False)),
+        y=alt.Y('mean(sprice)', title='Average Selling Price', scale=alt.Scale(type='log')), 
+        color=alt.Color("before1980:N", title='Built Before 1980')
+    )
+    .properties(title='Average Selling Price of Home by Year')
+)
+
+graph_sprice
+
+```
+
+
+
+
+
+
+
+
 
 
 
@@ -238,14 +385,14 @@ _include figures in chunks and discuss your findings in the figure._
 
 __Describe the quality of your classification model using 2-3 different evaluation metrics. You also need to explain how to interpret each of the evaluation metrics you use.__
 
-_type your results and analysis here_
+_I used a tool called pycaret that ran the model ten times and calculated the average of a variety of evaluation metrics (refer to the table below). I will go over the accuracy, recall, and precision evaluation metrics. The average accuracy of my model being run ten times was about 92%, this means that the model on average correctly predicted the target for 92% of the instances in the dataset. Accuracy is a measure of the overall correctness of the model's predictions. The average recall of my model being run ten times was about 94%, this means that my model successfully identified and correctly predicted on average 94% of the positive instances in the dataset. Recall, also known as sensitivity or true positive rate, is a measure of how well the model identifies the positive class. The average precision of my model being run ten times was about 93%, this means that when the model predicts a positive class label, it is correct approximately 93% of the time. Precision is a measure of the model's ability to avoid false positives._
 
 ```{python}
 #| label: GQ4
 #| code-summary: Read and format data
 # Include and execute your code here
 
-
+rf = create_model('rf')
 ```
 
 _include figures in chunks and discuss your findings in the figure._

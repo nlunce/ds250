@@ -1,0 +1,1 @@
+[{"attribute":"arcstyle_ONE_STORY","target":"arcstyle_ONE_STORY","correlation":1.0},{"attribute":"arcstyle_ONE_STORY","target":"before1980","correlation":0.499333257919328},{"attribute":"before1980","target":"arcstyle_ONE_STORY","correlation":0.499333257919328},{"attribute":"before1980","target":"before1980","correlation":1.0}]
