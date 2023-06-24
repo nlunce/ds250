@@ -1,7 +1,7 @@
 ---
-title: "Client Report - [Insert Project Title]"
+title: "Client Report - Project 5"
 subtitle: "Course DS 250"
-author: "[STUDENT NAME]"
+author: "Nathan Lunceford"
 format:
   html:
     self-contained: true
@@ -33,6 +33,10 @@ import numpy as np
 from IPython.display import Markdown
 from IPython.display import display
 from tabulate import tabulate
+
+# Load Data
+df = pd.read_csv('StarWars.csv', encoding='latin1')
+
 ```
 
 
@@ -51,7 +55,7 @@ __Highlight the grand questions__
 
 ## GRAND QUESTION 1
 
-__COPY PASTE GRAND QUESTION 1 FROM THE PROJECT HERE__
+__Shorten the column names and clean them up for easier use with pandas. Provide a table or list that exemplifies how you fixed the names.__
 
 _type your results and analysis here_
 
@@ -61,47 +65,114 @@ _type your results and analysis here_
 # Include and execute your code here
 
 
+new_column_names = {
+    'RespondentID': 'id',
+    'Have you seen any of the 6 films in the Star Wars franchise?': 'seen_star_wars',
+    'Do you consider yourself to be a fan of the Star Wars film franchise?': 'star_wars_fan',
+    'Which of the following Star Wars films have you seen? Please select all that apply.': 'seen_film_1',
+    'Unnamed: 4': 'seen_film_2',
+    'Unnamed: 5': 'seen_film_3',
+    'Unnamed: 6': 'seen_film_4',
+    'Unnamed: 7': 'seen_film_5',
+    'Unnamed: 8': 'seen_film_6',
+    'Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.': 'film_1_preference',
+    'Unnamed: 10': 'film_2_preference',
+    'Unnamed: 11': 'film_3_preference',
+    'Unnamed: 12': 'film_4_preference',
+    'Unnamed: 13': 'film_5_preference',
+    'Unnamed: 14': 'film_6_preference',
+    'Please state whether you view the following characters favorably, unfavorably, or are unfamiliar with him/her.': 'han_solo_view',
+    'Unnamed: 16': 'luke_skywalker_view',
+    'Unnamed: 17': 'princess_leia_view',
+    'Unnamed: 18': 'anakin_skywalker_view',
+    'Unnamed: 19': 'obi_wan_kenobi_view',
+    'Unnamed: 20': 'emperor_palpatine_view',
+    'Unnamed: 21': 'darth_vader_view',
+    'Unnamed: 22': 'lando_calrissian_view',
+    'Unnamed: 23': 'boba_fett_view',
+    'Unnamed: 24': 'c3p0_view',
+    'Unnamed: 25': 'r2d2_view',
+    'Unnamed: 26': 'jar_jar_binks_view',
+    'Unnamed: 27': 'padme_amidala_view',
+    'Unnamed: 28': 'yoda_view',
+    'Which character shot first?': 'shot_first',
+    'Are you familiar with the Expanded Universe?': 'familiar_expanded_universe',
+    'Do you consider yourself to be a fan of the Expanded Universe?æ': 'expanded_universe_fan',
+    'Do you consider yourself to be a fan of the Star Trek franchise?': 'star_trek_fan',
+    'Gender': 'gender',
+    'Age': 'age',
+    'Household Income': 'income',
+    'Education': 'education',
+    'Location (Census Region)': 'region'
+}
+
+df.rename(columns=new_column_names, inplace=True)
+
+# Original column names
+original_column_names = [
+    'RespondentID',
+    'Have you seen any of the 6 films in the Star Wars franchise?',
+    'Do you consider yourself to be a fan of the Star Wars film franchise?',
+    'Which of the following Star Wars films have you seen? Please select all that apply.',
+    'Unnamed: 4', 'Unnamed: 5', 'Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8',
+    'Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.',
+    'Unnamed: 10', 'Unnamed: 11', 'Unnamed: 12', 'Unnamed: 13',
+    'Unnamed: 14',
+    'Please state whether you view the following characters favorably, unfavorably, or are unfamiliar with him/her.',
+    'Unnamed: 16', 'Unnamed: 17', 'Unnamed: 18', 'Unnamed: 19',
+    'Unnamed: 20', 'Unnamed: 21', 'Unnamed: 22', 'Unnamed: 23',
+    'Unnamed: 24', 'Unnamed: 25', 'Unnamed: 26', 'Unnamed: 27',
+    'Unnamed: 28', 'Which character shot first?',
+    'Are you familiar with the Expanded Universe?',
+    'Do you consider yourself to be a fan of the Expanded Universe?æ',
+    'Do you consider yourself to be a fan of the Star Trek franchise?',
+    'Gender', 'Age', 'Household Income', 'Education',
+    'Location (Census Region)'
+]
+
+# Renamed column names
+new_column_names = [
+    'id', 'seen_star_wars', 'star_wars_fan', 'seen_film_1', 'seen_film_2',
+       'seen_film_3', 'seen_film_4', 'seen_film_5', 'seen_film_6',
+       'film_1_preference', 'film_2_preference', 'film_3_preference',
+       'film_4_preference', 'film_5_preference', 'film_6_preference',
+       'han_solo_view', 'luke_skywalker_view', 'princess_leia_view',
+       'anakin_skywalker_view', 'obi_wan_kenobi_view',
+       'emperor_palpatine_view', 'darth_vader_view', 'lando_calrissian_view',
+       'boba_fett_view', 'c3p0_view', 'r2d2_view', 'jar_jar_binks_view',
+       'padme_amidala_view', 'yoda_view', 'shot_first',
+       'familiar_expanded_universe', 'expanded_universe_fan', 'star_trek_fan',
+       'gender', 'age', 'income', 'education', 'region'
+]
+
+
+table_df = pd.DataFrame({'Original Name': original_column_names, 'Renamed Name': new_column_names})
+
+table_df
+
+
 ```
 
 _include figures in chunks and discuss your findings in the figure._
 
-```{python}
-#| label: GQ1 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x="name", y="AK")\
-    .mark_bar()\
-    .properties(
-        width=800,
-        height=300
-    )
-```
-
-
-```{python}
-#| label: GQ1 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
-
-```
 
 
 ## GRAND QUESTION 2
 
-__COPY PASTE GRAND QUESTION FROM THE PROJECT HERE__
+__Clean and format the data so that it can be used in a machine learning model. As you format the data, you should complete each item listed below. In your final report provide example(s) of the reformatted data with a short description of the changes made.__
+
+__A. Filter the dataset to respondents that have seen at least one film.__
+
+__B. Create a new column that converts the age ranges to a single number. Drop the age range categorical column.__
+
+__C. Create a new column that converts the education groupings to a single number. Drop the school categorical column__
+
+__D. Create a new column that converts the income ranges to a single number. Drop the income range categorical column.__
+
+__E. Create your target (also known as “y” or “label”) column based on the new income range column.__
+
+__F. One-hot encode all remaining categorical columns.__
+
 
 _type your results and analysis here_
 
@@ -115,39 +186,11 @@ _type your results and analysis here_
 
 _include figures in chunks and discuss your findings in the figure._
 
-```{python}
-#| label: GQ2 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x = "name", y = "AK")\
-    .mark_bar()
-```
-
-
-```{python}
-#| label: GQ2 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
-
-```
 
 
 ## GRAND QUESTION 3
 
-__COPY PASTE GRAND QUESTION FROM THE PROJECT HERE__
+__Validate that the data provided on GitHub lines up with the article by recreating 2 of the visuals from the article.__
 
 _type your results and analysis here_
 
@@ -161,34 +204,23 @@ _type your results and analysis here_
 
 _include figures in chunks and discuss your findings in the figure._
 
-```{python}
-#| label: GQ3 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-alt.Chart(dat.head(200))\
-    .encode(x = "name", y = "AK")\
-    .mark_bar()
-```
 
+## GRAND QUESTION 4
+
+__Build a machine learning model that predicts whether a person makes more than $50k. Describe your model and report the accuracy.__
+
+_type your results and analysis here_
 
 ```{python}
-#| label: GQ3 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
+#| label: GQ4
+#| code-summary: Read and format data
 # Include and execute your code here
-mydat = dat.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
 
-display(mydat)
 
 ```
+
+_include figures in chunks and discuss your findings in the figure._
+
 
 
 
