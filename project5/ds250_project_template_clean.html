@@ -3049,7 +3049,7 @@ vertical-align: -.125em;
 </nav>
 <section id="elevator-pitch" class="level2">
 <h2 class="anchored" data-anchor-id="elevator-pitch">Elevator pitch</h2>
-<p><em>paste your elevator pitch here</em></p>
+<p><em>In this project, I demonstrate how to clean and format data so that it is tidy. I also demonstrate how to create a machine learning model from data that is untidy.</em></p>
 <div id="project-data" class="cell" data-execution_count="2">
 <details>
 <summary>Read and format project data</summary>
@@ -3062,7 +3062,6 @@ vertical-align: -.125em;
 <section id="grand-question-1" class="level2">
 <h2 class="anchored" data-anchor-id="grand-question-1">GRAND QUESTION 1</h2>
 <p><strong>Shorten the column names and clean them up for easier use with pandas. Provide a table or list that exemplifies how you fixed the names.</strong></p>
-<p><em>type your results and analysis here</em></p>
 <div class="cell" data-execution_count="3">
 <details>
 <summary>Read and format data</summary>
@@ -3154,7 +3153,7 @@ vertical-align: -.125em;
 <span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>table_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="gq1" class="cell-output cell-output-display" data-execution_count="3">
+<div id="gq1" class="cell-output cell-output-display" data-execution_count="174">
 <div>
 
 
@@ -3368,16 +3367,10 @@ vertical-align: -.125em;
 <section id="grand-question-2" class="level2">
 <h2 class="anchored" data-anchor-id="grand-question-2">GRAND QUESTION 2</h2>
 <p><strong>Clean and format the data so that it can be used in a machine learning model. As you format the data, you should complete each item listed below. In your final report provide example(s) of the reformatted data with a short description of the changes made.</strong></p>
-<p><strong>A. Filter the dataset to respondents that have seen at least one film.</strong></p>
-<p><strong>B. Create a new column that converts the age ranges to a single number. Drop the age range categorical column.</strong></p>
-<p><strong>C. Create a new column that converts the education groupings to a single number. Drop the school categorical column</strong></p>
-<p><strong>D. Create a new column that converts the income ranges to a single number. Drop the income range categorical column.</strong></p>
-<p><strong>E. Create your target (also known as “y” or “label”) column based on the new income range column.</strong></p>
-<p><strong>F. One-hot encode all remaining categorical columns.</strong></p>
-<p><em>type your results and analysis here</em></p>
+<p><em>I have included some self explanatory tables that reflect the changes I made to the data. In summary, I converted qualitative data into quantitative data that I can train a machine learning model on.</em></p>
 <div id="gq2" class="cell" data-execution_count="4">
 <details>
-<summary>Read and format data</summary>
+<summary>GQ2 Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename Columns</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>new_column_names <span class="op">=</span> {</span>
@@ -3558,91 +3551,624 @@ vertical-align: -.125em;
 <span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;region&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;region&#39;</span>].<span class="bu">map</span>(region_numerical)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><em>include figures in chunks and discuss your findings in the figure.</em></p>
+<p><strong>A. Filter the dataset to respondents that have seen at least one film.</strong></p>
+<p><em>Refer to “GQ2 Code”</em></p>
+<p><strong>B. Create a new column that converts the age ranges to a single number. Drop the age range categorical column.</strong></p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>old_age <span class="op">=</span> [</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;18-29&#39;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;30-44&#39;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;45-60&#39;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;&gt; 60&#39;</span>]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>new_age <span class="op">=</span> [<span class="dv">0</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>table_df <span class="op">=</span> pd.DataFrame({<span class="st">&#39;Original Age Values&#39;</span>: old_age, <span class="st">&#39;New Age Values&#39;</span>: new_age})</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>table_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq2.b" class="cell-output cell-output-display" data-execution_count="176">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Original Age Values</th>
+<th data-quarto-table-cell-role="th">New Age Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>18-29</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>30-44</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>45-60</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>&gt; 60</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>C. Create a new column that converts the education groupings to a single number. Drop the school categorical column</strong></p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>old_education <span class="op">=</span> [</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Less than high school degree&#39;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;High school degree&#39;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Some college or Associate degree&#39;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Bachelor degree&#39;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Graduate degree&#39;</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>new_education <span class="op">=</span> [<span class="dv">0</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span>]</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>table_df <span class="op">=</span> pd.DataFrame({<span class="st">&#39;Original Education Values&#39;</span>: old_education, <span class="st">&#39;New Education Values&#39;</span>: new_education})</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>table_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq2.c" class="cell-output cell-output-display" data-execution_count="177">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Original Education Values</th>
+<th data-quarto-table-cell-role="th">New Education Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Less than high school degree</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>High school degree</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Some college or Associate degree</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Bachelor degree</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Graduate degree</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>D. Create a new column that converts the income ranges to a single number. Drop the income range categorical column.</strong></p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>income_numerical <span class="op">=</span> {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    np.nan: <span class="dv">0</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;$0 - $24,999&#39;</span>: <span class="dv">1</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;$25,000 - $49,999&#39;</span>: <span class="dv">2</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;$50,000 - $99,999&#39;</span>: <span class="dv">3</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;$100,000 - $149,999&#39;</span>: <span class="dv">4</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;$150,000+&#39;</span>: <span class="dv">5</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>old_income <span class="op">=</span> <span class="bu">list</span>(income_numerical.keys())</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>new_income <span class="op">=</span> <span class="bu">list</span>(income_numerical.values())</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>table_df <span class="op">=</span> pd.DataFrame({<span class="st">&#39;Original Income Values&#39;</span>: old_income, <span class="st">&#39;New Income Values&#39;</span>: new_income})</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>table_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq2.d" class="cell-output cell-output-display" data-execution_count="178">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Original Income Values</th>
+<th data-quarto-table-cell-role="th">New Income Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>$0 - $24,999</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>$25,000 - $49,999</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>$50,000 - $99,999</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>$100,000 - $149,999</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>$150,000+</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>E. Create your target (also known as “y” or “label”) column based on the new income range column.</strong></p>
+<p><em>Refer to “GQ2 Code”</em></p>
+<p><strong>F. One-hot encode all remaining categorical columns.</strong></p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>character_view_numerical <span class="op">=</span> {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    np.nan: <span class="dv">0</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unfamiliar (N/A)&#39;</span>: <span class="dv">1</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Very unfavorably&#39;</span>: <span class="dv">2</span>, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Somewhat unfavorably&#39;</span>: <span class="dv">3</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Neither favorably nor unfavorably (neutral)&#39;</span>: <span class="dv">4</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Somewhat favorably&#39;</span>: <span class="dv">5</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Very favorably&#39;</span>: <span class="dv">6</span>,                       </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>old_character_view <span class="op">=</span> <span class="bu">list</span>(character_view_numerical.keys())</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>new_character_view <span class="op">=</span> <span class="bu">list</span>(character_view_numerical.values())</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>table_df <span class="op">=</span> pd.DataFrame({<span class="st">&#39;Original Character View Values&#39;</span>: old_character_view, <span class="st">&#39;New Character View Values&#39;</span>: new_character_view})</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>table_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq2.e" class="cell-output cell-output-display" data-execution_count="179">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Original Character View Values</th>
+<th data-quarto-table-cell-role="th">New Character View Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>NaN</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Unfamiliar (N/A)</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Very unfavorably</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Somewhat unfavorably</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Neither favorably nor unfavorably (neutral)</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Somewhat favorably</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Very favorably</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>shot_first_numerical <span class="op">=</span> {</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;I don&#39;t understand this question&quot;</span>: <span class="dv">0</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Greedo&#39;</span>: <span class="dv">1</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Han&#39;</span>: <span class="dv">2</span>,                      </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>old <span class="op">=</span> <span class="bu">list</span>(shot_first_numerical.keys())</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>new <span class="op">=</span> <span class="bu">list</span>(shot_first_numerical.values())</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>table_df <span class="op">=</span> pd.DataFrame({<span class="st">&#39;Original Shot First Values&#39;</span>: old, <span class="st">&#39;New Shot First Values&#39;</span>: new})</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>table_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq2.f" class="cell-output cell-output-display" data-execution_count="180">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Original Shot First Values</th>
+<th data-quarto-table-cell-role="th">New Shot First Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>I don&#39;t understand this question</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Greedo</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Han</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>familiar_expanded_universe_numerical <span class="op">=</span> {</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;No&#39;</span>: <span class="dv">0</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Yes&#39;</span>: <span class="dv">1</span>,                      </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>old <span class="op">=</span> <span class="bu">list</span>(familiar_expanded_universe_numerical.keys())</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>new <span class="op">=</span> <span class="bu">list</span>(familiar_expanded_universe_numerical.values())</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>table_df <span class="op">=</span> pd.DataFrame({<span class="st">&#39;Original Familiar with Expanded Universe Values&#39;</span>: old, <span class="st">&#39;New Familiar with Expanded Universe Values&#39;</span>: new})</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>table_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq2.g" class="cell-output cell-output-display" data-execution_count="181">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Original Familiar with Expanded Universe Values</th>
+<th data-quarto-table-cell-role="th">New Familiar with Expanded Universe Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>No</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Yes</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>star_trek_fan_numerical <span class="op">=</span> {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;No&#39;</span>: <span class="dv">0</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Yes&#39;</span>: <span class="dv">1</span>,                      </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>old <span class="op">=</span> <span class="bu">list</span>(star_trek_fan_numerical.keys())</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>new <span class="op">=</span> <span class="bu">list</span>(star_trek_fan_numerical.values())</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>table_df <span class="op">=</span> pd.DataFrame({<span class="st">&#39;Original Star Trek Fan Values&#39;</span>: old, <span class="st">&#39;New Star Trek Fan Values&#39;</span>: new})</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>table_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq2.h" class="cell-output cell-output-display" data-execution_count="182">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Original Star Trek Fan Values</th>
+<th data-quarto-table-cell-role="th">New Star Trek Fan Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>No</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Yes</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>gender_numerical <span class="op">=</span> {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Male&#39;</span>: <span class="dv">0</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Female&#39;</span>: <span class="dv">1</span>,                      </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>old <span class="op">=</span> <span class="bu">list</span>(gender_numerical.keys())</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>new <span class="op">=</span> <span class="bu">list</span>(gender_numerical.values())</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>table_df <span class="op">=</span> pd.DataFrame({<span class="st">&#39;Original Gender Values&#39;</span>: old, <span class="st">&#39;New Gender Values&#39;</span>: new})</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>table_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq2.i" class="cell-output cell-output-display" data-execution_count="183">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Original Gender Values</th>
+<th data-quarto-table-cell-role="th">New Gender Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Male</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Female</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>region_numerical <span class="op">=</span> {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;South Atlantic&#39;</span>: <span class="dv">0</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;West North Central&#39;</span>: <span class="dv">1</span>, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Middle Atlantic&#39;</span>: <span class="dv">2</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;East North Central&#39;</span>: <span class="dv">3</span>, </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Pacific&#39;</span>: <span class="dv">4</span>, </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Mountain&#39;</span>: <span class="dv">5</span>, </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;West South Central&#39;</span>: <span class="dv">6</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;New England&#39;</span>: <span class="dv">7</span>, </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;East South Central&#39;</span>: <span class="dv">8</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>old <span class="op">=</span> <span class="bu">list</span>(region_numerical.keys())</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>new <span class="op">=</span> <span class="bu">list</span>(region_numerical.values())</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>table_df <span class="op">=</span> pd.DataFrame({<span class="st">&#39;Original Region Values&#39;</span>: old, <span class="st">&#39;New Region Values&#39;</span>: new})</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>table_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq2.j" class="cell-output cell-output-display" data-execution_count="184">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Original Region Values</th>
+<th data-quarto-table-cell-role="th">New Region Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>South Atlantic</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>West North Central</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Middle Atlantic</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>East North Central</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Pacific</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Mountain</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>West South Central</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>New England</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>East South Central</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="grand-question-3" class="level2">
 <h2 class="anchored" data-anchor-id="grand-question-3">GRAND QUESTION 3</h2>
 <p><strong>Validate that the data provided on GitHub lines up with the article by recreating 2 of the visuals from the article.</strong></p>
 <p><em>type your results and analysis here</em></p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="14">
 <details>
 <summary>Read and format data</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_melted <span class="op">=</span> df.melt(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span>[<span class="st">&quot;id&quot;</span>],</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    value_vars<span class="op">=</span>[<span class="st">&quot;seen_film_1&quot;</span>, <span class="st">&quot;seen_film_2&quot;</span>, <span class="st">&quot;seen_film_3&quot;</span>, <span class="st">&quot;seen_film_4&quot;</span>, <span class="st">&quot;seen_film_5&quot;</span>, <span class="st">&quot;seen_film_6&quot;</span>],</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">&quot;film&quot;</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    value_name<span class="op">=</span><span class="st">&quot;seen&quot;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename the film labels</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>film_labels <span class="op">=</span> {</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_1&quot;</span>: <span class="st">&quot;The Phantom Menace&quot;</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_2&quot;</span>: <span class="st">&quot;Attack of the Clones&quot;</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_3&quot;</span>: <span class="st">&quot;Revenge of the Sith&quot;</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_4&quot;</span>: <span class="st">&quot;A New Hope&quot;</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_5&quot;</span>: <span class="st">&quot;The Empire Strikes Back&quot;</span>,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_6&quot;</span>: <span class="st">&quot;Return of the Jedi&quot;</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>df_melted[<span class="st">&quot;film&quot;</span>] <span class="op">=</span> df_melted[<span class="st">&quot;film&quot;</span>].replace(film_labels)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Calculate the percentage of people who have seen each film</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>df_percentage <span class="op">=</span> (</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    df_melted.groupby(<span class="st">&quot;film&quot;</span>)[<span class="st">&quot;seen&quot;</span>].mean() <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>df_percentage[<span class="st">&quot;seen&quot;</span>] <span class="op">=</span> df_percentage[<span class="st">&quot;seen&quot;</span>].<span class="bu">round</span>()</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>df_percentage[<span class="st">&quot;seen&quot;</span>] <span class="op">=</span> df_percentage[<span class="st">&#39;seen&#39;</span>]<span class="op">/</span><span class="dv">100</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the order of the films</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>film_order <span class="op">=</span> [</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The Phantom Menace&quot;</span>,</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Attack of the Clones&quot;</span>,</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Revenge of the Sith&quot;</span>,</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;A New Hope&quot;</span>,</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The Empire Strikes Back&quot;</span>,</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Return of the Jedi&quot;</span>,</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Create the bar graph with percentage labels</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>bar_graph <span class="op">=</span> (</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    alt.Chart(df_percentage)</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;film:N&quot;</span>,</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            sort<span class="op">=</span>film_order,</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">&quot;seen:Q&quot;</span>, axis<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>        text<span class="op">=</span>alt.Text(<span class="st">&quot;seen:Q&quot;</span>, <span class="bu">format</span><span class="op">=</span><span class="st">&quot;.0%&quot;</span>),</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;film:N&quot;</span>, title<span class="op">=</span><span class="st">&quot;Film&quot;</span>),</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;seen:Q&quot;</span>, title<span class="op">=</span><span class="st">&quot;</span><span class="sc">% o</span><span class="st">f People&quot;</span>),</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    .properties(</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span>{</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;text&quot;</span>: <span class="st">&quot;Which &#39;Star Wars&#39; Movies Have You Seen?&quot;</span>,</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;subtitle&quot;</span>: <span class="st">&quot;Of 835 respondents who have seen any film&quot;</span>,</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;anchor&quot;</span>: <span class="st">&quot;start&quot;</span>,</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Add text labels to the bars</span></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>bar_graph <span class="op">=</span> bar_graph <span class="op">+</span> bar_graph.mark_text(align<span class="op">=</span><span class="st">&#39;left&#39;</span>, dx<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>bar_graph</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df_melted <span class="op">=</span> df.melt(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span>[<span class="st">&quot;id&quot;</span>],</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    value_vars<span class="op">=</span>[<span class="st">&quot;seen_film_1&quot;</span>, <span class="st">&quot;seen_film_2&quot;</span>, <span class="st">&quot;seen_film_3&quot;</span>, <span class="st">&quot;seen_film_4&quot;</span>, <span class="st">&quot;seen_film_5&quot;</span>, <span class="st">&quot;seen_film_6&quot;</span>],</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">&quot;film&quot;</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    value_name<span class="op">=</span><span class="st">&quot;seen&quot;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename the film labels</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>film_labels <span class="op">=</span> {</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_1&quot;</span>: <span class="st">&quot;The Phantom Menace&quot;</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_2&quot;</span>: <span class="st">&quot;Attack of the Clones&quot;</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_3&quot;</span>: <span class="st">&quot;Revenge of the Sith&quot;</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_4&quot;</span>: <span class="st">&quot;A New Hope&quot;</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_5&quot;</span>: <span class="st">&quot;The Empire Strikes Back&quot;</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_6&quot;</span>: <span class="st">&quot;Return of the Jedi&quot;</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>df_melted[<span class="st">&quot;film&quot;</span>] <span class="op">=</span> df_melted[<span class="st">&quot;film&quot;</span>].replace(film_labels)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Calculate the percentage of people who have seen each film</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>df_percentage <span class="op">=</span> (</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    df_melted.groupby(<span class="st">&quot;film&quot;</span>)[<span class="st">&quot;seen&quot;</span>].mean() <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>df_percentage[<span class="st">&quot;seen&quot;</span>] <span class="op">=</span> df_percentage[<span class="st">&quot;seen&quot;</span>].<span class="bu">round</span>()</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>df_percentage[<span class="st">&quot;seen&quot;</span>] <span class="op">=</span> df_percentage[<span class="st">&#39;seen&#39;</span>]<span class="op">/</span><span class="dv">100</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the order of the films</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>film_order <span class="op">=</span> [</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The Phantom Menace&quot;</span>,</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Attack of the Clones&quot;</span>,</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Revenge of the Sith&quot;</span>,</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;A New Hope&quot;</span>,</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The Empire Strikes Back&quot;</span>,</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Return of the Jedi&quot;</span>,</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Create the bar graph with percentage labels</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>bar_graph <span class="op">=</span> (</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>    alt.Chart(df_percentage)</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;film:N&quot;</span>,</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>            sort<span class="op">=</span>film_order,</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">&quot;seen:Q&quot;</span>, axis<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>        text<span class="op">=</span>alt.Text(<span class="st">&quot;seen:Q&quot;</span>, <span class="bu">format</span><span class="op">=</span><span class="st">&quot;.0%&quot;</span>),</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;film:N&quot;</span>, title<span class="op">=</span><span class="st">&quot;Film&quot;</span>),</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;seen:Q&quot;</span>, title<span class="op">=</span><span class="st">&quot;</span><span class="sc">% o</span><span class="st">f People&quot;</span>),</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>    .properties(</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span>{</span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;text&quot;</span>: <span class="st">&quot;Which &#39;Star Wars&#39; Movies Have You Seen?&quot;</span>,</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;subtitle&quot;</span>: <span class="st">&quot;Of 835 respondents who have seen any film&quot;</span>,</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;anchor&quot;</span>: <span class="st">&quot;start&quot;</span>,</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Add text labels to the bars</span></span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>bar_graph <span class="op">=</span> bar_graph <span class="op">+</span> bar_graph.mark_text(align<span class="op">=</span><span class="st">&#39;left&#39;</span>, dx<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>bar_graph</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="gq3" class="cell-output cell-output-display" data-execution_count="5">
+<div id="gq3" class="cell-output cell-output-display" data-execution_count="185">
 
-<div id="altair-viz-737b75fa21374375843016afdd37b0e1"></div>
+<div id="altair-viz-9aef4b24a1144a609d1959b6a2419139"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-737b75fa21374375843016afdd37b0e1") {
-      outputDiv = document.getElementById("altair-viz-737b75fa21374375843016afdd37b0e1");
+    if (outputDiv.id !== "altair-viz-9aef4b24a1144a609d1959b6a2419139") {
+      outputDiv = document.getElementById("altair-viz-9aef4b24a1144a609d1959b6a2419139");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
@@ -3692,63 +4218,63 @@ vertical-align: -.125em;
 </script>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="15">
 <details>
 <summary>Read and format data</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_shot_first <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;shot_first&quot;</span>: [<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;shot_first_label&quot;</span>: [<span class="st">&quot;Han&quot;</span>, <span class="st">&quot;Greedo&quot;</span>, <span class="st">&quot;I don&#39;t understand this question&quot;</span>]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Merge the shot_first labels with the original DataFrame</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> pd.merge(df, df_shot_first, on<span class="op">=</span><span class="st">&quot;shot_first&quot;</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Group by shot_first_label and calculate the percentage</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>df_percentage <span class="op">=</span> (</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    df_merged.groupby(<span class="st">&quot;shot_first_label&quot;</span>).size() <span class="op">/</span> <span class="bu">len</span>(df_merged) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>).reset_index(name<span class="op">=</span><span class="st">&quot;percentage&quot;</span>).<span class="bu">round</span>()</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>df_percentage[<span class="st">&quot;percentage&quot;</span>] <span class="op">=</span> df_percentage[<span class="st">&#39;percentage&#39;</span>]<span class="op">/</span><span class="dv">100</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>bar_graph2 <span class="op">=</span> (</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    alt.Chart(df_percentage)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;shot_first_label:N&quot;</span>,</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            sort<span class="op">=</span>[<span class="st">&quot;Han&quot;</span>, <span class="st">&quot;Greedo&quot;</span>, <span class="st">&quot;I don&#39;t understand this question&quot;</span>],</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">&quot;percentage:Q&quot;</span>, axis<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        text<span class="op">=</span>alt.Text(<span class="st">&#39;percentage:Q&#39;</span>, <span class="bu">format</span><span class="op">=</span><span class="st">&#39;.0%&#39;</span>),</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;shot_first_label:N&quot;</span>, title<span class="op">=</span><span class="st">&quot;Shot First&quot;</span>),</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;percentage:Q&quot;</span>, title<span class="op">=</span><span class="st">&quot;% Percentage&quot;</span>),</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    .properties(</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>         title<span class="op">=</span>{</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;text&quot;</span>: <span class="st">&quot;Who Shot First?&quot;</span>,</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;subtitle&quot;</span>: <span class="st">&quot;According to 834 respondents&quot;</span>,</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;anchor&quot;</span>: <span class="st">&quot;start&quot;</span>,</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>bar_graph2 <span class="op">=</span> bar_graph2 <span class="op">+</span> bar_graph2.mark_text(align<span class="op">=</span><span class="st">&#39;left&#39;</span>, dx<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>bar_graph2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_shot_first <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;shot_first&quot;</span>: [<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;shot_first_label&quot;</span>: [<span class="st">&quot;Han&quot;</span>, <span class="st">&quot;Greedo&quot;</span>, <span class="st">&quot;I don&#39;t understand this question&quot;</span>]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Merge the shot_first labels with the original DataFrame</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> pd.merge(df, df_shot_first, on<span class="op">=</span><span class="st">&quot;shot_first&quot;</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Group by shot_first_label and calculate the percentage</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>df_percentage <span class="op">=</span> (</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    df_merged.groupby(<span class="st">&quot;shot_first_label&quot;</span>).size() <span class="op">/</span> <span class="bu">len</span>(df_merged) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>).reset_index(name<span class="op">=</span><span class="st">&quot;percentage&quot;</span>).<span class="bu">round</span>()</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>df_percentage[<span class="st">&quot;percentage&quot;</span>] <span class="op">=</span> df_percentage[<span class="st">&#39;percentage&#39;</span>]<span class="op">/</span><span class="dv">100</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>bar_graph2 <span class="op">=</span> (</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    alt.Chart(df_percentage)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;shot_first_label:N&quot;</span>,</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>            sort<span class="op">=</span>[<span class="st">&quot;Han&quot;</span>, <span class="st">&quot;Greedo&quot;</span>, <span class="st">&quot;I don&#39;t understand this question&quot;</span>],</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">&quot;percentage:Q&quot;</span>, axis<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>        text<span class="op">=</span>alt.Text(<span class="st">&#39;percentage:Q&#39;</span>, <span class="bu">format</span><span class="op">=</span><span class="st">&#39;.0%&#39;</span>),</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;shot_first_label:N&quot;</span>, title<span class="op">=</span><span class="st">&quot;Shot First&quot;</span>),</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;percentage:Q&quot;</span>, title<span class="op">=</span><span class="st">&quot;% Percentage&quot;</span>),</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>    .properties(</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>         title<span class="op">=</span>{</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;text&quot;</span>: <span class="st">&quot;Who Shot First?&quot;</span>,</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;subtitle&quot;</span>: <span class="st">&quot;According to 834 respondents&quot;</span>,</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;anchor&quot;</span>: <span class="st">&quot;start&quot;</span>,</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>bar_graph2 <span class="op">=</span> bar_graph2 <span class="op">+</span> bar_graph2.mark_text(align<span class="op">=</span><span class="st">&#39;left&#39;</span>, dx<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>bar_graph2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="gq3.2" class="cell-output cell-output-display" data-execution_count="6">
+<div id="gq3.2" class="cell-output cell-output-display" data-execution_count="186">
 
-<div id="altair-viz-926f1cfeb3e343ebaa6eb5a88e3a6985"></div>
+<div id="altair-viz-44bbd81954c249c2849af6725f373b5a"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-926f1cfeb3e343ebaa6eb5a88e3a6985") {
-      outputDiv = document.getElementById("altair-viz-926f1cfeb3e343ebaa6eb5a88e3a6985");
+    if (outputDiv.id !== "altair-viz-44bbd81954c249c2849af6725f373b5a") {
+      outputDiv = document.getElementById("altair-viz-44bbd81954c249c2849af6725f373b5a");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
@@ -3803,18 +4329,43 @@ vertical-align: -.125em;
 <section id="grand-question-4" class="level2">
 <h2 class="anchored" data-anchor-id="grand-question-4">GRAND QUESTION 4</h2>
 <p><strong>Build a machine learning model that predicts whether a person makes more than $50k. Describe your model and report the accuracy.</strong></p>
-<p><em>type your results and analysis here</em></p>
-<div id="gq4" class="cell" data-execution_count="7">
+<p><em>For my machine learning model, I used the Random Forest Classifier. I used all of the columns as features except for the target itself and the id column. I did not use any specific tuning parameters. The accuracy I achieved on my model was 100%.</em></p>
+<div id="gq4" class="cell" data-execution_count="16">
 <details>
 <summary>Read and format data</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna()</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>new_df <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">&#39;id&#39;</span>])</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>df_features<span class="op">=</span> new_df.drop(columns<span class="op">=</span>[<span class="st">&#39;income50k+&#39;</span>]).columns</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>features  <span class="op">=</span> df_features.to_list()</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Train model</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[features]</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">&#39;income50k+&#39;</span>]</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">.3</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> RandomForestClassifier()</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, y_train)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> accuracy_score(y_test, predictions)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Accuracy Score: </span><span class="sc">{</span>score <span class="op">*</span> <span class="dv">100</span><span class="sc">: .3f}</span><span class="ss">%&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy Score:  100.000%</code></pre>
+</div>
 </div>
 <p><em>include figures in chunks and discuss your findings in the figure.</em></p>
 </section>
 <section id="appendix-a-additional-python-code" class="level2">
 <h2 class="anchored" data-anchor-id="appendix-a-additional-python-code">APPENDIX A (Additional Python Code)</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#paste other your code from your python file (.py) here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#paste other your code from your python file (.py) here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 
 </main>

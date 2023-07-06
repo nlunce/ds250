@@ -26,13 +26,25 @@ format:
 ```{python}
 #| label: libraries
 #| include: false
+# Importing
 import pandas as pd
 import altair as alt
 import numpy as np
 
+
 from IPython.display import Markdown
 from IPython.display import display
-from tabulate import tabulate
+
+from lightgbm import LGBMClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+
+from sklearn.multioutput import MultiOutputClassifier
 
 # Load Data
 df = pd.read_csv('StarWars.csv', encoding='latin1')
@@ -42,7 +54,7 @@ df = pd.read_csv('StarWars.csv', encoding='latin1')
 
 ## Elevator pitch
 
-_paste your elevator pitch here_
+_In this project, I demonstrate how to clean and format data so that it is tidy. I also demonstrate how to create a machine learning model from data that is untidy._
 
 ```{python}
 #| label: project data
@@ -57,7 +69,6 @@ __Highlight the grand questions__
 
 __Shorten the column names and clean them up for easier use with pandas. Provide a table or list that exemplifies how you fixed the names.__
 
-_type your results and analysis here_
 
 ```{python}
 #| label: GQ1
@@ -161,24 +172,11 @@ _include figures in chunks and discuss your findings in the figure._
 
 __Clean and format the data so that it can be used in a machine learning model. As you format the data, you should complete each item listed below. In your final report provide example(s) of the reformatted data with a short description of the changes made.__
 
-__A. Filter the dataset to respondents that have seen at least one film.__
-
-__B. Create a new column that converts the age ranges to a single number. Drop the age range categorical column.__
-
-__C. Create a new column that converts the education groupings to a single number. Drop the school categorical column__
-
-__D. Create a new column that converts the income ranges to a single number. Drop the income range categorical column.__
-
-__E. Create your target (also known as “y” or “label”) column based on the new income range column.__
-
-__F. One-hot encode all remaining categorical columns.__
-
-
-_type your results and analysis here_
+_I have included some self explanatory tables that reflect the changes I made to the data. In summary, I converted qualitative data into quantitative data that I can train a machine learning model on._
 
 ```{python}
 #| label: GQ2
-#| code-summary: Read and format data
+#| code-summary: GQ2 Code
 # Include and execute your code here
 # Rename Columns
 new_column_names = {
@@ -358,11 +356,183 @@ region_numerical = {
 
 df['region'] = df['region'].map(region_numerical)
 
-
 ```
 
-_include figures in chunks and discuss your findings in the figure._
+__A. Filter the dataset to respondents that have seen at least one film.__
 
+_Refer to "GQ2 Code"_
+
+__B. Create a new column that converts the age ranges to a single number. Drop the age range categorical column.__
+```{python}
+#| label: GQ2.b
+#| code-summary: Read and format data
+# Include and execute your code here
+
+old_age = [
+    '18-29',
+    '30-44',
+    '45-60',
+    '> 60']
+
+new_age = [0,
+    1,
+    2,
+    3]
+table_df = pd.DataFrame({'Original Age Values': old_age, 'New Age Values': new_age})
+
+table_df
+```
+
+__C. Create a new column that converts the education groupings to a single number. Drop the school categorical column__
+```{python}
+#| label: GQ2.c
+#| code-summary: Read and format data
+# Include and execute your code here
+
+old_education = [
+    'Less than high school degree',
+    'High school degree',
+    'Some college or Associate degree',
+    'Bachelor degree',
+    'Graduate degree']
+
+new_education = [0,
+    1,
+    2,
+    3,
+    4]
+table_df = pd.DataFrame({'Original Education Values': old_education, 'New Education Values': new_education})
+
+table_df
+```
+
+__D. Create a new column that converts the income ranges to a single number. Drop the income range categorical column.__
+```{python}
+#| label: GQ2.d
+#| code-summary: Read and format data
+# Include and execute your code here
+income_numerical = {
+    np.nan: 0,
+    '$0 - $24,999': 1,
+    '$25,000 - $49,999': 2,
+    '$50,000 - $99,999': 3,
+    '$100,000 - $149,999': 4,
+    '$150,000+': 5
+}
+old_income = list(income_numerical.keys())
+new_income = list(income_numerical.values())
+table_df = pd.DataFrame({'Original Income Values': old_income, 'New Income Values': new_income})
+
+table_df
+```
+__E. Create your target (also known as “y” or “label”) column based on the new income range column.__
+
+_Refer to "GQ2 Code"_
+
+__F. One-hot encode all remaining categorical columns.__
+
+```{python}
+#| label: GQ2.e
+#| code-summary: Read and format data
+# Include and execute your code here
+character_view_numerical = {
+    np.nan: 0,
+    'Unfamiliar (N/A)': 1,
+    'Very unfavorably': 2, 
+    'Somewhat unfavorably': 3,
+    'Neither favorably nor unfavorably (neutral)': 4,
+    'Somewhat favorably': 5,
+    'Very favorably': 6,                       
+}
+old_character_view = list(character_view_numerical.keys())
+new_character_view = list(character_view_numerical.values())
+table_df = pd.DataFrame({'Original Character View Values': old_character_view, 'New Character View Values': new_character_view})
+
+table_df
+```
+
+```{python}
+#| label: GQ2.f
+#| code-summary: Read and format data
+# Include and execute your code here
+shot_first_numerical = {
+    "I don't understand this question": 0,
+    'Greedo': 1,
+    'Han': 2,                      
+}
+old = list(shot_first_numerical.keys())
+new = list(shot_first_numerical.values())
+table_df = pd.DataFrame({'Original Shot First Values': old, 'New Shot First Values': new})
+
+table_df
+```
+
+```{python}
+#| label: GQ2.g
+#| code-summary: Read and format data
+# Include and execute your code here
+familiar_expanded_universe_numerical = {
+    'No': 0,
+    'Yes': 1,                      
+}
+old = list(familiar_expanded_universe_numerical.keys())
+new = list(familiar_expanded_universe_numerical.values())
+table_df = pd.DataFrame({'Original Familiar with Expanded Universe Values': old, 'New Familiar with Expanded Universe Values': new})
+
+table_df
+```
+
+```{python}
+#| label: GQ2.h
+#| code-summary: Read and format data
+# Include and execute your code here
+star_trek_fan_numerical = {
+    'No': 0,
+    'Yes': 1,                      
+}
+old = list(star_trek_fan_numerical.keys())
+new = list(star_trek_fan_numerical.values())
+table_df = pd.DataFrame({'Original Star Trek Fan Values': old, 'New Star Trek Fan Values': new})
+
+table_df
+```
+
+```{python}
+#| label: GQ2.i
+#| code-summary: Read and format data
+# Include and execute your code here
+gender_numerical = {
+    'Male': 0,
+    'Female': 1,                      
+}
+old = list(gender_numerical.keys())
+new = list(gender_numerical.values())
+table_df = pd.DataFrame({'Original Gender Values': old, 'New Gender Values': new})
+
+table_df
+```
+
+```{python}
+#| label: GQ2.j
+#| code-summary: Read and format data
+# Include and execute your code here
+region_numerical = {
+    'South Atlantic': 0, 
+    'West North Central': 1, 
+    'Middle Atlantic': 2,
+    'East North Central': 3, 
+    'Pacific': 4, 
+    'Mountain': 5, 
+    'West South Central': 6,
+    'New England': 7, 
+    'East South Central': 8
+}
+old = list(region_numerical.keys())
+new = list(region_numerical.values())
+table_df = pd.DataFrame({'Original Region Values': old, 'New Region Values': new})
+
+table_df
+```
 
 
 ## GRAND QUESTION 3
@@ -499,14 +669,34 @@ _include figures in chunks and discuss your findings in the figure._
 
 __Build a machine learning model that predicts whether a person makes more than $50k. Describe your model and report the accuracy.__
 
-_type your results and analysis here_
+_For my machine learning model, I used the Random Forest Classifier. I used all of the columns as features except for the target itself and the id column. I did not use any specific tuning parameters. The accuracy I achieved on my model was 100%._
 
 ```{python}
 #| label: GQ4
 #| code-summary: Read and format data
 # Include and execute your code here
+df = df.dropna()
+new_df = df.drop(columns=['id'])
+df_features= new_df.drop(columns=['income50k+']).columns
+
+features  = df_features.to_list()
+# Train model
+X = df[features]
+y = df['income50k+']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.3)
 
 
+classifier = RandomForestClassifier()
+
+
+classifier.fit(X_train, y_train)
+
+predictions = classifier.predict(X_test)
+
+
+score = accuracy_score(y_test, predictions)
+
+print(f"Accuracy Score: {score * 100: .3f}%")
 ```
 
 _include figures in chunks and discuss your findings in the figure._
