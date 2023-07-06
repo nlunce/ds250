@@ -3378,7 +3378,184 @@ vertical-align: -.125em;
 <div id="gq2" class="cell" data-execution_count="4">
 <details>
 <summary>Read and format data</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename Columns</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>new_column_names <span class="op">=</span> {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;RespondentID&#39;</span>: <span class="st">&#39;id&#39;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Have you seen any of the 6 films in the Star Wars franchise?&#39;</span>: <span class="st">&#39;seen_star_wars&#39;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Do you consider yourself to be a fan of the Star Wars film franchise?&#39;</span>: <span class="st">&#39;star_wars_fan&#39;</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Which of the following Star Wars films have you seen? Please select all that apply.&#39;</span>: <span class="st">&#39;seen_film_1&#39;</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 4&#39;</span>: <span class="st">&#39;seen_film_2&#39;</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 5&#39;</span>: <span class="st">&#39;seen_film_3&#39;</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 6&#39;</span>: <span class="st">&#39;seen_film_4&#39;</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 7&#39;</span>: <span class="st">&#39;seen_film_5&#39;</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 8&#39;</span>: <span class="st">&#39;seen_film_6&#39;</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.&#39;</span>: <span class="st">&#39;film_1_preference&#39;</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 10&#39;</span>: <span class="st">&#39;film_2_preference&#39;</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 11&#39;</span>: <span class="st">&#39;film_3_preference&#39;</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 12&#39;</span>: <span class="st">&#39;film_4_preference&#39;</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 13&#39;</span>: <span class="st">&#39;film_5_preference&#39;</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 14&#39;</span>: <span class="st">&#39;film_6_preference&#39;</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Please state whether you view the following characters favorably, unfavorably, or are unfamiliar with him/her.&#39;</span>: <span class="st">&#39;han_solo_view&#39;</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 16&#39;</span>: <span class="st">&#39;luke_skywalker_view&#39;</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 17&#39;</span>: <span class="st">&#39;princess_leia_view&#39;</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 18&#39;</span>: <span class="st">&#39;anakin_skywalker_view&#39;</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 19&#39;</span>: <span class="st">&#39;obi_wan_kenobi_view&#39;</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 20&#39;</span>: <span class="st">&#39;emperor_palpatine_view&#39;</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 21&#39;</span>: <span class="st">&#39;darth_vader_view&#39;</span>,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 22&#39;</span>: <span class="st">&#39;lando_calrissian_view&#39;</span>,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 23&#39;</span>: <span class="st">&#39;boba_fett_view&#39;</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 24&#39;</span>: <span class="st">&#39;c3p0_view&#39;</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 25&#39;</span>: <span class="st">&#39;r2d2_view&#39;</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 26&#39;</span>: <span class="st">&#39;jar_jar_binks_view&#39;</span>,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 27&#39;</span>: <span class="st">&#39;padme_amidala_view&#39;</span>,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unnamed: 28&#39;</span>: <span class="st">&#39;yoda_view&#39;</span>,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Which character shot first?&#39;</span>: <span class="st">&#39;shot_first&#39;</span>,</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Are you familiar with the Expanded Universe?&#39;</span>: <span class="st">&#39;familiar_expanded_universe&#39;</span>,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Do you consider yourself to be a fan of the Expanded Universe?æ&#39;</span>: <span class="st">&#39;expanded_universe_fan&#39;</span>,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Do you consider yourself to be a fan of the Star Trek franchise?&#39;</span>: <span class="st">&#39;star_trek_fan&#39;</span>,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Gender&#39;</span>: <span class="st">&#39;gender&#39;</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Age&#39;</span>: <span class="st">&#39;age&#39;</span>,</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Household Income&#39;</span>: <span class="st">&#39;income&#39;</span>,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Education&#39;</span>: <span class="st">&#39;education&#39;</span>,</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Location (Census Region)&#39;</span>: <span class="st">&#39;region&#39;</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>df.rename(columns<span class="op">=</span>new_column_names, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(<span class="dv">0</span>)</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the dataset to respondents that have seen at least one film.</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.query(<span class="st">&#39;seen_star_wars == &quot;Yes&quot;&#39;</span>)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">&#39;seen_film_1&#39;</span>, <span class="st">&#39;seen_film_2&#39;</span>, <span class="st">&#39;seen_film_3&#39;</span>, <span class="st">&#39;seen_film_4&#39;</span>, <span class="st">&#39;seen_film_5&#39;</span>, <span class="st">&#39;seen_film_6&#39;</span>], how<span class="op">=</span><span class="st">&#39;all&#39;</span>)</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop rows where &#39;age&#39; column has NaN values</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">&#39;age&#39;</span>])</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop rows where &#39;education&#39; column has NaN values</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">&#39;education&#39;</span>])</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop rows where &#39;education&#39; column has NaN values</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">&#39;region&#39;</span>])</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column that converts the age ranges to a single number. Drop the age range categorical column.</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="co"># df[&#39;age&#39;].unique()</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>age_numerical <span class="op">=</span> {</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;18-29&#39;</span>: <span class="dv">0</span>,</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;30-44&#39;</span>: <span class="dv">1</span>,</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;45-60&#39;</span>: <span class="dv">2</span>,</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;&gt; 60&#39;</span> : <span class="dv">3</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;age&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;age&#39;</span>].<span class="bu">map</span>(age_numerical)</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column that converts the education groupings to a single number. Drop the school categorical column</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="co"># df[&#39;education&#39;].unique()</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>education_numerical <span class="op">=</span> {</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Less than high school degree&#39;</span>: <span class="dv">0</span>,</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;High school degree&#39;</span>: <span class="dv">1</span>,</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Some college or Associate degree&#39;</span>: <span class="dv">2</span>,</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Bachelor degree&#39;</span> : <span class="dv">3</span>,</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Graduate degree&#39;</span> : <span class="dv">4</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;education&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;education&#39;</span>].<span class="bu">map</span>(education_numerical)</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column that converts the income ranges to a single number. Drop the income range categorical column.</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="co"># filtered_df = df[df[&#39;income&#39;].isna()]</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="co"># df[&#39;income&#39;].unique()</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="co"># # filtered_df</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>income_numerical <span class="op">=</span> {</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    np.nan : <span class="dv">0</span>,</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;$0 - $24,999&#39;</span>: <span class="dv">1</span>,</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;$25,000 - $49,999&#39;</span>: <span class="dv">2</span>,</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;$50,000 - $99,999&#39;</span> : <span class="dv">3</span>,</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;$100,000 - $149,999&#39;</span> : <span class="dv">4</span>,</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;$150,000+&#39;</span> : <span class="dv">5</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;income&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;income&#39;</span>].<span class="bu">map</span>(income_numerical)</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Create your target (also known as “y” or “label”) column based on the new income range column.</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;income50k+&#39;</span>] <span class="op">=</span> (df[<span class="st">&#39;income&#39;</span>] <span class="op">&gt;=</span> <span class="dv">3</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="co"># One-hot encode all remaining categorical columns.</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;seen_star_wars&#39;</span>] <span class="op">=</span> np.where(df[<span class="st">&#39;seen_star_wars&#39;</span>] <span class="op">==</span> <span class="st">&#39;Yes&#39;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;star_wars_fan&#39;</span>] <span class="op">=</span> np.where(df[<span class="st">&#39;star_wars_fan&#39;</span>] <span class="op">==</span> <span class="st">&#39;Yes&#39;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;seen_film_1&#39;</span>] <span class="op">=</span> np.where(df[<span class="st">&#39;seen_film_1&#39;</span>] <span class="op">==</span> <span class="st">&#39;Star Wars: Episode I  The Phantom Menace&#39;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;seen_film_2&#39;</span>] <span class="op">=</span> np.where(df[<span class="st">&#39;seen_film_2&#39;</span>] <span class="op">==</span> <span class="st">&#39;Star Wars: Episode II  Attack of the Clones&#39;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;seen_film_3&#39;</span>] <span class="op">=</span> np.where(df[<span class="st">&#39;seen_film_3&#39;</span>] <span class="op">==</span> <span class="st">&#39;Star Wars: Episode III  Revenge of the Sith&#39;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;seen_film_4&#39;</span>] <span class="op">=</span> np.where(df[<span class="st">&#39;seen_film_4&#39;</span>] <span class="op">==</span> <span class="st">&#39;Star Wars: Episode IV  A New Hope&#39;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;seen_film_5&#39;</span>] <span class="op">=</span> np.where(df[<span class="st">&#39;seen_film_5&#39;</span>] <span class="op">==</span> <span class="st">&#39;Star Wars: Episode V The Empire Strikes Back&#39;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;seen_film_6&#39;</span>] <span class="op">=</span> np.where(df[<span class="st">&#39;seen_film_6&#39;</span>] <span class="op">==</span> <span class="st">&#39;Star Wars: Episode VI Return of the Jedi&#39;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>character_view_columns <span class="op">=</span> [<span class="st">&#39;han_solo_view&#39;</span>, <span class="st">&#39;luke_skywalker_view&#39;</span>, <span class="st">&#39;princess_leia_view&#39;</span>, <span class="st">&#39;anakin_skywalker_view&#39;</span>, </span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&#39;obi_wan_kenobi_view&#39;</span>, <span class="st">&#39;emperor_palpatine_view&#39;</span>, <span class="st">&#39;darth_vader_view&#39;</span>,  </span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&#39;lando_calrissian_view&#39;</span>, <span class="st">&#39;boba_fett_view&#39;</span>,    </span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&#39;c3p0_view&#39;</span>, <span class="st">&#39;r2d2_view&#39;</span>, <span class="st">&#39;jar_jar_binks_view&#39;</span>,   </span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&#39;padme_amidala_view&#39;</span>, <span class="st">&#39;yoda_view&#39;</span>]</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>character_view_numerical <span class="op">=</span> {</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>    np.nan: <span class="dv">0</span>,</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unfamiliar (N/A)&#39;</span>: <span class="dv">1</span>,</span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Very unfavorably&#39;</span>: <span class="dv">2</span>, </span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Somewhat unfavorably&#39;</span>: <span class="dv">3</span>,</span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Neither favorably nor unfavorably (neutral)&#39;</span>: <span class="dv">4</span>,</span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Somewhat favorably&#39;</span>: <span class="dv">5</span>,</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Very favorably&#39;</span>: <span class="dv">6</span>,                       </span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> character <span class="kw">in</span> character_view_columns:</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>    df[character] <span class="op">=</span> df[character].<span class="bu">map</span>(character_view_numerical)</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>shot_first_numerical <span class="op">=</span> {</span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;I don&#39;t understand this question&quot;</span>: <span class="dv">0</span>,</span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Greedo&#39;</span>: <span class="dv">1</span>,</span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Han&#39;</span>: <span class="dv">2</span>,                      </span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;shot_first&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;shot_first&#39;</span>].<span class="bu">map</span>(shot_first_numerical)</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>familiar_expanded_universe_numerical <span class="op">=</span> {</span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;No&#39;</span>: <span class="dv">0</span>,</span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Yes&#39;</span>: <span class="dv">1</span>,                      </span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;familiar_expanded_universe&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;familiar_expanded_universe&#39;</span>].<span class="bu">map</span>(familiar_expanded_universe_numerical)</span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>expanded_universe_fan_numerical <span class="op">=</span> {</span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>    np.nan: <span class="dv">0</span>,</span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;No&#39;</span>: <span class="dv">0</span>,</span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Yes&#39;</span>: <span class="dv">1</span>,                      </span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;expanded_universe_fan&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;expanded_universe_fan&#39;</span>].<span class="bu">map</span>(expanded_universe_fan_numerical)</span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>star_trek_fan_numerical <span class="op">=</span> {</span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;No&#39;</span>: <span class="dv">0</span>,</span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Yes&#39;</span>: <span class="dv">1</span>,                      </span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;star_trek_fan&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;star_trek_fan&#39;</span>].<span class="bu">map</span>(star_trek_fan_numerical)</span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a>gender_numerical <span class="op">=</span> {</span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Male&#39;</span>: <span class="dv">0</span>,</span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Female&#39;</span>: <span class="dv">1</span>,                      </span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;gender&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;gender&#39;</span>].<span class="bu">map</span>(gender_numerical)</span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>region_numerical <span class="op">=</span> {</span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;South Atlantic&#39;</span>: <span class="dv">0</span>, </span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;West North Central&#39;</span>: <span class="dv">1</span>, </span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Middle Atlantic&#39;</span>: <span class="dv">2</span>,</span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;East North Central&#39;</span>: <span class="dv">3</span>, </span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Pacific&#39;</span>: <span class="dv">4</span>, </span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Mountain&#39;</span>: <span class="dv">5</span>, </span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;West South Central&#39;</span>: <span class="dv">6</span>,</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;New England&#39;</span>: <span class="dv">7</span>, </span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;East South Central&#39;</span>: <span class="dv">8</span></span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;region&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;region&#39;</span>].<span class="bu">map</span>(region_numerical)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><em>include figures in chunks and discuss your findings in the figure.</em></p>
@@ -3387,11 +3564,239 @@ vertical-align: -.125em;
 <h2 class="anchored" data-anchor-id="grand-question-3">GRAND QUESTION 3</h2>
 <p><strong>Validate that the data provided on GitHub lines up with the article by recreating 2 of the visuals from the article.</strong></p>
 <p><em>type your results and analysis here</em></p>
-<div id="gq3" class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="5">
 <details>
 <summary>Read and format data</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_melted <span class="op">=</span> df.melt(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span>[<span class="st">&quot;id&quot;</span>],</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    value_vars<span class="op">=</span>[<span class="st">&quot;seen_film_1&quot;</span>, <span class="st">&quot;seen_film_2&quot;</span>, <span class="st">&quot;seen_film_3&quot;</span>, <span class="st">&quot;seen_film_4&quot;</span>, <span class="st">&quot;seen_film_5&quot;</span>, <span class="st">&quot;seen_film_6&quot;</span>],</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">&quot;film&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    value_name<span class="op">=</span><span class="st">&quot;seen&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename the film labels</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>film_labels <span class="op">=</span> {</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_1&quot;</span>: <span class="st">&quot;The Phantom Menace&quot;</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_2&quot;</span>: <span class="st">&quot;Attack of the Clones&quot;</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_3&quot;</span>: <span class="st">&quot;Revenge of the Sith&quot;</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_4&quot;</span>: <span class="st">&quot;A New Hope&quot;</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_5&quot;</span>: <span class="st">&quot;The Empire Strikes Back&quot;</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;seen_film_6&quot;</span>: <span class="st">&quot;Return of the Jedi&quot;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>df_melted[<span class="st">&quot;film&quot;</span>] <span class="op">=</span> df_melted[<span class="st">&quot;film&quot;</span>].replace(film_labels)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Calculate the percentage of people who have seen each film</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>df_percentage <span class="op">=</span> (</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    df_melted.groupby(<span class="st">&quot;film&quot;</span>)[<span class="st">&quot;seen&quot;</span>].mean() <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>df_percentage[<span class="st">&quot;seen&quot;</span>] <span class="op">=</span> df_percentage[<span class="st">&quot;seen&quot;</span>].<span class="bu">round</span>()</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>df_percentage[<span class="st">&quot;seen&quot;</span>] <span class="op">=</span> df_percentage[<span class="st">&#39;seen&#39;</span>]<span class="op">/</span><span class="dv">100</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the order of the films</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>film_order <span class="op">=</span> [</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The Phantom Menace&quot;</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Attack of the Clones&quot;</span>,</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Revenge of the Sith&quot;</span>,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;A New Hope&quot;</span>,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The Empire Strikes Back&quot;</span>,</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Return of the Jedi&quot;</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Create the bar graph with percentage labels</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>bar_graph <span class="op">=</span> (</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    alt.Chart(df_percentage)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;film:N&quot;</span>,</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            sort<span class="op">=</span>film_order,</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">&quot;seen:Q&quot;</span>, axis<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>        text<span class="op">=</span>alt.Text(<span class="st">&quot;seen:Q&quot;</span>, <span class="bu">format</span><span class="op">=</span><span class="st">&quot;.0%&quot;</span>),</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;film:N&quot;</span>, title<span class="op">=</span><span class="st">&quot;Film&quot;</span>),</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;seen:Q&quot;</span>, title<span class="op">=</span><span class="st">&quot;</span><span class="sc">% o</span><span class="st">f People&quot;</span>),</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    .properties(</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span>{</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;text&quot;</span>: <span class="st">&quot;Which &#39;Star Wars&#39; Movies Have You Seen?&quot;</span>,</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;subtitle&quot;</span>: <span class="st">&quot;Of 835 respondents who have seen any film&quot;</span>,</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;anchor&quot;</span>: <span class="st">&quot;start&quot;</span>,</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Add text labels to the bars</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>bar_graph <span class="op">=</span> bar_graph <span class="op">+</span> bar_graph.mark_text(align<span class="op">=</span><span class="st">&#39;left&#39;</span>, dx<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>bar_graph</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div id="gq3" class="cell-output cell-output-display" data-execution_count="5">
+
+<div id="altair-viz-737b75fa21374375843016afdd37b0e1"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-737b75fa21374375843016afdd37b0e1") {
+      outputDiv = document.getElementById("altair-viz-737b75fa21374375843016afdd37b0e1");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "layer": [{"mark": "bar", "encoding": {"text": {"field": "seen", "format": ".0%", "type": "quantitative"}, "tooltip": [{"field": "film", "title": "Film", "type": "nominal"}, {"field": "seen", "title": "% of People", "type": "quantitative"}], "x": {"axis": null, "field": "seen", "type": "quantitative"}, "y": {"field": "film", "sort": ["The Phantom Menace", "Attack of the Clones", "Revenge of the Sith", "A New Hope", "The Empire Strikes Back", "Return of the Jedi"], "title": null, "type": "nominal"}}, "title": {"text": "Which 'Star Wars' Movies Have You Seen?", "subtitle": "Of 835 respondents who have seen any film", "anchor": "start"}}, {"mark": {"type": "text", "align": "left", "dx": 2}, "encoding": {"text": {"field": "seen", "format": ".0%", "type": "quantitative"}, "tooltip": [{"field": "film", "title": "Film", "type": "nominal"}, {"field": "seen", "title": "% of People", "type": "quantitative"}], "x": {"axis": null, "field": "seen", "type": "quantitative"}, "y": {"field": "film", "sort": ["The Phantom Menace", "Attack of the Clones", "Revenge of the Sith", "A New Hope", "The Empire Strikes Back", "Return of the Jedi"], "title": null, "type": "nominal"}}, "title": {"text": "Which 'Star Wars' Movies Have You Seen?", "subtitle": "Of 835 respondents who have seen any film", "anchor": "start"}}], "data": {"name": "data-85f61f1aeec0522f801883a7befdbb99"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-85f61f1aeec0522f801883a7befdbb99": [{"film": "A New Hope", "seen": 0.73}, {"film": "Attack of the Clones", "seen": 0.68}, {"film": "Return of the Jedi", "seen": 0.89}, {"film": "Revenge of the Sith", "seen": 0.66}, {"film": "The Empire Strikes Back", "seen": 0.91}, {"film": "The Phantom Menace", "seen": 0.81}]}}, {"mode": "vega-lite"});
+</script>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Read and format data</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_shot_first <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;shot_first&quot;</span>: [<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;shot_first_label&quot;</span>: [<span class="st">&quot;Han&quot;</span>, <span class="st">&quot;Greedo&quot;</span>, <span class="st">&quot;I don&#39;t understand this question&quot;</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Merge the shot_first labels with the original DataFrame</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> pd.merge(df, df_shot_first, on<span class="op">=</span><span class="st">&quot;shot_first&quot;</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Group by shot_first_label and calculate the percentage</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>df_percentage <span class="op">=</span> (</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    df_merged.groupby(<span class="st">&quot;shot_first_label&quot;</span>).size() <span class="op">/</span> <span class="bu">len</span>(df_merged) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>).reset_index(name<span class="op">=</span><span class="st">&quot;percentage&quot;</span>).<span class="bu">round</span>()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>df_percentage[<span class="st">&quot;percentage&quot;</span>] <span class="op">=</span> df_percentage[<span class="st">&#39;percentage&#39;</span>]<span class="op">/</span><span class="dv">100</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>bar_graph2 <span class="op">=</span> (</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    alt.Chart(df_percentage)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;shot_first_label:N&quot;</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            sort<span class="op">=</span>[<span class="st">&quot;Han&quot;</span>, <span class="st">&quot;Greedo&quot;</span>, <span class="st">&quot;I don&#39;t understand this question&quot;</span>],</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">&quot;percentage:Q&quot;</span>, axis<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        text<span class="op">=</span>alt.Text(<span class="st">&#39;percentage:Q&#39;</span>, <span class="bu">format</span><span class="op">=</span><span class="st">&#39;.0%&#39;</span>),</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;shot_first_label:N&quot;</span>, title<span class="op">=</span><span class="st">&quot;Shot First&quot;</span>),</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">&quot;percentage:Q&quot;</span>, title<span class="op">=</span><span class="st">&quot;% Percentage&quot;</span>),</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    .properties(</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>         title<span class="op">=</span>{</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;text&quot;</span>: <span class="st">&quot;Who Shot First?&quot;</span>,</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;subtitle&quot;</span>: <span class="st">&quot;According to 834 respondents&quot;</span>,</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;anchor&quot;</span>: <span class="st">&quot;start&quot;</span>,</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>bar_graph2 <span class="op">=</span> bar_graph2 <span class="op">+</span> bar_graph2.mark_text(align<span class="op">=</span><span class="st">&#39;left&#39;</span>, dx<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>bar_graph2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="gq3.2" class="cell-output cell-output-display" data-execution_count="6">
+
+<div id="altair-viz-926f1cfeb3e343ebaa6eb5a88e3a6985"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-926f1cfeb3e343ebaa6eb5a88e3a6985") {
+      outputDiv = document.getElementById("altair-viz-926f1cfeb3e343ebaa6eb5a88e3a6985");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "layer": [{"mark": "bar", "encoding": {"text": {"field": "percentage", "format": ".0%", "type": "quantitative"}, "tooltip": [{"field": "shot_first_label", "title": "Shot First", "type": "nominal"}, {"field": "percentage", "title": "% Percentage", "type": "quantitative"}], "x": {"axis": null, "field": "percentage", "type": "quantitative"}, "y": {"field": "shot_first_label", "sort": ["Han", "Greedo", "I don't understand this question"], "title": null, "type": "nominal"}}, "title": {"text": "Who Shot First?", "subtitle": "According to 834 respondents", "anchor": "start"}}, {"mark": {"type": "text", "align": "left", "dx": 2}, "encoding": {"text": {"field": "percentage", "format": ".0%", "type": "quantitative"}, "tooltip": [{"field": "shot_first_label", "title": "Shot First", "type": "nominal"}, {"field": "percentage", "title": "% Percentage", "type": "quantitative"}], "x": {"axis": null, "field": "percentage", "type": "quantitative"}, "y": {"field": "shot_first_label", "sort": ["Han", "Greedo", "I don't understand this question"], "title": null, "type": "nominal"}}, "title": {"text": "Who Shot First?", "subtitle": "According to 834 respondents", "anchor": "start"}}], "data": {"name": "data-e2767873ef0baedab4d527b6caac8f86"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-e2767873ef0baedab4d527b6caac8f86": [{"shot_first_label": "Greedo", "percentage": 0.23}, {"shot_first_label": "Han", "percentage": 0.39}, {"shot_first_label": "I don't understand this question", "percentage": 0.37}]}}, {"mode": "vega-lite"});
+</script>
+</div>
 </div>
 <p><em>include figures in chunks and discuss your findings in the figure.</em></p>
 </section>
@@ -3399,17 +3804,17 @@ vertical-align: -.125em;
 <h2 class="anchored" data-anchor-id="grand-question-4">GRAND QUESTION 4</h2>
 <p><strong>Build a machine learning model that predicts whether a person makes more than $50k. Describe your model and report the accuracy.</strong></p>
 <p><em>type your results and analysis here</em></p>
-<div id="gq4" class="cell" data-execution_count="6">
+<div id="gq4" class="cell" data-execution_count="7">
 <details>
 <summary>Read and format data</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include and execute your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><em>include figures in chunks and discuss your findings in the figure.</em></p>
 </section>
 <section id="appendix-a-additional-python-code" class="level2">
 <h2 class="anchored" data-anchor-id="appendix-a-additional-python-code">APPENDIX A (Additional Python Code)</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#paste other your code from your python file (.py) here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#paste other your code from your python file (.py) here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 
 </main>

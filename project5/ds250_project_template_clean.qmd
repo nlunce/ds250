@@ -180,6 +180,183 @@ _type your results and analysis here_
 #| label: GQ2
 #| code-summary: Read and format data
 # Include and execute your code here
+# Rename Columns
+new_column_names = {
+    'RespondentID': 'id',
+    'Have you seen any of the 6 films in the Star Wars franchise?': 'seen_star_wars',
+    'Do you consider yourself to be a fan of the Star Wars film franchise?': 'star_wars_fan',
+    'Which of the following Star Wars films have you seen? Please select all that apply.': 'seen_film_1',
+    'Unnamed: 4': 'seen_film_2',
+    'Unnamed: 5': 'seen_film_3',
+    'Unnamed: 6': 'seen_film_4',
+    'Unnamed: 7': 'seen_film_5',
+    'Unnamed: 8': 'seen_film_6',
+    'Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.': 'film_1_preference',
+    'Unnamed: 10': 'film_2_preference',
+    'Unnamed: 11': 'film_3_preference',
+    'Unnamed: 12': 'film_4_preference',
+    'Unnamed: 13': 'film_5_preference',
+    'Unnamed: 14': 'film_6_preference',
+    'Please state whether you view the following characters favorably, unfavorably, or are unfamiliar with him/her.': 'han_solo_view',
+    'Unnamed: 16': 'luke_skywalker_view',
+    'Unnamed: 17': 'princess_leia_view',
+    'Unnamed: 18': 'anakin_skywalker_view',
+    'Unnamed: 19': 'obi_wan_kenobi_view',
+    'Unnamed: 20': 'emperor_palpatine_view',
+    'Unnamed: 21': 'darth_vader_view',
+    'Unnamed: 22': 'lando_calrissian_view',
+    'Unnamed: 23': 'boba_fett_view',
+    'Unnamed: 24': 'c3p0_view',
+    'Unnamed: 25': 'r2d2_view',
+    'Unnamed: 26': 'jar_jar_binks_view',
+    'Unnamed: 27': 'padme_amidala_view',
+    'Unnamed: 28': 'yoda_view',
+    'Which character shot first?': 'shot_first',
+    'Are you familiar with the Expanded Universe?': 'familiar_expanded_universe',
+    'Do you consider yourself to be a fan of the Expanded Universe?æ': 'expanded_universe_fan',
+    'Do you consider yourself to be a fan of the Star Trek franchise?': 'star_trek_fan',
+    'Gender': 'gender',
+    'Age': 'age',
+    'Household Income': 'income',
+    'Education': 'education',
+    'Location (Census Region)': 'region'
+}
+
+df.rename(columns=new_column_names, inplace=True)
+df = df.drop(0)
+
+# Filter the dataset to respondents that have seen at least one film.
+df = df.query('seen_star_wars == "Yes"')
+df = df.dropna(subset=['seen_film_1', 'seen_film_2', 'seen_film_3', 'seen_film_4', 'seen_film_5', 'seen_film_6'], how='all')
+# Drop rows where 'age' column has NaN values
+df = df.dropna(subset=['age'])
+# Drop rows where 'education' column has NaN values
+df = df.dropna(subset=['education'])
+# Drop rows where 'education' column has NaN values
+df = df.dropna(subset=['region'])
+
+# Create a new column that converts the age ranges to a single number. Drop the age range categorical column.
+# df['age'].unique()
+age_numerical = {
+    '18-29': 0,
+    '30-44': 1,
+    '45-60': 2,
+    '> 60' : 3
+}
+df['age'] = df['age'].map(age_numerical)
+
+# Create a new column that converts the education groupings to a single number. Drop the school categorical column
+# df['education'].unique()
+education_numerical = {
+    'Less than high school degree': 0,
+    'High school degree': 1,
+    'Some college or Associate degree': 2,
+    'Bachelor degree' : 3,
+    'Graduate degree' : 4
+
+}
+df['education'] = df['education'].map(education_numerical)
+
+# Create a new column that converts the income ranges to a single number. Drop the income range categorical column.
+# filtered_df = df[df['income'].isna()]
+# df['income'].unique()
+# # filtered_df
+income_numerical = {
+    np.nan : 0,
+    '$0 - $24,999': 1,
+    '$25,000 - $49,999': 2,
+    '$50,000 - $99,999' : 3,
+    '$100,000 - $149,999' : 4,
+    '$150,000+' : 5
+
+}
+
+df['income'] = df['income'].map(income_numerical)
+
+# Create your target (also known as “y” or “label”) column based on the new income range column.
+df['income50k+'] = (df['income'] >= 3).astype(int)
+
+# One-hot encode all remaining categorical columns.
+df['seen_star_wars'] = np.where(df['seen_star_wars'] == 'Yes', 1, 0)
+df['star_wars_fan'] = np.where(df['star_wars_fan'] == 'Yes', 1, 0)
+
+df['seen_film_1'] = np.where(df['seen_film_1'] == 'Star Wars: Episode I  The Phantom Menace', 1, 0)
+df['seen_film_2'] = np.where(df['seen_film_2'] == 'Star Wars: Episode II  Attack of the Clones', 1, 0)
+df['seen_film_3'] = np.where(df['seen_film_3'] == 'Star Wars: Episode III  Revenge of the Sith', 1, 0)
+df['seen_film_4'] = np.where(df['seen_film_4'] == 'Star Wars: Episode IV  A New Hope', 1, 0)
+df['seen_film_5'] = np.where(df['seen_film_5'] == 'Star Wars: Episode V The Empire Strikes Back', 1, 0)
+df['seen_film_6'] = np.where(df['seen_film_6'] == 'Star Wars: Episode VI Return of the Jedi', 1, 0)
+
+
+character_view_columns = ['han_solo_view', 'luke_skywalker_view', 'princess_leia_view', 'anakin_skywalker_view', 
+                          'obi_wan_kenobi_view', 'emperor_palpatine_view', 'darth_vader_view',	
+                          'lando_calrissian_view', 'boba_fett_view',	
+                          'c3p0_view', 'r2d2_view', 'jar_jar_binks_view',	
+                          'padme_amidala_view', 'yoda_view']
+
+character_view_numerical = {
+    np.nan: 0,
+    'Unfamiliar (N/A)': 1,
+    'Very unfavorably': 2, 
+    'Somewhat unfavorably': 3,
+    'Neither favorably nor unfavorably (neutral)': 4,
+    'Somewhat favorably': 5,
+    'Very favorably': 6,                       
+}
+
+for character in character_view_columns:
+    df[character] = df[character].map(character_view_numerical)
+
+shot_first_numerical = {
+    "I don't understand this question": 0,
+    'Greedo': 1,
+    'Han': 2,                      
+}
+
+df['shot_first'] = df['shot_first'].map(shot_first_numerical)
+
+familiar_expanded_universe_numerical = {
+    'No': 0,
+    'Yes': 1,                      
+}
+
+df['familiar_expanded_universe'] = df['familiar_expanded_universe'].map(familiar_expanded_universe_numerical)
+
+expanded_universe_fan_numerical = {
+    np.nan: 0,
+    'No': 0,
+    'Yes': 1,                      
+}
+
+df['expanded_universe_fan'] = df['expanded_universe_fan'].map(expanded_universe_fan_numerical)
+
+star_trek_fan_numerical = {
+    'No': 0,
+    'Yes': 1,                      
+}
+
+df['star_trek_fan'] = df['star_trek_fan'].map(star_trek_fan_numerical)
+
+gender_numerical = {
+    'Male': 0,
+    'Female': 1,                      
+}
+
+df['gender'] = df['gender'].map(gender_numerical)
+
+region_numerical = {
+    'South Atlantic': 0, 
+    'West North Central': 1, 
+    'Middle Atlantic': 2,
+    'East North Central': 3, 
+    'Pacific': 4, 
+    'Mountain': 5, 
+    'West South Central': 6,
+    'New England': 7, 
+    'East South Central': 8
+}
+
+df['region'] = df['region'].map(region_numerical)
 
 
 ```
@@ -198,8 +375,121 @@ _type your results and analysis here_
 #| label: GQ3
 #| code-summary: Read and format data
 # Include and execute your code here
+df_melted = df.melt(
+    id_vars=["id"],
+    value_vars=["seen_film_1", "seen_film_2", "seen_film_3", "seen_film_4", "seen_film_5", "seen_film_6"],
+    var_name="film",
+    value_name="seen"
+)
 
+# Rename the film labels
+film_labels = {
+    "seen_film_1": "The Phantom Menace",
+    "seen_film_2": "Attack of the Clones",
+    "seen_film_3": "Revenge of the Sith",
+    "seen_film_4": "A New Hope",
+    "seen_film_5": "The Empire Strikes Back",
+    "seen_film_6": "Return of the Jedi"
+}
+df_melted["film"] = df_melted["film"].replace(film_labels)
 
+# Step 2: Calculate the percentage of people who have seen each film
+df_percentage = (
+    df_melted.groupby("film")["seen"].mean() * 100
+).reset_index()
+df_percentage["seen"] = df_percentage["seen"].round()
+
+df_percentage["seen"] = df_percentage['seen']/100
+
+# Define the order of the films
+film_order = [
+    "The Phantom Menace",
+    "Attack of the Clones",
+    "Revenge of the Sith",
+    "A New Hope",
+    "The Empire Strikes Back",
+    "Return of the Jedi",
+]
+
+# Step 3: Create the bar graph with percentage labels
+bar_graph = (
+    alt.Chart(df_percentage)
+    .mark_bar()
+    .encode(
+        y=alt.Y(
+            "film:N",
+            title=None,
+            sort=film_order,
+        ),
+        x=alt.X("seen:Q", axis=None),
+        text=alt.Text("seen:Q", format=".0%"),
+        tooltip=[
+            alt.Tooltip("film:N", title="Film"),
+            alt.Tooltip("seen:Q", title="% of People"),
+        ],
+    )
+    .properties(
+        title={
+            "text": "Which 'Star Wars' Movies Have You Seen?",
+            "subtitle": "Of 835 respondents who have seen any film",
+            "anchor": "start",
+        }
+    )
+)
+
+# Add text labels to the bars
+bar_graph = bar_graph + bar_graph.mark_text(align='left', dx=2)
+bar_graph
+
+```
+
+```{python}
+#| label: GQ3.2
+#| code-summary: Read and format data
+# Include and execute your code here
+df_shot_first = pd.DataFrame({
+    "shot_first": [2, 1, 0],
+    "shot_first_label": ["Han", "Greedo", "I don't understand this question"]
+})
+
+# Step 2: Merge the shot_first labels with the original DataFrame
+df_merged = pd.merge(df, df_shot_first, on="shot_first")
+
+# Step 3: Group by shot_first_label and calculate the percentage
+df_percentage = (
+    df_merged.groupby("shot_first_label").size() / len(df_merged) * 100
+).reset_index(name="percentage").round()
+
+df_percentage["percentage"] = df_percentage['percentage']/100
+
+bar_graph2 = (
+    alt.Chart(df_percentage)
+    .mark_bar()
+    .encode(
+        y=alt.Y(
+            "shot_first_label:N",
+            title=None,
+            sort=["Han", "Greedo", "I don't understand this question"],
+
+        ),
+        x=alt.X("percentage:Q", axis=None),
+        text=alt.Text('percentage:Q', format='.0%'),
+        tooltip=[
+            alt.Tooltip("shot_first_label:N", title="Shot First"),
+            alt.Tooltip("percentage:Q", title="% Percentage"),
+        ],
+    )
+    .properties(
+         title={
+            "text": "Who Shot First?",
+            "subtitle": "According to 834 respondents",
+            "anchor": "start",
+        }
+    )
+)
+
+bar_graph2 = bar_graph2 + bar_graph2.mark_text(align='left', dx=2)
+bar_graph2
 ```
 
 _include figures in chunks and discuss your findings in the figure._
